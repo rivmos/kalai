@@ -8,10 +8,10 @@ export type AppConfig = {
 }
 
 const appConfig: AppConfig = {
-    apiPrefix: 'http://localhost:3001/api',
+    apiPrefix: 'https://kalai-y5oa.onrender.com/api/',
     authenticatedEntryPath: '/web/home',
-    unAuthenticatedEntryPath: '/sign-in',
-    tourPath: '/',
+    unAuthenticatedEntryPath: '/web/home',
+    tourPath: '/web/home',
     locale: 'en',
     enableMock: false,
 }

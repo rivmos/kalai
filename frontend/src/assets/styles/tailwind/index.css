@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.custom-hover-effect::before {
+.linkButton::before {
   content: '';
   background-color: black; /* You might need to use a Tailwind color or custom property */
   position: absolute;
@@ -13,7 +13,7 @@
   z-index: -1;
   transition: all .3s ease-in-out;
 }
-.custom-hover-effect:hover::before {
+.linkButton:hover::before {
   left: -5px;
   bottom: 0;
   height: 100%;

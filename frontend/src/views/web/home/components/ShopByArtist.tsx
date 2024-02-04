@@ -18,7 +18,7 @@ const ShopByArtist = () => {
     const [autoPlay, setAutoPlay] = useState(true)
     return (
         <>
-            <div className='container mx-auto py-24'>
+            <div className='container mx-auto py-32'>
                 <h2 className="text-3xl font-bold uppercase text-center tracking-tight text-gray-700 sm:text-4xl">Artists</h2>
                 <p className='text-center mt-2 text-base'>Discover from a curated collection of works by renowned Indian artists</p>
                 <Swiper
@@ -33,10 +33,10 @@ const ShopByArtist = () => {
                     {
                         artists.map((artist, index) => {
                             return (
-                                <Link to={""}>
-                                    <SwiperSlide className='cursor-pointer'>
-                                        {/* <img src={`/img/banner/${index + 1}.jpg`} className='object-cover h-[300px] hover:scale-125 transition-all duration-1000' />
+                                <SwiperSlide className='cursor-pointer'>
+                                    {/* <img src={`/img/banner/${index + 1}.jpg`} className='object-cover h-[300px] hover:scale-125 transition-all duration-1000' />
                                         <div>{artist.name}</div> */}
+                                    <Link to={`/web/profile/${artist.id}`}>
                                         <div className="text-gray-700">
                                             <img src={`/img/banner/${index + 1}.jpg`} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
 
@@ -47,8 +47,8 @@ const ShopByArtist = () => {
                                             </div>
 
                                         </div>
-                                    </SwiperSlide>
-                                </Link>
+                                    </Link>
+                                </SwiperSlide>
                             )
                         })
                     }

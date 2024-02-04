@@ -73,8 +73,12 @@ module.exports = {
 						},
 					},
 				}),
+				backgroundImage: {
+					'contactImage': "url('/img/background/contactus.jpg')",
+				  },
 			},
 		},
+		
 	plugins: [
 		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		require('./twSafelistGenerator')({

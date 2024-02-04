@@ -16,7 +16,7 @@ artistRouter.get('/', (req, res) => {
 /* Get Single Product */
 artistRouter.get('/:id', (req, res) => {
     const id = req.params.id
-    Artist.findById(id).then(artist => {
+    Artist.findById(id).populate('artworks').then(artist => {
         res.json(artist)
     }).catch(error => {
         res.json({

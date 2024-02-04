@@ -8,7 +8,7 @@ import type { NavigationTree } from '@/@types/navigation'
 const webNavigationConfig: NavigationTree[] = [
     {
         key: 'home',
-        path: '/home',
+        path: '/web/home',
         title: 'Home',
         translateKey: 'nav.home',
         icon: 'home',
@@ -18,7 +18,7 @@ const webNavigationConfig: NavigationTree[] = [
     },
     {
         key: 'paintings',
-        path: '/paintings',
+        path: '/web/paintings',
         title: 'Paintings',
         translateKey: 'nav.paintings',
         icon: 'paintings',
@@ -28,7 +28,7 @@ const webNavigationConfig: NavigationTree[] = [
     },
     {
         key: 'sculptures',
-        path: '/sculptures',
+        path: '/web/sculptures',
         title: 'Sculptures',
         translateKey: 'nav.sculptures',
         icon: 'sculptures',
@@ -38,7 +38,7 @@ const webNavigationConfig: NavigationTree[] = [
     },
     {
         key: 'artists',
-        path: '/artists',
+        path: '/web/artists',
         title: 'Artists',
         translateKey: 'nav.artists',
         icon: 'artists',
@@ -48,7 +48,7 @@ const webNavigationConfig: NavigationTree[] = [
     },
     {
         key: 'exclusives',
-        path: '/exclusives',
+        path: '/web/exclusives',
         title: 'Exclusives',
         translateKey: 'nav.exclusives',
         icon: 'exclusives',
@@ -58,7 +58,7 @@ const webNavigationConfig: NavigationTree[] = [
     },
     {
         key: 'aboutus',
-        path: '/exclusives',
+        path: '/web/aboutus',
         title: 'About Us',
         translateKey: 'nav.exclusives',
         icon: 'exclusives',
@@ -68,7 +68,7 @@ const webNavigationConfig: NavigationTree[] = [
     },
     {
         key: 'contactus',
-        path: '/contactus',
+        path: '/web/contactus',
         title: 'Contact Us',
         translateKey: 'nav.contactus',
         icon: 'contactus',
@@ -78,7 +78,7 @@ const webNavigationConfig: NavigationTree[] = [
     },
     {
         key: 'login',
-        path: '/login',
+        path: '/web/login',
         title: 'Login',
         translateKey: 'nav.login',
         icon: 'login',
@@ -88,7 +88,7 @@ const webNavigationConfig: NavigationTree[] = [
     },
     // {
     //     key: 'collapseMenu',
-    //     path: '',
+    //     path: '/web',
     //     title: 'Collapse Menu',
     //     translateKey: 'nav.collapseMenu.collapseMenu',
     //     icon: 'collapseMenu',
@@ -97,7 +97,7 @@ const webNavigationConfig: NavigationTree[] = [
     //     subMenu: [
     //         {
     //             key: 'collapseMenu.item1',
-    //             path: '/collapse-menu-item-view-1',
+    //             path: '/web/collapse-menu-item-view-1',
     //             title: 'Collapse menu item 1',
     //             translateKey: 'nav.collapseMenu.item1',
     //             icon: '',
@@ -107,7 +107,7 @@ const webNavigationConfig: NavigationTree[] = [
     //         },
     //         {
     //             key: 'collapseMenu.item2',
-    //             path: '/collapse-menu-item-view-2',
+    //             path: '/web/collapse-menu-item-view-2',
     //             title: 'Collapse menu item 2',
     //             translateKey: 'nav.collapseMenu.item2',
     //             icon: '',
@@ -119,7 +119,7 @@ const webNavigationConfig: NavigationTree[] = [
     // },
     // {
     //     key: 'groupMenu',
-    //     path: '',
+    //     path: '/web',
     //     title: 'Group Menu',
     //     translateKey: 'nav.groupMenu.groupMenu',
     //     icon: '',
@@ -128,7 +128,7 @@ const webNavigationConfig: NavigationTree[] = [
     //     subMenu: [
     //         {
     //             key: 'groupMenu.single',
-    //             path: '/group-single-menu-item-view',
+    //             path: '/web/group-single-menu-item-view',
     //             title: 'Group single menu item',
     //             translateKey: 'nav.groupMenu.single',
     //             icon: 'groupSingleMenu',
@@ -138,7 +138,7 @@ const webNavigationConfig: NavigationTree[] = [
     //         },
     //         {
     //             key: 'groupMenu.collapse',
-    //             path: '',
+    //             path: '/web',
     //             title: 'Group collapse menu',
     //             translateKey: 'nav.groupMenu.collapse.collapse',
     //             icon: 'groupCollapseMenu',
@@ -147,7 +147,7 @@ const webNavigationConfig: NavigationTree[] = [
     //             subMenu: [
     //                 {
     //                     key: 'groupMenu.collapse.item1',
-    //                     path: '/group-collapse-menu-item-view-1',
+    //                     path: '/web/group-collapse-menu-item-view-1',
     //                     title: 'Menu item 1',
     //                     translateKey: 'nav.groupMenu.collapse.item1',
     //                     icon: '',
@@ -157,7 +157,7 @@ const webNavigationConfig: NavigationTree[] = [
     //                 },
     //                 {
     //                     key: 'groupMenu.collapse.item2',
-    //                     path: '/group-collapse-menu-item-view-2',
+    //                     path: '/web/group-collapse-menu-item-view-2',
     //                     title: 'Menu item 2',
     //                     translateKey: 'nav.groupMenu.collapse.item2',
     //                     icon: '',

@@ -35,7 +35,7 @@ const HorizontalMenuItem = ({
             {path && isLink ? (
                 <HorizontalMenuNavLink path={path} isExternalLink={isExternalLink}>
                     <MenuItem variant={manuVariant}>
-                        <span className="flex items-center gap-2 ">
+                        <span className="flex items-center gap-2">
                             {renderIcon}
                             {itemTitle}
                         </span>

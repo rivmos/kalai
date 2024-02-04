@@ -35,15 +35,18 @@ const Layout = () => {
     useLocale()
 
     const AppLayout = useMemo(() => {
-        if (authenticated) {
-            return lazy(() => import('./WebLayout'))
+        if(authenticated){
+            return lazy(() => import('./Weblayout'))
+        }
+        if (path.includes('auth.')) {
+            return lazy(() => import('./Authlayout'))
         }
 
-        if(path.includes('web.') && !authenticated){
-            return layouts['web']
-        }
+        // if(path.includes('auth.') && !authenticated){
+        //     return layouts['web']
+        // }
 
-        return lazy(() => import('./Authlayout'))
+        return lazy(() => import('./Weblayout'))
     }, [layoutType, authenticated, path])
 
 console.log(path)

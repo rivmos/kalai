@@ -6,3 +6,10 @@ export async function apiGetArtists<T>() {
         method: 'get',
     })
 }
+
+export async function apiGetArtistProfile<T>(id:string) {
+    return ApiService.fetchData<T>({
+        url: `/artists/${id}`,
+        method: 'get',
+    })
+}

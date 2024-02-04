@@ -18,7 +18,7 @@ const Banner = () => {
     slidesPerView={1}
     onSlideChange={() => console.log('slide change')}
     onSwiper={(swiper) => console.log(swiper)}
-    className='h-[700px]'
+    className='h-[750px]'
   >
     {
       [1, 2, 3, 4].map(number => {
@@ -31,7 +31,7 @@ const Banner = () => {
     }
   </Swiper>
 
-  <div className="absolute top-[20%] left-[12%] right-0 z-[1] mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
+  <div className="absolute top-[20%] left-[13%] right-0 z-[1] mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
     <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
       Elevate Your Art Journey.
     </h2>
