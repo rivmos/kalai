@@ -36,7 +36,7 @@ const Layout = () => {
 
     const AppLayout = useMemo(() => {
         if(authenticated){
-            return lazy(() => import('./Weblayout'))
+            return lazy(() => import('./WebLayout'))
         }
         if (path.includes('auth.')) {
             return lazy(() => import('./Authlayout'))
