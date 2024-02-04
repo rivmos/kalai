@@ -78,7 +78,7 @@ const webNavigationConfig: NavigationTree[] = [
     },
     {
         key: 'login',
-        path: '/web/login',
+        path: '/auth/sign-in',
         title: 'Login',
         translateKey: 'nav.login',
         icon: 'login',
