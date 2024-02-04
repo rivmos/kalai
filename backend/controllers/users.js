@@ -5,16 +5,17 @@ const jwt = require('jsonwebtoken')
 const usersRouter = require('express').Router()
 const config = require('../utils/config')
 
-usersRouter.post('/signup', async (req, res) => {
-    const { username, password } = req.body
+usersRouter.post('/sign-up', async (req, res) => {
+    const { username, password, email } = req.body
     const hashedPassword = await bcrypt.hash(password, 10)
 
     const user = new User({
         username,
-        hashedPassword
+        hashedPassword,
+        email
     })
 
-    
+
     user.save().then((response) => {
         logger.info('User Created Successfully')
         const retDoc = response._doc
@@ -23,8 +24,15 @@ usersRouter.post('/signup', async (req, res) => {
             id: user._id,
         }
         const token = jwt.sign(userForToken, config.JWTSECRET);
-        res.status(201).json({username:retDoc.username, token:token})
-        
+        res.status(201).json({
+            token, user: {
+                avatar: retDoc.avatar,
+                userName: retDoc.username,
+                authority: [],
+                email: retDoc.email,
+            }
+        })
+
     })
         .catch((err) => {
             logger.info('User Not Created')
@@ -33,7 +41,7 @@ usersRouter.post('/signup', async (req, res) => {
         })
 })
 
-usersRouter.post('/login', async (request, response) => {
+usersRouter.post('/sign-in', async (request, response) => {
     const { username, password } = request.body
 
     const user = await User.findOne({ username })
@@ -56,7 +64,14 @@ usersRouter.post('/login', async (request, response) => {
 
     response
         .status(200)
-        .json({ token, username: user.username })
+        .json({
+            token, user: {
+                avatar: user.avatar,
+                userName: user.username,
+                authority: [],
+                email: user.email,
+            }
+        })
 })
 
 module.exports = usersRouter
