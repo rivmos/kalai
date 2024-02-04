@@ -39,14 +39,14 @@ const Layout = () => {
             return lazy(() => import('./WebLayout'))
         }
         if (path.includes('auth.')) {
-            return lazy(() => import('./Authlayout'))
+            return lazy(() => import('./Authlayout/AuthLayout'))
         }
 
         // if(path.includes('auth.') && !authenticated){
         //     return layouts['web']
         // }
 
-        return lazy(() => import('./Weblayout'))
+        return lazy(() => import('./WebLayout'))
     }, [layoutType, authenticated, path])
 
 console.log(path)
