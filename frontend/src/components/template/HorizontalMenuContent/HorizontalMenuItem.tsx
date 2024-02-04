@@ -3,6 +3,7 @@ import MenuItem from '@/components/ui/MenuItem'
 import HorizontalMenuNavLink from './HorizontalMenuNavLink'
 import { useTranslation } from 'react-i18next'
 import type { NavMode } from '@/@types/theme'
+import useAuth from '@/utils/hooks/useAuth'
 
 export type HorizontalMenuItemProps = {
     nav: {
@@ -27,6 +28,8 @@ const HorizontalMenuItem = ({
     const { t } = useTranslation()
 
     const itemTitle = t(translateKey, title)
+    
+    const {authenticated} = useAuth()
 
     const renderIcon = icon && <span className="text-2xl">{navigationIcon[icon]}</span>
 
@@ -37,14 +40,14 @@ const HorizontalMenuItem = ({
                     <MenuItem variant={manuVariant}>
                         <span className="flex items-center gap-2">
                             {renderIcon}
-                            {itemTitle}
+                            {authenticated && itemTitle === 'Login' ? 'Profile' : itemTitle}
                         </span>
                     </MenuItem>
                 </HorizontalMenuNavLink>
             ) : (
                 <MenuItem variant={manuVariant}>
                     {renderIcon}
-                    <span>{itemTitle}</span>
+                    <span>{authenticated && itemTitle === 'Login' ? 'Profile' : itemTitle}</span>
                 </MenuItem>
             )}
         </>
