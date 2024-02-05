@@ -35,7 +35,7 @@ const StickyFooter = (props: StickyFooterProps) => {
         <div
             ref={ref}
             className={classNames(
-                'sticky -bottom-1',
+                'sticky -bottom-0 py-4 bg-white btn-fix-dwn',
                 className,
                 isSticky && stickyClass
             )}

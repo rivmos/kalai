@@ -24,7 +24,7 @@ const DropdownMenu = forwardRef<HTMLElement, DropdownMenuProps>(
         const dropdownMenuClass = classNames(
             dropdownMenuDefaultClass,
             dropdownMenuPositionClass,
-            className
+            className,
         )
 
         const dropdownSubmenuClass = classNames(

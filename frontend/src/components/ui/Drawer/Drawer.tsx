@@ -129,7 +129,7 @@ const Drawer = (props: DrawerProps) => {
                 }}
             >
                 {title || closable ? (
-                    <div className={classNames('drawer-header', headerClass)}>
+                    <div className={classNames('drawer-header mb-4', headerClass)}>
                         {typeof title === 'string' ? (
                             <h4>{title}</h4>
                         ) : (

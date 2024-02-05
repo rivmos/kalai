@@ -3,18 +3,20 @@ import uniqueId from 'lodash/uniqueId'
 import isEmpty from 'lodash/isEmpty'
 
 export default function authFakeApi(server: Server, apiPrefix: string) {
-    server.post(`${apiPrefix}/sign-in`, (schema, { requestBody }) => {
-        const { userName, password } = JSON.parse(requestBody)
+    server.post(`${apiPrefix}/login`, (schema, { requestBody }) => {
+        const { email, password } = JSON.parse(requestBody)
         const user = schema.db.signInUserData.findBy({
-            accountUserName: userName,
+            email: email,
             password,
         })
+
         console.log('user', user)
         if (user) {
-            const { avatar, userName, email, authority } = user
+            const { avatar, userName, email, authority, role, permissions } = user
             return {
-                user: { avatar, userName, email, authority },
-                token: 'wVYrxaeNa9OxdnULvde1Au5m5w63',
+                status:'success',
+                message:'data extracted successfully',
+                user: { avatar, userName, email, authority, role, permissions, token:'wVYrxaeNa9OxdnULvde1Au5m5w63' },
             }
         }
         return new Response(
@@ -24,7 +26,7 @@ export default function authFakeApi(server: Server, apiPrefix: string) {
         )
     })
 
-    server.post(`${apiPrefix}/sign-out`, () => {
+    server.post(`${apiPrefix}/logout`, () => {
         return true
     })
 

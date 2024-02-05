@@ -32,7 +32,7 @@ app.use('/api/artists', artistRouter)
 app.use('/api/artworks', artworkRouter)
 app.use('/api/subscribers', subscriberRouter)
 app.use('/api/enquiries', enquiryRouter)
-app.use('/api/auth', usersRouter)
+app.use('/api/', usersRouter)
 
 
 /* Mongoose Connection */

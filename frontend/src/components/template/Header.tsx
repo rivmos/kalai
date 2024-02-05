@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { HEADER_HEIGHT_CLASS } from '@/constants/theme.constant'
-import type { ReactNode } from 'react'
 import type { CommonProps } from '@/@types/common'
+import { ReactNode } from 'react'
 
 interface HeaderProps extends CommonProps {
     headerStart?: ReactNode
@@ -18,7 +18,6 @@ const Header = (props: HeaderProps) => {
             <div
                 className={classNames(
                     'header-wrapper',
-                    HEADER_HEIGHT_CLASS,
                     container && 'container mx-auto'
                 )}
             >

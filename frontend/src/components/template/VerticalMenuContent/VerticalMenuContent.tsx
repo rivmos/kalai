@@ -115,14 +115,14 @@ const VerticalMenuContent = (props: VerticalMenuContentProps) => {
                     </AuthorityCheck>
                 )
             } else {
-                ;<MenuGroup label={nav.title} />
+                <MenuGroup label={nav.title} />
             }
         }
     }
 
     return (
         <Menu
-            className="px-4 pb-4"
+            className="px-4 pb-4 bg-[#F3F4F6] font-normal"
             variant={navMode}
             sideCollapsed={collapsed}
             defaultActiveKeys={activedRoute?.key ? [activedRoute.key] : []}

@@ -25,7 +25,7 @@ const MenuGroup = (props: MenuGroupProps) => {
             {label && !sideCollapsed && (
                 <div
                     className={classNames(
-                        'menu-title',
+                        'menu-title capitalize !text-black',
                         `menu-title-${variant}`
                     )}
                     id={entityHeaderId}

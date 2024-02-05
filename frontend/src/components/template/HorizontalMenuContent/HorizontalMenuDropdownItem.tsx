@@ -9,41 +9,36 @@ export type HorizontalMenuItemProps = {
         title: string
         translateKey: string
         icon: string
+        iconSrc?: string
         path: string
         isExternalLink?: boolean
     }
 }
 
 const HorizontalMenuDropdownItem = ({ nav }: HorizontalMenuItemProps) => {
-    const { title, translateKey, path, key, isExternalLink } = nav
+    const { title, iconSrc, translateKey, path, key, isExternalLink } = nav
 
     const { t } = useTranslation()
 
     const itemTitle = t(translateKey, title)
+    const renderIconSrc = iconSrc && <span className='header-image-icon'><img src={iconSrc} className="" /></span>
 
     return (
-        <Dropdown.Item 
-            eventKey={key} 
-            className={
-                classNames(
-                    path && 'px-0'
-                )
-            }
-        >
+        <Dropdown.Item eventKey={key} className={classNames(path && 'px-0')}>
             {path ? (
-                <HorizontalMenuNavLink 
+                <HorizontalMenuNavLink
                     path={path}
-                    className={
-                        classNames(
-                            path && 'px-2'
-                        )
-                    }
+                    className={classNames(path && 'px-2')}
                     isExternalLink={isExternalLink}
                 >
+                    {renderIconSrc}
                     {itemTitle}
                 </HorizontalMenuNavLink>
             ) : (
-                <span>{itemTitle}</span>
+                <span className="flex items-center gap-2">
+                    {renderIconSrc}
+                    {itemTitle}
+                </span>
             )}
         </Dropdown.Item>
     )

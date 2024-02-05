@@ -18,7 +18,7 @@ const ShopByTheme = () => {
     const [autoPlay, setAutoPlay] = useState(true)
     return (
         <>
-            <div className='container mx-auto py-32'>
+            <div className='container mx-auto !py-28'>
                 <h2 className="text-3xl font-bold uppercase text-center tracking-tight text-gray-700 sm:text-4xl">Artworks</h2>
                 <p className='text-center mt-2 text-base'>Discover from a curated collection of works by renowned Indian artists</p>
                 <div className='flex justify-center items-center'>

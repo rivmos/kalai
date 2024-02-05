@@ -62,7 +62,7 @@ const MenuCollapse = (props: MenuCollapseProps) => {
                 role="presentation"
                 onClick={toggleCollapse}
             >
-                <span className="flex items-center">{label}</span>
+                <span className="flex items-center font-normal">{label}</span>
                 <motion.span
                     className="text-lg mt-1"
                     initial={{ transform: 'rotate(0deg)' }}

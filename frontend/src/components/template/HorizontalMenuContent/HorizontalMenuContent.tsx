@@ -1,8 +1,9 @@
-import navigationConfig from '@/configs/navigation.config'
+// import navigationConfig from '@/configs/navigation.config'
 import Dropdown from '@/components/ui/Dropdown'
 import AuthorityCheck from '@/components/shared/AuthorityCheck'
 import HorizontalMenuItem from './HorizontalMenuItem'
 import HorizontalMenuDropdownItem from './HorizontalMenuDropdownItem'
+import { NavigationTree } from '@/@types/navigation'
 import {
     NAV_ITEM_TYPE_TITLE,
     NAV_ITEM_TYPE_COLLAPSE,
@@ -10,24 +11,25 @@ import {
 } from '@/constants/navigation.constant'
 import { useTranslation } from 'react-i18next'
 import type { NavMode } from '@/@types/theme'
-import { NavigationTree } from '@/@types/navigation'
+import useAuth from '@/utils/hooks/useAuth'
 
 type HorizontalMenuContentProps = {
     manuVariant: NavMode
-    userAuthority?: string[]
-    navigation: NavigationTree[]
+    navigationTree?:NavigationTree[],
+    userAuthority?: string[],
 }
 
 const HorizontalMenuContent = ({
     manuVariant,
     userAuthority = [],
-    navigation
+    navigationTree = []
 }: HorizontalMenuContentProps) => {
     const { t } = useTranslation()
+    const {authenticated} = useAuth()
 
     return (
-        <span className="flex items-center">
-            {navigation.map((nav) => {
+        <span className="flex items-center gap-10">
+            {navigationTree.map((nav) => {
                 if (
                     nav.type === NAV_ITEM_TYPE_TITLE ||
                     nav.type === NAV_ITEM_TYPE_COLLAPSE
@@ -44,8 +46,10 @@ const HorizontalMenuContent = ({
                                     <HorizontalMenuItem
                                         manuVariant={manuVariant}
                                         nav={nav}
+                                        
                                     />
                                 }
+                                menuClass="bg-[url('/img/web/dd.png')]"
                             >
                                 {nav.subMenu.map((secondarySubNav) => (
                                     <AuthorityCheck

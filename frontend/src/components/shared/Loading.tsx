@@ -2,6 +2,7 @@ import Spinner from '@/components/ui/Spinner'
 import classNames from 'classnames'
 import type { CommonProps } from '@/@types/common'
 import type { ElementType, ReactNode } from 'react'
+import Mainloader from '../ui/Spinner/Mainloader'
 
 interface BaseLoadingProps extends CommonProps {
     asElement?: ElementType
@@ -63,7 +64,8 @@ const CoveredLoading = (props: BaseLoadingProps) => {
                     {customLoader ? (
                         <>{customLoader}</>
                     ) : (
-                        <Spinner className={spinnerClass} size={40} />
+                        // <Spinner className={spinnerClass} size={40} />
+                        <Mainloader />
                     )}
                 </div>
             )}

@@ -13,5 +13,5 @@ const AuthorityCheck = (props: AuthorityCheckProps) => {
 
     return <>{roleMatched ? children : null}</>
 }
-
+   
 export default AuthorityCheck

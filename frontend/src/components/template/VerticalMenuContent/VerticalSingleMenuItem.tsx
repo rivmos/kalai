@@ -48,10 +48,10 @@ const DefaultItem = (props: DefaultItemProps) => {
 
     return (
         <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
-            <MenuItem key={nav.key} eventKey={nav.key} className="mb-2">
+            <MenuItem key={nav.key} eventKey={nav.key} className="mb-2 font-normal">
                 <Link
                     to={nav.path}
-                    className="flex items-center h-full w-full"
+                    className="flex items-center h-full w-full font-normal"
                     onClick={() =>
                         onLinkClick?.({
                             key: nav.key,
@@ -100,7 +100,7 @@ const VerticalSingleMenuItem = ({
                 </CollapsedItem>
             ) : (
                 <DefaultItem
-                    nav={nav}
+                    nav={nav}                    
                     sideCollapsed={sideCollapsed}
                     userAuthority={userAuthority}
                     onLinkClick={onLinkClick}

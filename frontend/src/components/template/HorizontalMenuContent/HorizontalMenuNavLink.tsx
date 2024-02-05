@@ -12,19 +12,15 @@ const HorizontalMenuNavLink = ({
     path,
     children,
     isExternalLink,
-    className
+    className,
 }: HorizontalMenuNavLinkProps) => {
     return (
-        <Link 
-            className={
-                classNames(
-                    'h-full w-full flex items-center',
-                    className
-                )} 
+        <Link
+            className={classNames('h-full w-full flex items-center', className)}
             to={path}
-            target={isExternalLink ? '_blank' :  ''}
+            target={isExternalLink ? '_blank' : ''}
         >
-            <span>{children}</span>
+            <span className="flex items-center gap-2">{children}</span>
         </Link>
     )
 }

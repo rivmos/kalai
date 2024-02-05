@@ -1,1 +1,6 @@
 export { default as authFakeApi } from './authFakeApi'
+export { default as webFakeApi } from './webFakeApi'
+export { default as crmFakeApi } from './crmFakeApi'
+export { default as projectFakeApi } from './projectFakeApi'
+export { default as salesFakeApi } from './salesFakeApi'
+export { default as reportAnalysisFakeApi } from './reportAnalysisFakeApi'

@@ -31,13 +31,13 @@ export const themeConfig: ThemeConfig = {
     themeColor: 'yellow',
     direction: THEME_ENUM.DIR_LTR,
     mode: THEME_ENUM.MODE_LIGHT,
-    primaryColorLevel: 300,
+    primaryColorLevel: 200,
     cardBordered: true,
     panelExpand: false,
     controlSize: 'md',
     navMode: THEME_ENUM.NAV_MODE_LIGHT,
     layout: {
-        type: THEME_ENUM.LAYOUT_TYPE_WEB,
+        type: THEME_ENUM.LAYOUT_TYPE_CLASSIC,
         sideNavCollapse: false,
     },
 }

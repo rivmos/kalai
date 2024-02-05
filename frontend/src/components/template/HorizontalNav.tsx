@@ -1,7 +1,6 @@
 import HorizontalMenuContent from './HorizontalMenuContent'
 import useResponsive from '@/utils/hooks/useResponsive'
 import { useAppSelector } from '@/store'
-import navigationConfig from '@/configs/navigation.config'
 
 const HorizontalNav = () => {
     const mode = useAppSelector((state) => state.theme.mode)
@@ -15,7 +14,6 @@ const HorizontalNav = () => {
                 <HorizontalMenuContent
                     manuVariant={mode}
                     userAuthority={userAuthority}
-                    navigation={navigationConfig}
                 />
             )}
         </>

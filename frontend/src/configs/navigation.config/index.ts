@@ -7,8 +7,8 @@ import type { NavigationTree } from '@/@types/navigation'
 
 const navigationConfig: NavigationTree[] = [
     {
-        key: 'home',
-        path: '/web/home',
+        key: 'app.dashboard',
+        path: '/home',
         title: 'Home',
         translateKey: 'nav.home',
         icon: 'home',
@@ -16,6 +16,7 @@ const navigationConfig: NavigationTree[] = [
         authority: [],
         subMenu: [],
     },
+
     /** Example purpose only, please remove */
     {
         key: 'singleMenuItem',

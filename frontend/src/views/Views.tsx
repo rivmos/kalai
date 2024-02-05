@@ -39,7 +39,7 @@ const AllRoutes = (props: AllRoutesProps) => {
                                 userAuthority={userAuthority}
                                 authority={route.authority}
                             >
-                                <PageContainer {...props} {...route.meta}>
+                                <PageContainer footer={false} {...props} {...route.meta}>
                                     <AppRoute
                                         routeKey={route.key}
                                         component={route.component}

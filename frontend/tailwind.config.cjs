@@ -50,6 +50,7 @@ module.exports = {
 					'"Courier New"',
 					'monospace',
 				],
+				syne:['Syne', 'sans-serif']
 			},
 			screens: {
 				xs: '576',
@@ -73,14 +74,11 @@ module.exports = {
 						},
 					},
 				}),
-				backgroundImage: {
-					'contactImage': "url('/img/background/contactus.jpg')",
-				  },
 			},
 		},
-		
 	plugins: [
 		// eslint-disable-next-line @typescript-eslint/no-var-requires
+		require("@tailwindcss/forms"),
 		require('./twSafelistGenerator')({
             path: safeListFile,
             patterns: [

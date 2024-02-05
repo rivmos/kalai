@@ -10,10 +10,11 @@ import {
     LOGO_X_GUTTER,
 } from '@/constants/theme.constant'
 import Logo from '@/components/template/Logo'
-import navigationConfig from '@/configs/navigation.config'
+import appsNavigationConfig from '@/configs/navigation.config/app.navigation.config'
 import VerticalMenuContent from '@/components/template/VerticalMenuContent'
 import useResponsive from '@/utils/hooks/useResponsive'
 import { useAppSelector } from '@/store'
+import { Link } from 'react-router-dom'
 
 const sideNavStyle = {
     width: SIDE_NAV_WIDTH,
@@ -66,7 +67,7 @@ const SideNav = () => {
         <VerticalMenuContent
             navMode={navMode}
             collapsed={sideNavCollapse}
-            navigationTree={navigationConfig}
+            navigationTree={appsNavigationConfig}
             routeKey={currentRouteKey}
             userAuthority={userAuthority as string[]}
             direction={direction}
@@ -81,21 +82,23 @@ const SideNav = () => {
                         sideNavCollapse ? sideNavCollapseStyle : sideNavStyle
                     }
                     className={classNames(
-                        'side-nav',
+                        'side-nav bg-[#F3F4F6]',
                         sideNavColor(),
                         !sideNavCollapse && 'side-nav-expand'
                     )}
                 >
-                    <div className="side-nav-header">
-                        <Logo
-                            mode={logoMode()}
-                            type={sideNavCollapse ? 'streamline' : 'full'}
-                            className={
-                                sideNavCollapse
-                                    ? SIDE_NAV_CONTENT_GUTTER
-                                    : LOGO_X_GUTTER
-                            }
-                        />
+                    <div className="side-nav-header my-4">
+                        <Link to={'web/home'}>
+                            <Logo
+                                mode={logoMode()}
+                                type={sideNavCollapse ? 'streamline' : 'full'}
+                                className={
+                                    sideNavCollapse
+                                        ? SIDE_NAV_CONTENT_GUTTER
+                                        : LOGO_X_GUTTER
+                                }
+                            />
+                        </Link>
                     </div>
                     {sideNavCollapse ? (
                         menuContent

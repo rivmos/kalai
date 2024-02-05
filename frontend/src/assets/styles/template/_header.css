@@ -14,7 +14,7 @@
   @apply cursor-pointer p-2 rounded-full mx-1;
 }
 
-.header-action-item-hoverable {
+/* .header-action-item-hoverable {
   @apply hover:bg-black 
     hover:bg-opacity-5 
     hover:text-gray-900 
@@ -24,4 +24,4 @@
     transition-colors 
     duration-300 
     ease-in-out;
-}
+} */

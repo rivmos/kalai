@@ -5,19 +5,26 @@ import SideNavToggle from '@/components/template/SideNavToggle'
 import MobileNav from '@/components/template/MobileNav'
 import SideNav from '@/components/template/SideNav'
 import View from '@/views'
+import Search from '../template/Search'
+import LanguageSelector from '../template/LanguageSelector'
+import Notification from '@/components/template/Notification'
 
 const HeaderActionsStart = () => {
     return (
         <>
             <MobileNav />
             <SideNavToggle />
+            <Search />
         </>
     )
 }
 
+
 const HeaderActionsEnd = () => {
     return (
         <>
+            <LanguageSelector />
+            <Notification />
             <SidePanel />
             <UserDropdown hoverable={false} />
         </>

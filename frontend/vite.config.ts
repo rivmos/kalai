@@ -13,12 +13,12 @@ export default defineConfig({
     }
   }),
   dynamicImport()],
-  assetsInclude: ['**/*.md'],
+  assetsInclude: ['**/*.md'],              
   resolve: {
     alias: {
       '@': path.join(__dirname, 'src'),
     },
-  },
+  },                   
   build: {
     outDir: 'build'
   }

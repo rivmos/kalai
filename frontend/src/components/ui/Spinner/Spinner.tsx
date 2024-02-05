@@ -4,6 +4,10 @@ import { useConfig } from '../ConfigProvider'
 import { CgSpinner } from 'react-icons/cg'
 import type { CommonProps } from '../@types/common'
 import type { ElementType } from 'react'
+import Mainloader from './Mainloader'
+import { ImSpinner2 } from "react-icons/im";
+import { TbLoader3 } from "react-icons/tb";
+
 
 export interface SpinnerProps extends CommonProps {
     color?: string
@@ -18,7 +22,7 @@ const Spinner = forwardRef((props: SpinnerProps, ref) => {
         className,
         color,
         enableTheme = true,
-        indicator: Component = CgSpinner,
+        indicator: Component = TbLoader3,
         isSpining = true,
         size = 20,
         style,
@@ -43,12 +47,15 @@ const Spinner = forwardRef((props: SpinnerProps, ref) => {
     )
 
     return (
+        <div>
         <Component
             ref={ref}
             style={spinnerStyle}
-            className={spinnerClass}
+            className={classNames(spinnerClass)}
             {...rest}
         />
+        {/* <Mainloader /> */}
+        </div>
     )
 })
 

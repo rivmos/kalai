@@ -9,6 +9,7 @@ import debounce from 'lodash/debounce'
 import { HiOutlineSearch, HiChevronRight } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 import Highlighter from 'react-highlight-words'
+import { IoMdClose } from "react-icons/io";
 
 type SearchData = {
     title: string
@@ -150,9 +151,9 @@ const _Search = ({ className }: { className?: string }) => {
                 closable={false}
                 onRequestClose={handleSearchClose}
             >
-                <div>
-                    <div className="px-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-600">
-                        <div className="flex items-center">
+                <div className="search-popup">
+                    <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-600 mb-4 pb-4">
+                        <div className="flex items-center input-boxx">
                             <HiOutlineSearch className="text-xl" />
                             <input
                                 ref={inputRef}
@@ -161,14 +162,14 @@ const _Search = ({ className }: { className?: string }) => {
                                 onChange={handleSearch}
                             />
                         </div>
-                        <Button size="xs" onClick={handleSearchClose}>
-                            Esc
+                        <Button className='close-btn' size="xs" onClick={handleSearchClose}>
+                            <IoMdClose />
                         </Button>
                     </div>
-                    <div className="py-6 px-5 max-h-[550px] overflow-y-auto">
+                    <div className="max-h-[550px] overflow-y-auto">
                         {searchResult.map((result) => (
-                            <div key={result.title} className="mb-6">
-                                <h6 className="mb-3">{result.title}</h6>
+                            <div key={result.title} className="">
+                                <h6 className="">{result.title}</h6>
                                 {result.data.map((data, index) => (
                                     <ListItem
                                         key={data.title + index}

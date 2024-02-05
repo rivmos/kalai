@@ -1,19 +1,66 @@
-import Header from '@/components/template/Header'
 import View from '@/views'
-import WebHeader from '../template/WebHeader'
+import SidePanel from '@/components/template/SidePanel'
+import { setPanelExpand, useAppSelector, useAppDispatch } from '@/store'
+import { HiOutlineCog } from 'react-icons/hi'
+import classNames from 'classnames'
+import Header from '../template/Header'
+import WebHorizontalNav from '@/views/web/components/WebHorizontalNav'
+import WebMobileNav from '@/views/web/components/WebMobileNav'
+import HeaderLogo from '../template/HeaderLogo'
 import Footer from '../template/Footer'
+import { Link } from 'react-router-dom'
+import '@/assets/styles/custom.css'
+import '@/assets/styles/responsive.css'
+
+
+const HeaderActionsStart = () => {
+
+
+    return (
+        <>
+        <Link to='home'>
+            <HeaderLogo />
+        </Link>
+            <WebMobileNav />
+        </>
+    )
+}
+
+
+const ConfiguratorToggle = () => {
+    const dispatch = useAppDispatch()
+    const themeColor = useAppSelector((state) => state.theme.themeColor)
+    const primaryColorLevel = useAppSelector(
+        (state) => state.theme.primaryColorLevel
+    )
+
+    return (
+        <div
+            className={classNames(
+                'fixed ltr:right-0 rtl:left-0 top-96 p-3 ltr:rounded-tl-md ltr:rounded-bl-md rtl:rounded-tr-md rtl:rounded-br-md text-white text-xl cursor-pointer select-none',
+                `bg-${themeColor}-${primaryColorLevel}`
+            )}
+            onClick={() => {
+                dispatch(setPanelExpand(true))
+            }}
+        >
+            <HiOutlineCog />
+        </div>
+    )
+}
 
 const WebLayout = () => {
+const currentRouteKey = useAppSelector(state => state.base.common.currentRouteKey)
+
     return (
-        <div>
-            <WebHeader />
-            <div className="flex flex-col flex-auto min-w-0 relative w-full bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700">
+        <>
+            <Header className='h-24' container headerStart={<HeaderActionsStart />} headerEnd={<WebHorizontalNav />} />
+            <div className={classNames("app-layout-blank", {'homepage':currentRouteKey === 'web.home'})}>
                 <View />
+                <SidePanel className="hidden" />
             </div>
-            <div className='container mx-auto m-0'>
-                <Footer pageContainerType='gutterless' />
-            </div>
-        </div>
+            <Footer pageContainerType='gutterless' />
+        </>
     )
 }
 

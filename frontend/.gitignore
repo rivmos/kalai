@@ -24,3 +24,7 @@ build
 *.sln
 *.sw?
 .vite-cache/
+package-lock.json
+build.zip
+/.env
+/.env.production

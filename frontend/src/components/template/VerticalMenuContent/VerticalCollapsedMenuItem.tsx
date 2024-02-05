@@ -7,6 +7,7 @@ import { Trans } from 'react-i18next'
 import type { CommonProps } from '@/@types/common'
 import type { Direction } from '@/@types/theme'
 import type { NavigationTree } from '@/@types/navigation'
+import { useAppSelector } from '@/store'
 
 interface DefaultItemProps extends CommonProps {
     nav: NavigationTree
@@ -25,6 +26,8 @@ interface VerticalCollapsedMenuItemProps extends CollapsedItemProps {
 const { MenuItem, MenuCollapse } = Menu
 
 const DefaultItem = ({ nav, onLinkClick, userAuthority }: DefaultItemProps) => {
+    const collapsed = useAppSelector(state => state.theme.layout.sideNavCollapse)
+    const direction = useAppSelector(state => state.theme.direction)
     return (
         <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
             <MenuCollapse
@@ -45,45 +48,61 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }: DefaultItemProps) => {
                 className="mb-2"
             >
                 {nav.subMenu.map((subNav) => (
-                    <AuthorityCheck
-                        key={subNav.key}
-                        userAuthority={userAuthority}
-                        authority={subNav.authority}
-                    >
-                        <MenuItem eventKey={subNav.key}>
-                            {subNav.path ? (
-                                <Link
-                                    className="h-full w-full flex items-center"
-                                    to={subNav.path}
-                                    onClick={() =>
-                                        onLinkClick?.({
-                                            key: subNav.key,
-                                            title: subNav.title,
-                                            path: subNav.path,
-                                        })
-                                    }
-                                    target={subNav.isExternalLink ? '_blank' :  ''}
-                                >
-                                    <span>
-                                        <Trans
-                                            i18nKey={subNav.translateKey}
-                                            defaults={subNav.title}
-                                        />
-                                    </span>
-                                </Link>
-                            ) : (
-                                <span>
-                                    <Trans
-                                        i18nKey={subNav.translateKey}
-                                        defaults={subNav.title}
-                                    />
-                                </span>
-                            )}
-                        </MenuItem>
-                    </AuthorityCheck>
+
+                    subNav.subMenu.length > 0 ?
+                        (
+                            <VerticalCollapsedMenuItem
+                                key={nav.key}
+                                nav={subNav}
+                                sideCollapsed={collapsed}
+                                userAuthority={subNav.authority}
+                                direction={direction}
+
+                            />
+                        )
+                        :
+                        (
+                            <AuthorityCheck
+                                key={subNav.key}
+                                userAuthority={userAuthority}
+                                authority={subNav.authority}
+                            >
+                                <MenuItem eventKey={subNav.key}>
+                                    {subNav.path ? (
+                                        <Link
+                                            className="h-full w-full flex items-center font-normal ml-2"
+                                            to={subNav.path}
+                                            onClick={() =>
+                                                onLinkClick?.({
+                                                    key: subNav.key,
+                                                    title: subNav.title,
+                                                    path: subNav.path,
+                                                })
+                                            }
+                                            target={subNav.isExternalLink ? '_blank' : ''}
+                                        >
+                                            <span>
+                                                <Trans
+                                                    i18nKey={subNav.translateKey}
+                                                    defaults={subNav.title}
+                                                />
+                                            </span>
+                                        </Link>
+                                    ) : (
+                                        <span>
+                                            <Trans
+                                                i18nKey={subNav.translateKey}
+                                                defaults={subNav.title}
+                                            />
+                                        </span>
+                                    )}
+                                </MenuItem>
+                            </AuthorityCheck>
+                        )
+
                 ))}
-            </MenuCollapse>
-        </AuthorityCheck>
+            </MenuCollapse >
+        </AuthorityCheck >
     )
 }
 
@@ -98,7 +117,7 @@ const CollapsedItem = ({
             <VerticalMenuIcon icon={nav.icon} />
         </MenuItem>
     )
-
+    const collapsed = useAppSelector(state => state.theme.layout.sideNavCollapse)
     return (
         <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
             <Dropdown
@@ -107,47 +126,64 @@ const CollapsedItem = ({
                 placement={
                     direction === 'rtl' ? 'middle-end-top' : 'middle-start-top'
                 }
+                className='!flex'
             >
                 {nav.subMenu.map((subNav) => (
-                    <AuthorityCheck
-                        key={subNav.key}
-                        userAuthority={userAuthority}
-                        authority={subNav.authority}
-                    >
-                        <Dropdown.Item eventKey={subNav.key}>
-                            {subNav.path ? (
-                                <Link
-                                    className="h-full w-full flex items-center"
-                                    to={subNav.path}
-                                    onClick={() =>
-                                        onLinkClick?.({
-                                            key: subNav.key,
-                                            title: subNav.title,
-                                            path: subNav.path,
-                                        })
-                                    }
-                                    target={subNav.isExternalLink ? '_blank' :  ''}
-                                >
+                    subNav.subMenu.length > 0
+                    ?
+                    (
+                        <VerticalCollapsedMenuItem
+                            key={nav.key}
+                            nav={subNav}
+                            sideCollapsed={collapsed}
+                            userAuthority={subNav.authority}
+                            direction={direction}
+
+                        />
+                    )
+                    :
+                    (
+                        <AuthorityCheck
+                            key={subNav.key}
+                            userAuthority={userAuthority}
+                            authority={subNav.authority}
+                        >
+                            <Dropdown.Item eventKey={subNav.key}>
+                                {subNav.path ? (
+                                    <Link
+                                        className="h-full w-full flex items-center"
+                                        to={subNav.path}
+                                        onClick={() =>
+                                            onLinkClick?.({
+                                                key: subNav.key,
+                                                title: subNav.title,
+                                                path: subNav.path,
+                                            })
+                                        }
+                                        target={subNav.isExternalLink ? '_blank' : ''}
+                                    >
+                                        <span>
+                                            <Trans
+                                                i18nKey={subNav.translateKey}
+                                                defaults={subNav.title}
+                                            />
+                                        </span>
+                                    </Link>
+                                ) : (
                                     <span>
                                         <Trans
                                             i18nKey={subNav.translateKey}
                                             defaults={subNav.title}
                                         />
                                     </span>
-                                </Link>
-                            ) : (
-                                <span>
-                                    <Trans
-                                        i18nKey={subNav.translateKey}
-                                        defaults={subNav.title}
-                                    />
-                                </span>
-                            )}
-                        </Dropdown.Item>
-                    </AuthorityCheck>
+                                )}
+                            </Dropdown.Item>
+                        </AuthorityCheck>
+                    )
+
                 ))}
-            </Dropdown>
-        </AuthorityCheck>
+            </Dropdown >
+        </AuthorityCheck >
     )
 }
 

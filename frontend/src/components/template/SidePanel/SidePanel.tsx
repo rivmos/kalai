@@ -42,7 +42,7 @@ const _SidePanel = (props: SidePanelProps) => {
                 title="Side Panel"
                 isOpen={panelExpand}
                 placement={direction === 'rtl' ? 'left' : 'right'}
-                width={375}
+                width={320}
                 onClose={closePanel}
                 onRequestClose={closePanel}
             >

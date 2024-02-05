@@ -12,13 +12,13 @@ injectReducer('home', reducer)
 const Home = () => {
 
   return (
-    <div>
+    <>
       <Banner />
       <ShopByArtist />
       <Stats />
       <ShopByTheme />
       <Newsletter />
-    </div>
+    </>
   )
 }
 

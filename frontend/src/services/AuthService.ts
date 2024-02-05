@@ -10,7 +10,7 @@ import type {
 
 export async function apiSignIn(data: SignInCredential) {
     return ApiService.fetchData<SignInResponse>({
-        url: 'auth/sign-in',
+        url: '/sign-in',
         method: 'post',
         data,
     })
@@ -18,7 +18,7 @@ export async function apiSignIn(data: SignInCredential) {
 
 export async function apiSignUp(data: SignUpCredential) {
     return ApiService.fetchData<SignUpResponse>({
-        url: 'auth/sign-up',
+        url: '/sign-up',
         method: 'post',
         data,
     })
@@ -26,7 +26,7 @@ export async function apiSignUp(data: SignUpCredential) {
 
 export async function apiSignOut() {
     return ApiService.fetchData({
-        url: '/sign-out',
+        url: '/logout',
         method: 'post',
     })
 }

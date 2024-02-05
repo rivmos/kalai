@@ -11,6 +11,7 @@ export type HorizontalMenuItemProps = {
         title: string
         translateKey: string
         icon: string
+        iconSrc?: string
         path: string
         isExternalLink?: boolean
     }
@@ -23,31 +24,37 @@ const HorizontalMenuItem = ({
     isLink,
     manuVariant,
 }: HorizontalMenuItemProps) => {
-    const { title, translateKey, icon, path, isExternalLink } = nav
+    const { title, translateKey, icon, iconSrc, path, isExternalLink } = nav
 
     const { t } = useTranslation()
 
-    const itemTitle = t(translateKey, title)
-    
     const {authenticated} = useAuth()
+    const SignInButtonTitle = authenticated ? 'Dashboard' : 'Sign In'
+    const SignInButtonPath = authenticated ? '/app/projects/projectdashboard' : 'sign-in'
 
-    const renderIcon = icon && <span className="text-2xl">{navigationIcon[icon]}</span>
+    const itemTitle = t(translateKey, title)
 
+    const renderIcon = icon && (
+        <span className="text-2xl">{navigationIcon[icon]}</span>
+    )
     return (
         <>
             {path && isLink ? (
-                <HorizontalMenuNavLink path={path} isExternalLink={isExternalLink}>
+                <HorizontalMenuNavLink
+                    path={translateKey === 'nav.user.user' ? SignInButtonPath : path}
+                    isExternalLink={isExternalLink}
+                >
                     <MenuItem variant={manuVariant}>
                         <span className="flex items-center gap-2">
                             {renderIcon}
-                            {authenticated && itemTitle === 'Login' ? 'Profile' : itemTitle}
+                            {translateKey === 'nav.user.user' ? SignInButtonTitle : itemTitle}
                         </span>
                     </MenuItem>
                 </HorizontalMenuNavLink>
             ) : (
                 <MenuItem variant={manuVariant}>
                     {renderIcon}
-                    <span>{authenticated && itemTitle === 'Login' ? 'Profile' : itemTitle}</span>
+                    <span>{itemTitle}</span>
                 </MenuItem>
             )}
         </>

@@ -5,12 +5,17 @@ import MobileNav from '@/components/template/MobileNav'
 import UserDropdown from '@/components/template/UserDropdown'
 import SideNav from '@/components/template/SideNav'
 import View from '@/views'
+import '@/assets/styles/dashboard.css'
+import LanguageSelector from '../template/LanguageSelector'
+import Notification from '../template/Notification'
+import Search from '../template/Search'
 
 const HeaderActionsStart = () => {
     return (
         <>
             <MobileNav />
             <SideNavToggle />
+            <Search />
         </>
     )
 }
@@ -18,6 +23,8 @@ const HeaderActionsStart = () => {
 const HeaderActionsEnd = () => {
     return (
         <>
+            <LanguageSelector />
+            <Notification/>
             <SidePanel />
             <UserDropdown hoverable={false} />
         </>
@@ -35,7 +42,7 @@ const ClassicLayout = () => {
                         headerStart={<HeaderActionsStart />}
                         headerEnd={<HeaderActionsEnd />}
                     />
-                    <div className="h-full flex flex-auto flex-col">
+                    <div className="h-full flex flex-auto flex-col !bg-white">
                         <View />
                     </div>
                 </div>
