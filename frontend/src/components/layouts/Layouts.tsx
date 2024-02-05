@@ -8,7 +8,7 @@ import {
     LAYOUT_TYPE_STACKED_SIDE,
     LAYOUT_TYPE_DECKED,
     LAYOUT_TYPE_BLANK,
-    LAYOUT_TYPE_WEB
+    LAYOUT_TYPE_WEB,
 } from '@/constants/theme.constant'
 import useAuth from '@/utils/hooks/useAuth'
 import useDirection from '@/utils/hooks/useDirection'
@@ -26,7 +26,7 @@ const layouts = {
 
 const Layout = () => {
     const layoutType = useAppSelector((state) => state.theme.layout.type)
-    const currentRouteKey = useAppSelector(state => state.base.common.currentRouteKey)
+    const path = useAppSelector(state => state.base.common.currentRouteKey)
 
     const { authenticated } = useAuth()
 
@@ -35,19 +35,26 @@ const Layout = () => {
     useLocale()
 
     const AppLayout = useMemo(() => {
-        if (authenticated) { 
-            return layouts[layoutType]
+        if(authenticated){
+            return lazy(() => import('./WebLayout'))
         }
-        if(currentRouteKey === 'signIn') {
-            return lazy(() => import('./AuthLayout/AuthLayout'))
+        if (path.includes('auth.')) {
+            return lazy(() => import('./Authlayout/AuthLayout'))
         }
+
+        // if(path.includes('auth.') && !authenticated){
+        //     return layouts['web']
+        // }
+
         return lazy(() => import('./WebLayout'))
-    }, [layoutType, authenticated])
+    }, [layoutType, authenticated, path])
+
+console.log(path)
 
     return (
         <Suspense
             fallback={
-                <div className="flex flex-auto flex-col h-screen">
+                <div className="flex flex-auto flex-col h-[100vh]">
                     <Loading loading={true} />
                 </div>
             }

@@ -4,6 +4,7 @@ import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
+import classNames from 'classnames'
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().required('Required'),
@@ -18,7 +19,7 @@ const validationSchema = Yup.object().shape({
 const ContactForm = ({ className }: { className: string }) => {
 
     return (
-        <div className={className}>
+        <div className={classNames('bg-gradient-to-r from-white to-transparent',className)}>
             <Formik
                 initialValues={{ name: '', email: '', mobile: '', message: '' }}
                 validationSchema={validationSchema}

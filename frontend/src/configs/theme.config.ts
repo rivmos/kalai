@@ -31,7 +31,7 @@ export const themeConfig: ThemeConfig = {
     themeColor: 'yellow',
     direction: THEME_ENUM.DIR_LTR,
     mode: THEME_ENUM.MODE_LIGHT,
-    primaryColorLevel: 200,
+    primaryColorLevel: 300,
     cardBordered: true,
     panelExpand: false,
     controlSize: 'md',

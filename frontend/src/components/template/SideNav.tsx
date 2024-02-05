@@ -15,6 +15,7 @@ import VerticalMenuContent from '@/components/template/VerticalMenuContent'
 import useResponsive from '@/utils/hooks/useResponsive'
 import { useAppSelector } from '@/store'
 import { Link } from 'react-router-dom'
+import webNavigationConfig from '@/configs/navigation.config/web.navigation.config'
 
 const sideNavStyle = {
     width: SIDE_NAV_WIDTH,
@@ -67,7 +68,7 @@ const SideNav = () => {
         <VerticalMenuContent
             navMode={navMode}
             collapsed={sideNavCollapse}
-            navigationTree={appsNavigationConfig}
+            navigationTree={webNavigationConfig}
             routeKey={currentRouteKey}
             userAuthority={userAuthority as string[]}
             direction={direction}

@@ -29,8 +29,8 @@ const HorizontalMenuItem = ({
     const { t } = useTranslation()
 
     const {authenticated} = useAuth()
-    const SignInButtonTitle = authenticated ? 'Dashboard' : 'Sign In'
-    const SignInButtonPath = authenticated ? '/app/projects/projectdashboard' : 'sign-in'
+    const SignInButtonTitle = authenticated ? 'Account' : 'Sign In'
+    const SignInButtonPath = authenticated ? '/web/home' : 'sign-in'
 
     const itemTitle = t(translateKey, title)
 
@@ -41,13 +41,13 @@ const HorizontalMenuItem = ({
         <>
             {path && isLink ? (
                 <HorizontalMenuNavLink
-                    path={translateKey === 'nav.user.user' ? SignInButtonPath : path}
+                    path={translateKey === 'nav.login' ? SignInButtonPath : path}
                     isExternalLink={isExternalLink}
                 >
                     <MenuItem variant={manuVariant}>
                         <span className="flex items-center gap-2">
                             {renderIcon}
-                            {translateKey === 'nav.user.user' ? SignInButtonTitle : itemTitle}
+                            {translateKey === 'nav.login' ? SignInButtonTitle : itemTitle}
                         </span>
                     </MenuItem>
                 </HorizontalMenuNavLink>
