@@ -26,9 +26,6 @@ const validateEnquiry = (body) => {
     else if (!body.mobile) {
         return 'Mobile'
     }
-    else if (!body.product) {
-        return 'Product'
-    }
     else if (!body.message) {
         return 'Message'
     }

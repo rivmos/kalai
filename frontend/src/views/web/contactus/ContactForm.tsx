@@ -5,6 +5,9 @@ import Button from '@/components/ui/Button'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import classNames from 'classnames'
+import { apiNewEnquiry } from '@/services/Enquiry'
+import { Notification, toast } from '@/components/ui'
+import { MdMessage} from 'react-icons/md'
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().required('Required'),
@@ -12,25 +15,34 @@ const validationSchema = Yup.object().shape({
     mobile: Yup.number().required('Required'),
     message: Yup.string()
         .min(3, 'Too Short!')
-        .max(12, 'Too Long!')
+        .max(100, 'Too Long!')
         .required('Required'),
 })
 
 const ContactForm = ({ className }: { className: string }) => {
 
     return (
-        <div className={classNames('bg-gradient-to-r from-white to-transparent',className)}>
+        <div className={classNames('bg-gradient-to-r from-white to-transparent', className)}>
             <Formik
                 initialValues={{ name: '', email: '', mobile: '', message: '' }}
                 validationSchema={validationSchema}
-                onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2))
-                        setSubmitting(false)
-                    }, 400)
+                onSubmit={async (values, { setSubmitting, setValues }) => {
+                    const res = await apiNewEnquiry(values)
+                    if (res.status === 200) {
+                        toast.push(
+                            <Notification
+                                title="Your Query Was Sent!"
+                                customIcon={<MdMessage className="text-xl text-indigo-400" />}
+                            >
+                                We'll Get Back To You Within 24hrs.
+                            </Notification>, {placement:'bottom-start'}
+                        )
+                    }
+                    // setValues({ name: '', email: '', mobile: '', message: '' })
+                    setSubmitting(false)
                 }}
             >
-                {({ touched, errors }) => (
+                {({ touched, errors, isSubmitting}) => (
                     <Form>
                         <FormContainer>
                             <FormItem
@@ -83,7 +95,7 @@ const ContactForm = ({ className }: { className: string }) => {
                                 />
                             </FormItem>
                             <FormItem>
-                                <Button type="submit">Submit</Button>
+                                <Button loading={isSubmitting} type="submit">Submit</Button>
                             </FormItem>
                         </FormContainer>
                     </Form>

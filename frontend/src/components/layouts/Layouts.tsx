@@ -38,7 +38,7 @@ const Layout = () => {
         if(authenticated){
             return lazy(() => import('./WebLayout'))
         }
-        if (path.includes('auth.')) {
+        if (path === 'signIn' || path === 'signUp') {
             return lazy(() => import('./Authlayout/AuthLayout'))
         }
 
@@ -50,7 +50,6 @@ const Layout = () => {
     }, [layoutType, authenticated, path])
 
 console.log(path)
-
     return (
         <Suspense
             fallback={

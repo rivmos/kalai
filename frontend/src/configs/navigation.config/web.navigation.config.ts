@@ -321,9 +321,9 @@ const webNavigationConfig: NavigationTree[] = [
         subMenu: [],
     },
     {
-        key: 'login',
+        key: 'auth.sign-in',
         path: '/auth/sign-in',
-        title: 'Login',
+        title: 'Sign In',
         translateKey: 'nav.login',
         icon: 'login',
         type: NAV_ITEM_TYPE_ITEM,

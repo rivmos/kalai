@@ -17,10 +17,6 @@ const enquirySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    product: {
-        type: String,
-        required: true
-    },
 })
 
 enquirySchema.set('toJSON', {

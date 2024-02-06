@@ -54,7 +54,7 @@ const currentRouteKey = useAppSelector(state => state.base.common.currentRouteKe
 
     return (
         <>
-            <Header className='h-24' container headerStart={<HeaderActionsStart />} headerEnd={<WebHorizontalNav />} />
+            <Header className='h-28 shadow-md' container headerStart={<HeaderActionsStart />} headerEnd={<WebHorizontalNav />} />
             <div className={classNames("app-layout-blank", {'homepage':currentRouteKey === 'web.home'})}>
                 <View />
                 <SidePanel className="hidden" />

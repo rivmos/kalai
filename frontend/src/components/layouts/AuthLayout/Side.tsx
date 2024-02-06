@@ -29,7 +29,7 @@ const Side = ({ children, content, ...rest }: SideProps) => {
                             <div className="font-semibold text-base">
                                 Somvir
                             </div>
-                            <span className="opacity-80">Artist @Kalai</span>
+                            <span className="opacity-80">Artist @Uchaan Arts</span>
                         </div>
                     </div>
                     <p className="text-lg text-white opacity-80">

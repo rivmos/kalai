@@ -2,7 +2,7 @@ import React from 'react'
 
 const AboutUs = () => {
   return (
-    <section className="py-10 lg:py-20 bg-stone-50 font-poppins dark:bg-gray-800">
+    <section className="py-10 lg:py-20 bg-indigo-50 font-poppins dark:bg-gray-800">
       <div className="container py-4 mx-auto lg:py-6 md:px-6">
         <div className="flex flex-wrap ">
           <div className="w-full px-4 mb-10 lg:w-1/2 lg:mb-0 ">
@@ -14,7 +14,7 @@ const AboutUs = () => {
                 </h1>
               </div>
               <p className="px-4 mb-10 text-base leading-7 text-gray-500 dark:text-gray-400">
-              At Kalai, we are passionate about bringing the beauty and emotion of art into your life. Founded in 2023 by Somvir, our platform has been meticulously designed as a sanctuary where art lovers, collectors, and artists converge to experience and share the power of creativity.
+              At Uchaan Arts, we are passionate about bringing the beauty and emotion of art into your life. Our platform has been meticulously designed as a sanctuary where art lovers, collectors, and artists converge to experience and share the power of creativity.
               </p>
               <div className=" flex flex-wrap items-center">
                 <div className="w-full px-4 mb-6 sm:w-1/2 md:w-1/2 lg:mb-6">
@@ -30,7 +30,7 @@ const AboutUs = () => {
                     </span>
                     <p className="mt-4 mb-2 text-3xl font-bold text-gray-700 dark:text-gray-400">2097
                     </p>
-                    <h2 className="text-sm text-gray-700 dark:text-gray-400">Projects and Plans</h2>
+                    <h2 className="text-sm text-gray-700 dark:text-gray-400">Artworks Sold</h2>
                   </div>
                 </div>
                 <div className="w-full px-4 mb-6 sm:w-1/2 md:w-1/2 lg:mb-6">
@@ -47,7 +47,7 @@ const AboutUs = () => {
                     </span>
                     <p className="mt-4 mb-2 text-3xl font-bold text-gray-700 dark:text-gray-400">3,590
                     </p>
-                    <h2 className="text-sm text-gray-700 dark:text-gray-400">Helped people</h2>
+                    <h2 className="text-sm text-gray-700 dark:text-gray-400">People Community</h2>
                   </div>
                 </div>
                 <div className="w-full px-4 mb-6 sm:w-1/2 md:w-1/2 lg:mb-6">
@@ -61,7 +61,7 @@ const AboutUs = () => {
                     </span>
                     <p className="mt-4 mb-2 text-3xl font-bold text-gray-700 dark:text-gray-400">74
                     </p>
-                    <h2 className="text-sm text-gray-700 dark:text-gray-400">Volunteer</h2>
+                    <h2 className="text-sm text-gray-700 dark:text-gray-400">Artists</h2>
                   </div>
                 </div>
                 <div className="w-full px-4 mb-6 sm:w-1/2 md:w-1/2 lg:mb-6">
@@ -75,7 +75,7 @@ const AboutUs = () => {
                     </span>
                     <p className="mt-4 mb-2 text-3xl font-bold text-gray-700 dark:text-gray-400">100
                     </p>
-                    <h2 className="text-sm text-gray-700 dark:text-gray-400">Timing</h2>
+                    <h2 className="text-sm text-gray-700 dark:text-gray-400">On Time</h2>
                   </div>
                 </div>
               </div>
