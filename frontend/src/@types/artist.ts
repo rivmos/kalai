@@ -1,8 +1,18 @@
 export type Artwork = {
-    title: string ,
+    id:number,
+    title: string,
     description: string,
     imageUrl: string,
-    id: string
+    artist: string,
+    width: number,
+    height: number,
+    sizeUnit: string,
+    price: number,
+    medium: string,
+    deliveredAs:string,
+    createdIn:number,
+    itemCode:number,
+    isSold:false
 }
 
 export type Artist = {

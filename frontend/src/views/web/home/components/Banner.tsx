@@ -18,7 +18,7 @@ const Banner = () => {
         slidesPerView={1}
         onSlideChange={() => console.log('slide change')}
         onSwiper={(swiper) => console.log(swiper)}
-        className='h-[700px]'
+        className='h-[500px] lg:h-[700px]'
       >
         {
           [1, 2, 3, 4].map(number => {
@@ -32,21 +32,21 @@ const Banner = () => {
       </Swiper>
 
       <div className="absolute top-[50%] -translate-y-[50%] left-0 right-0 z-[1] mx-auto container">
-        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        <h2 className="text-2xl lg:text-3xl font-bold tracking-tight text-white sm:text-4xl">
           Elevate Your Art Journey.
         </h2>
-        <p className="mt-6 text-lg leading-8 text-gray-300 w-1/2">
+        <p className="mt-6 text-base md:text-lg text-gray-300 w-1/2">
           Forge a closer bond to the art world by interacting directly with the creators. Learn about their processes, visions, and stories behind each masterpiece.
 
         </p>
-        <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
+        <div className="mt-10 flex flex-col sm:flex-row lg:items-center justify-center gap-x-6 lg:justify-start">
           <Button
             variant='solid'
-            className="!text-black rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className='hover:!text-gray-900 bg-orange-900 !px-2 !py-1'
           >
             Get started
           </Button>
-          <a href="#" className="text-sm font-semibold leading-6 text-white">
+          <a href="#" className="flex items-center gap-2 text-sm font-semibold leading-6 text-white">
             Discover more <span aria-hidden="true">→</span>
           </a>
         </div>

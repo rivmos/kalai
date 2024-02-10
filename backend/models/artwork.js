@@ -5,6 +5,16 @@ const artworkSchema = new mongoose.Schema({
     description: String,
     imageUrl: { type: String, required: true },
     artist: { type: mongoose.Schema.Types.ObjectId, ref: 'Artist' },
+    width: {type:Number, required: true},
+    height: {type:Number, required: true},
+    sizeUnit: {type:String, required: true},
+    price: {type:Number, required: true},
+    medium: {type:String, required:true},
+    deliveredAs:{type:String, required:true},
+    createdIn:Number,
+    itemCode:{type:Number, required:true},
+    isSold:{type:Boolean, required:true}
+
 })
 
 artworkSchema.set('toJSON', {

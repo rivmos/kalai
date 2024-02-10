@@ -143,7 +143,7 @@ const FooterContent = () => {
                     </div>
                 </div>
             </div>                 */}
-            <div className="mx-auto w-full py-8 lg:py-12">
+            <div className="mx-auto w-full py-8 !bg-warmGray-100 lg:py-12">
                 <div className="md:flex md:justify-between">
                     <div className="mb-6 md:mb-0">
                         <Link to="/" className="flex items-center">

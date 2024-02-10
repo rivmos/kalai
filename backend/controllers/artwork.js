@@ -13,16 +13,16 @@ artworkRouter.get('/', (req, res) => {
 })
 
 /* Get Single Product */
-// artworkRouter.get('/:id', (req, res) => {
-//     const id = req.params.id
-//     Artist.findById(id).then(artist => {
-//         res.json(artist)
-//     }).catch(error => {
-//         res.json({
-//             message: `The Artist Doesn't Exist`
-//         })
-//     })
-// })
+artworkRouter.get('/:id', (req, res) => {
+    const id = req.params.id
+    Artwork.findById(id).then(artwork => {
+        res.json(artwork)
+    }).catch(error => {
+        res.json({
+            message: `The Artwork Doesn't Exist`
+        })
+    })
+})
 
 // const validateArtist = (body) => {
 //     if (!body.name) {

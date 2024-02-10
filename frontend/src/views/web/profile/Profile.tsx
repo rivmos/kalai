@@ -1,135 +1,97 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import reducer, { getArtistProfile, useAppDispatch, useAppSelector } from './store'
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import shortenText from '@/utils/shortenText';
 
 // Import Swiper styles
 import 'swiper/css';
 import { Link } from 'react-router-dom';
 import { injectReducer } from '@/store'
+import { Button } from '@/components/ui';
+import useResponsive from '@/utils/hooks/useResponsive';
 injectReducer('profile', reducer)
 
 const Profile = () => {
 
     const { id } = useParams()
-
+    const {larger} = useResponsive()
     const dispatch = useAppDispatch()
     const profile = useAppSelector(state => state.profile.data.profile)
+    const [showBio, setShowBio] = useState(false)
 
     useEffect(() => {
         dispatch(getArtistProfile(id as string))
     }, [])
 
     return (
-
-        <main className="profile-page mt-80">
-            <section className="relative block h-500-px">
-                <div className="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-[url('/img/background/contactus.jpg')]">
-                    <span id="blackOverlay" className="w-full h-full absolute opacity-50 bg-black"></span>
+        <>
+            <div className="container mx-auto px-8 lg:px-48">
+                {/* <img alt="avatar" loading="lazy" width="1024" height="1024" decoding="async" data-nimg="1" className="w-40 rounded-xl" src="/nextjs-tailwind-author-page/image/avatar1.jpg" /> */}
+                <div className="flex mt-8 lg:mt-16  justify-between">
+                    <h5 className="block antialiased tracking-normal font-sans font-semibold text-inherit text-lg md:text-xl lg:text-3xl">{profile?.name}</h5>
+                    <button className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-1 px-2 lg:py-3 lg:px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none" type="button">follow</button>
                 </div>
-                <div className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px translate-z-0">
-                    <svg className="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
-                        <polygon className="text-blueGray-200 fill-current" points="2560 0 2560 100 0 100"></polygon>
-                    </svg>
-                </div>
-            </section>
-            <section className="relative py-16 bg-blueGray-200">
-                <div className="container mx-auto px-4">
-                    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
-                        <div className="px-6">
-                            <div className="flex flex-wrap justify-center">
-                                <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
-                                    <div className="relative">
-                                        <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px" />
-                                    </div>
-                                </div>
-                                {/* <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
-                                    <div className="py-6 px-3 mt-32 sm:mt-0">
-                                        <button className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
-                                            Connect
-                                        </button>
-                                    </div>
-                                </div> */}
-                                {/* <div className="w-full lg:w-4/12 px-4 lg:order-1">
-                                    <div className="flex justify-center py-4 lg:pt-4 pt-8">
-                                        <div className="mr-4 p-3 text-center">
-                                            <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span><span className="text-sm text-blueGray-400">Friends</span>
-                                        </div>
-                                        <div className="mr-4 p-3 text-center">
-                                            <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">10</span><span className="text-sm text-blueGray-400">Photos</span>
-                                        </div>
-                                        <div className="lg:mr-4 p-3 text-center">
-                                            <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">89</span><span className="text-sm text-blueGray-400">Comments</span>
-                                        </div>
-                                    </div>
-                                </div> */}
-                            </div>
-                            <div className="text-center mt-12">
-                                <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-                                    {profile?.name}
-                                </h3>
-                                <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                                    <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                                    {profile?.website}
-                                </div>
-                                {/* <div className="mb-2 text-blueGray-600 mt-10">
-                                    <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>Solution Manager - Creative Tim Officer
-                                </div>
-                                <div className="mb-2 text-blueGray-600">
-                                    <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>University of Computer Science
-                                </div> */}
-                                <div>
-                                    <Swiper
-                                        modules={[Autoplay, Pagination]}
-                                        spaceBetween={20}
-                                        autoplay={true}
-                                        slidesPerView={profile?.artworks?.length as number % 4 === 0 ? 4 : 2}
-                                        onSwiper={(swiper) => console.log(swiper.autoplay)}
-                                        className='my-16 h-[300px]'
-                                        onMouseEnter={(swiper) => console.log(swiper)}
-                                    >
-                                        {
-                                            profile?.artworks.map((artwork, index) => {
-                                                return (
-                                                    <SwiperSlide className='cursor-pointer'>
-                                                        {/* <img src={`/img/banner/${index + 1}.jpg`} className='object-cover h-[300px] hover:scale-125 transition-all duration-1000' />
-                                        <div>{artist.name}</div> */}
-                                                        <Link to={`/web/profile/${artwork.id}`}>
-                                                            <div className="text-gray-700">
-                                                                <img src={`/img/banner/${index + 1}.jpg`} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
-
-                                                                <div className="relative px-8 -mt-8  ">
-                                                                    <div className="bg-white p-4 rounded-lg shadow-lg">
-                                                                        <h4 className="mt-1 text-xl capitalize text-center leading-tight text-gray-700 truncate">{artwork.title}</h4>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </Link>
-                                                    </SwiperSlide>
-                                                )
-                                            })
-                                        }
-                                    </Swiper>
-                                </div>
-                            </div>
-                            <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
-                                <div className="flex flex-wrap justify-center">
-                                    <div className="w-full lg:w-9/12 px-4">
-                                        <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                                            {profile?.bio}
-                                        </p>
-                                        <a href="#pablo" className="font-normal text-pink-500">Show more</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div className="flex flex items-center justify-between mt-4 gap-6">
+                    <div className="flex flex-col lg:flex-row items-center gap-1 mt-3">
+                        <p className="block antialiased font-sans text-base leading-relaxed text-inherit !text-gray-900 font-bold">323</p>
+                        <p className="block antialiased font-sans text-base leading-relaxed text-inherit !text-gray-500 font-normal">Posts</p>
+                    </div>
+                    <div className="flex flex-col lg:flex-row items-center gap-1 mt-3">
+                        <p className="block antialiased font-sans text-base leading-relaxed text-inherit !text-gray-900 font-bold">3.5k</p>
+                        <p className="block antialiased font-sans text-base leading-relaxed text-inherit !text-gray-500 font-normal">Followers</p>
+                    </div>
+                    <div className="flex flex-col lg:flex-row items-center gap-1 mt-3">
+                        <p className="block antialiased font-sans text-base leading-relaxed text-inherit !text-gray-900 font-bold">260</p>
+                        <p className="block antialiased font-sans text-base leading-relaxed text-inherit !text-gray-500 font-normal">Following</p>
                     </div>
                 </div>
+                <p className="block antialiased font-sans text-base md:text-lg lg:text-xl font-normal leading-relaxed text-inherit !text-gray-500 mt-4">{showBio ? shortenText(profile?.bio) : profile?.bio}</p>
+                <Button variant='solid' onClick={() => setShowBio(!showBio)} className='flex items-center gap-2' type="button">
+                    {showBio ? 'Show More' : 'Show Less'}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="white" aria-hidden="true" className="h-3.5 w-3.5 text-gray-900">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path>
+                    </svg>
+                </Button>
+                <h2 className="text-3xl mt-16 font-bold uppercase text-center tracking-tight text-gray-700 sm:text-4xl text-orange-900">Artworks</h2>
+                <Swiper
+                    modules={[Autoplay, Pagination]}
+                    spaceBetween={20}
+                    autoplay={true}
+                    slidesPerView={larger.sm === false ? 1 : larger.md === false ? 2 : 4}
+                    onSwiper={(swiper) => console.log(swiper.autoplay)}
+                    className='my-8 h-[300px]'
+                    onMouseEnter={(swiper) => console.log(swiper)}
+                >
+                    {
+                        profile?.artworks.map((artwork, index) => {
+                            return (
+                                <SwiperSlide className='cursor-pointer'>
+                                    {/* <img src={`/img/banner/${index + 1}.jpg`} className='object-cover h-[300px] hover:scale-125 transition-all duration-1000' />
+            <div>{artist.name}</div> */}
+                                    <Link to={`/web/artwork/${artwork.id}`}>
+                                        <div className="text-gray-700">
+                                            <img src={artwork.imageUrl} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
 
-            </section>
-        </main>
+                                            <div className="relative px-6 -mt-8  ">
+                                                <div className="bg-white p-4 rounded-lg shadow-lg">
+                                                    <h4 className="mt-1 text-base capitalize text-center leading-tight text-gray-700 truncate">{artwork.title}</h4>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </Link>
+                                </SwiperSlide>
+                            )
+                        })
+                    }
+                </Swiper>
+            </div>
+            <div>
+            </div>
+        </>
+
     )
 }
 

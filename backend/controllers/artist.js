@@ -8,7 +8,7 @@ const config = require('../utils/config')
   
 /* Get Products */
 artistRouter.get('/', (req, res) => {
-    Artist.find({}).then((artist) => {
+    Artist.find({}).populate('artworks', 'imageUrl').then((artist) => {
         res.json(artist) 
     }).catch(error => res.json(error))
 })

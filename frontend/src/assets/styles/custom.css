@@ -138,7 +138,7 @@ p {
 	left: 0;
 	bottom: 0;
 	width: 0;
-	background: rgb(250 204 21);
+	background: #683b2b;
 	height: 2px;
 	transition: .3s ease-in-out;
 }

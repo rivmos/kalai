@@ -4,7 +4,7 @@ import React from 'react'
 
 const Newsletter = () => {
   return (
-    <div className="relative isolate overflow-hidden bg-indigo-100 py-16 sm:py-24 lg:py-32">
+    <div className="relative isolate overflow-hidden bg-orange-200 py-16 sm:py-24 lg:py-32">
       <div className="mx-auto container px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
           <div className="max-w-xl lg:max-w-lg">
@@ -28,7 +28,7 @@ const Newsletter = () => {
               />
               <Button
                 variant='solid'
-                className="flex-none !text-gray-600 rounded-md bg-yellow-200 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                className="hover:!text-gray-900 rounded-md bg-orange-900"
               >
                 Subscribe
               </Button>

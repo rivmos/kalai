@@ -68,6 +68,13 @@ const webRoute: Routes = [
         authority: [],
         meta:{}
     },
+    {
+        key: 'web.artwork',
+        path: '/web/artwork/:id',
+        component: lazy(() => import('@/views/web/profile/Artwork')),
+        authority: [],
+        meta:{}
+    },
 
     // {
     //     key: 'web.offer.websolutions',

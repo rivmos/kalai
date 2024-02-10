@@ -13,3 +13,10 @@ export async function apiGetArtistProfile<T>(id:string) {
         method: 'get',
     })
 }
+
+export async function apiGetArtworkDetail<T>(id:string) {
+    return ApiService.fetchData<T>({
+        url: `/artworks/${id}`,
+        method: 'get',
+    })
+}
