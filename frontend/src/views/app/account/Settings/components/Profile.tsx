@@ -25,6 +25,7 @@ import type { FormikProps, FieldInputProps, FieldProps } from 'formik'
 
 export type ProfileFormModel = {
     name: string
+    bio:string
     email: string
     title: string
     avatar: string
@@ -112,6 +113,7 @@ const CustomControl = ({
 const Profile = ({
     data = {
         name: '',
+        bio:'',
         email: '',
         title: '',
         avatar: '',
@@ -170,6 +172,22 @@ const Profile = ({
                                     autoComplete="off"
                                     name="name"
                                     placeholder="Name"
+                                    component={Input}
+                                    prefix={
+                                        <HiOutlineUserCircle className="text-xl" />
+                                    }
+                                />
+                            </FormRow>
+                            <FormRow
+                                name="bio"
+                                label="Bio"
+                                {...validatorProps}
+                            >
+                                <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    name="bio"
+                                    placeholder="Bio"
                                     component={Input}
                                     prefix={
                                         <HiOutlineUserCircle className="text-xl" />

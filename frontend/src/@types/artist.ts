@@ -1,9 +1,10 @@
 export type Artwork = {
-    id:number,
+    id?:number,
+    imageUrl?: string[],
+    artist?: string,
+    itemCode?:number,
     title: string,
     description: string,
-    imageUrl: string,
-    artist: string,
     width: number,
     height: number,
     sizeUnit: string,
@@ -11,8 +12,7 @@ export type Artwork = {
     medium: string,
     deliveredAs:string,
     createdIn:number,
-    itemCode:number,
-    isSold:false
+    isSold:boolean
 }
 
 export type Artist = {

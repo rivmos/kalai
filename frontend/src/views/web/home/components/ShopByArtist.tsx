@@ -39,7 +39,7 @@ const ShopByArtist = () => {
                                 <SwiperSlide className='cursor-pointer'>
                                     <Link to={`/web/profile/${artist.id}`}>
                                         <div className="text-gray-700">
-                                            <img src={artist?.artworks[0]?.imageUrl ? artist?.artworks[0]?.imageUrl : `/img/banner/${index}.jpg`} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
+                                            <img src={artist?.artworks[0]?.imageUrl?.[0] ? artist?.artworks[0]?.imageUrl?.[0] : `/img/banner/${index}.jpg`} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
 
                                             <div className="relative px-4 -mt-8  ">
                                                 <div className="bg-white p-4 rounded-lg shadow-lg">

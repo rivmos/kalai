@@ -4,6 +4,7 @@ const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
 const getTokenFrom = require('../utils/auth').getTokenFrom
 const config = require('../utils/config')
+const {upload} = require('../utils/middleware')
   
 /* Get Products */
 artworkRouter.get('/', (req, res) => {
@@ -39,24 +40,37 @@ artworkRouter.get('/:id', (req, res) => {
 //     }
 // }
 
-// artworkRouter.post('/new', async (req, res) => {
-//     const decodedToken = jwt.verify(getTokenFrom(req, res), config.JWTSECRET)
-//     if (!decodedToken.id) {
-//         return res.status(401).json({ error: 'token invalid' })
-//     }
-//     const body = req.body;
-//     const newArtist = new Artist(body)
-//     newArtist.save()
-//         .then((response) => {
-//             logger.info('Artist saved')
-//             res.json(response)
-//         })
-//         .catch((err) => {
-//             logger.info('Artist not saved')
-//             logger.info(err)
-//             res.status(500).json(err)
-//         })
-// })
+artworkRouter.post('/new', upload.array('images[]', 5) , async (req, res) => {
+    const decodedToken = jwt.verify(getTokenFrom(req, res), config.JWTSECRET)
+    if (!decodedToken.id) {
+        return res.status(401).json({ error: 'token invalid' })
+    }
+    const {title, description, width, height, sizeUnit, price, medium, deliveredAs, createdIn, isSold} = req.body;
+    const imagePaths = req.files.map(file => file.path); 
+    const newArtwork = new Artwork({
+        title,
+        description,
+        width,
+        height,
+        sizeUnit,
+        price,
+        medium,
+        deliveredAs,
+        createdIn,
+        isSold,
+        imageUrls:imagePaths
+    })
+    newArtwork.save()
+        .then((response) => {
+            logger.info('Artwork saved')
+            res.json(response)
+        })
+        .catch((err) => {
+            logger.info('Artwork not saved')
+            logger.info(err)
+            res.status(500).json(err)
+        })
+})
 
 
 module.exports = artworkRouter 

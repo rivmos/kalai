@@ -5,11 +5,13 @@ const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
 const getTokenFrom = require('../utils/auth').getTokenFrom
 const config = require('../utils/config')
-  
+const {upload} = require('../utils/middleware')
+
+
 /* Get Products */
 artistRouter.get('/', (req, res) => {
     Artist.find({}).populate('artworks', 'imageUrl').then((artist) => {
-        res.json(artist) 
+        res.json(artist)
     }).catch(error => res.json(error))
 })
 
@@ -45,19 +47,22 @@ artistRouter.post('/new', async (req, res) => {
     if (!decodedToken.id) {
         return res.status(401).json({ error: 'token invalid' })
     }
-    const {name, bio, website, artworks} = req.body;
+    const { name, bio, website, artworks } = req.body;
     // const validationError = validateEnquiry(body)
     // if (validationError) {
     //     res.status(500).json({ message: `${validationError} Required` })
     //     return
     // }
-    const newArtist = new Artist({name, bio, website})
-    await newArtist.save()
-    
-    const createdArtworks = await Artwork.create(artworks.map(artwork => ({...artwork, artist:newArtist._id})))
+    const newArtist = new Artist({ name, bio, website, artworks })
+    // await newArtist.save()
 
-    newArtist.artworks = createdArtworks.map(artwork => artwork._id)
+    // const createdArtworks = await Artwork.create(artworks.map(artwork => {
+    //         console.log(upload.array(artwork.images))
+    //         return {...artwork, artist: newArtist._id }
+    //     }))
 
+
+    // newArtist.artworks = createdArtworks.map(artwork => artwork._id)
 
     newArtist.save()
         .then((response) => {
@@ -74,17 +79,17 @@ artistRouter.post('/new', async (req, res) => {
 
 artistRouter.get('/:artistId/artworks', async (req, res) => {
     try {
-      const artist = await Artist.findById(req.params.artistId).populate('artworks');
-      if (!artist) {
-        return res.status(404).json({ error: 'Artist not found' });
-      }
-  
-      const artworks = artist.artworks;
-      res.json(artworks);
+        const artist = await Artist.findById(req.params.artistId).populate('artworks');
+        if (!artist) {
+            return res.status(404).json({ error: 'Artist not found' });
+        }
+
+        const artworks = artist.artworks;
+        res.json(artworks);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
-  });
-  
+});
+
 
 module.exports = artistRouter 

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const artworkSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: String,
-    imageUrl: { type: String, required: true },
+    imageUrls: [String],
     artist: { type: mongoose.Schema.Types.ObjectId, ref: 'Artist' },
     width: {type:Number, required: true},
     height: {type:Number, required: true},
@@ -12,7 +12,7 @@ const artworkSchema = new mongoose.Schema({
     medium: {type:String, required:true},
     deliveredAs:{type:String, required:true},
     createdIn:Number,
-    itemCode:{type:Number, required:true},
+    itemCode:Number,
     isSold:{type:Boolean, required:true}
 
 })

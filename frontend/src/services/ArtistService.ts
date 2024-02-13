@@ -20,3 +20,26 @@ export async function apiGetArtworkDetail<T>(id:string) {
         method: 'get',
     })
 }
+
+export async function apiAddArtist<T, U extends Record<string, unknown>>(
+    data: U
+) {
+    return ApiService.fetchData<T>({
+        url: '/artists/new',
+        method: 'post',
+        data,
+    })
+}
+
+export async function apiAddArtwork<T, U extends Record<string, unknown>>(
+    data: U
+) {
+    return ApiService.fetchData<T>({
+        url: '/artworks/new',
+        method: 'post',
+        data,
+        headers:{
+            "Content-Type":'multipart/form-data'
+        }
+    })
+}
