@@ -15,6 +15,24 @@ const appRoute: Routes = [
             layout: 'classic'
         }
     },
+    {
+        key: 'app.artist',
+        path: `${APP_PREFIX_PATH}/artist/add`,
+        component: lazy(() => import('@/views/app/artist/ArtistForm')),
+        authority: [ADMIN, USER],
+        meta: {
+            layout: 'classic'
+        }
+    },
+    {
+        key: 'app.artist',
+        path: `${APP_PREFIX_PATH}/dashboard`,
+        component: lazy(() => import('@/views/app/dashboard/Dashboard')),
+        authority: [ADMIN, USER],
+        meta: {
+            layout: 'classic'
+        }
+    },
 ]
 
 export default appRoute

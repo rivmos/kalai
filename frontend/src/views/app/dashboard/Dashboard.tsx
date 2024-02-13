@@ -1,5 +1,7 @@
 import React from 'react'
 import { useAppSelector } from '@/store'
+import { Link } from 'react-router-dom'
+import { Button } from '@/components/ui'
 //import { defineAbilitiesFor } from '@/can'
 //import Can from '@/can'
 
@@ -15,7 +17,13 @@ const Dashboard = () => {
     </div>
   ) */
   return(
-    <div></div>
+    <div className='container'>
+      <div>
+        <Link to="/app/artist/add">
+          <Button className='!w-full !h-52 !border-dashed'>Add Artist</Button>
+        </Link>
+      </div>
+    </div>
   )
 }
 

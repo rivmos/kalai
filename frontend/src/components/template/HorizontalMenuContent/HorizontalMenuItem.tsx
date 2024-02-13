@@ -29,8 +29,8 @@ const HorizontalMenuItem = ({
     const { t } = useTranslation()
 
     const {authenticated} = useAuth()
-    const SignInButtonTitle = authenticated ? 'Account' : 'Sign In'
-    const SignInButtonPath = authenticated ? '/web/home' : '/auth/sign-in'
+    const SignInButtonTitle = authenticated ? 'Dashboard' : 'Sign In'
+    const SignInButtonPath = authenticated ? '/app/dashboard' : '/auth/sign-in'
 
     const itemTitle = t(translateKey, title)
 
