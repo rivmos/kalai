@@ -7,6 +7,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import type { CommonProps } from '@/@types/common'
 import type { Direction } from '@/@types/theme'
 import type { NavigationTree } from '@/@types/navigation'
+import useAuth from '@/utils/hooks/useAuth'
 
 const { MenuItem } = Menu
 
@@ -45,12 +46,16 @@ const CollapsedItem = ({
 
 const DefaultItem = (props: DefaultItemProps) => {
     const { nav, onLinkClick, sideCollapsed, userAuthority } = props
+    const { title, translateKey, icon, iconSrc, path, isExternalLink } = nav
+    const {authenticated} = useAuth()
+    const SignInButtonTitle = authenticated ? 'Dashboard' : 'Sign In'
+    const SignInButtonPath = authenticated ? '/app/dashboard' : '/auth/sign-in'
 
     return (
         <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
             <MenuItem key={nav.key} eventKey={nav.key} className="mb-2 font-normal">
                 <Link
-                    to={nav.path}
+                    to={translateKey === 'nav.login' ? SignInButtonPath : nav.path}
                     className="flex items-center h-full w-full font-normal"
                     onClick={() =>
                         onLinkClick?.({
@@ -66,7 +71,7 @@ const DefaultItem = (props: DefaultItemProps) => {
                         <span>
                             <Trans
                                 i18nKey={nav.translateKey}
-                                defaults={nav.title}
+                                defaults={translateKey === 'nav.login' ? SignInButtonTitle : nav.title}
                             />
                         </span>
                     )}
