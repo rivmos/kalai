@@ -46,7 +46,7 @@ const Artwork = () => {
                         </div>
                         {/* <p className="block antialiased font-sans text-sm leading-normal text-inherit font-normal !text-gray-500">Read <a href="#" className="font-medium underline transition-colors">Terms and Conditions</a></p> */}
                     </div>
-                    <img alt="team work" loading="lazy" width="1024" height="1024" decoding="async" data-nimg="1" className="h-[36rem] w-full rounded-xl object-cover" src={artwork?.imageUrl} />
+                    <img alt="team work" loading="lazy" width="1024" height="1024" decoding="async" data-nimg="1" className="h-[36rem] w-full rounded-xl object-cover" src={artwork?.imageUrl?.[0]} />
                 </div>
             </header>
             {/* <header className="bg-white p-8">
