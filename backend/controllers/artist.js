@@ -6,7 +6,9 @@ const jwt = require('jsonwebtoken')
 const getTokenFrom = require('../utils/auth').getTokenFrom
 const config = require('../utils/config')
 const {upload} = require('../utils/middleware')
+const {verifyTokenMiddleware} = require('../utils/auth')
 
+// artistRouter.use(verifyTokenMiddleware)
 
 /* Get Products */
 artistRouter.get('/', (req, res) => {
@@ -16,7 +18,7 @@ artistRouter.get('/', (req, res) => {
 })
 
 /* Get Single Product */
-artistRouter.get('/:id', (req, res) => {
+artistRouter.get('/:id', verifyTokenMiddleware, (req, res) => {
     const id = req.params.id
     Artist.findById(id).populate('artworks').then(artist => {
         res.json(artist)

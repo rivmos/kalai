@@ -18,7 +18,6 @@ const ShopByArtist = () => {
     const artists = useAppSelector(state => state.home.data.artists)
     const [autoPlay, setAutoPlay] = useState(true)
     const {larger, smaller, windowWidth} = useResponsive()
-    console.log(larger, smaller, windowWidth)
     return (
         <>
             <div className='container mx-auto !py-16 md:!py-20 lg:!py-28'>
@@ -29,12 +28,11 @@ const ShopByArtist = () => {
                     spaceBetween={20}
                     autoplay={autoPlay}
                     slidesPerView={larger.sm === false ? 1 : larger.md === false ? 2 : 4}
-                    onSwiper={(swiper) => console.log(swiper.autoplay)}
+                    onSwiper={(swiper) => {}}
                     className='my-4 md:my-8 lg:my-16 h-[300px]'
-                    onMouseEnter={(swiper) => console.log(swiper)}
                 >
                     {
-                        artists.map((artist, index) => {
+                        artists?.map((artist, index) => {
                             return (
                                 <SwiperSlide className='cursor-pointer'>
                                     <Link to={`/web/profile/${artist.id}`}>

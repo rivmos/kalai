@@ -36,7 +36,7 @@ const Layout = () => {
 
     const AppLayout = useMemo(() => {
         if(authenticated){
-            return lazy(() => import('./WebLayout'))
+            return lazy(() => import('./ClassicLayout'))
         }
         if (path === 'signIn' || path === 'signUp') {
             return lazy(() => import('./Authlayout/AuthLayout'))
@@ -49,7 +49,6 @@ const Layout = () => {
         return lazy(() => import('./WebLayout'))
     }, [layoutType, authenticated, path])
 
-console.log(path)
     return (
         <Suspense
             fallback={

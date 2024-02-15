@@ -16,8 +16,8 @@ const Banner = () => {
         spaceBetween={0}
         autoplay
         slidesPerView={1}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => {}}
+        onSwiper={(swiper) => {}}
         className='h-[500px] lg:h-[700px]'
       >
         {

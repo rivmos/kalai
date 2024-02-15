@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const usersRouter = require('express').Router()
 const config = require('../utils/config')
+const BlacklistedToken = require('../models/blacklistedToken');
 
 usersRouter.post('/sign-up', async (req, res) => {
     const { username, password, email } = req.body
@@ -73,5 +74,22 @@ usersRouter.post('/sign-in', async (request, response) => {
             }
         })
 })
+
+
+usersRouter.post('/logout', async (req, res) => {
+    const { token } = req.body; // Assume the client sends the token to blacklist
+    const decoded = jwt.verify(token, config.JWTSECRET);
+    const expiryDate = new Date(); // Convert exp to milliseconds
+
+    const blacklistedToken = new BlacklistedToken({
+        token,
+        expiryDate,
+    });
+
+    await blacklistedToken.save();
+
+    res.status(204).end(); // No content to send back
+});
+
 
 module.exports = usersRouter

@@ -2,6 +2,8 @@ const logger = require('./logger')
 const multer = require('multer')
 const path = require('path');
 
+// Logger
+
 const requestLogger = (request, response, next) => {
   logger.info('Method:', request.method)
   logger.info('Path:  ', request.path)
@@ -10,9 +12,13 @@ const requestLogger = (request, response, next) => {
   next()
 }
 
+//Unknown Endpoint Route
+
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
+
+// Multer Upload Object
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

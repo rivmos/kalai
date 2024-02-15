@@ -34,9 +34,11 @@ const dropdownItemList: DropdownList[] = [
 ]
 
 const _UserDropdown = ({ className }: CommonProps) => {
-    const { avatar, userName, authority, email, role } = useAppSelector(
+    const { avatar, userName, authority, email} = useAppSelector(
         (state) => state.auth.user
     )
+
+    const token = useAppSelector(state => state.auth.session.token)
 
     const { signOut } = useAuth()
 
@@ -44,9 +46,9 @@ const _UserDropdown = ({ className }: CommonProps) => {
         <div className={classNames(className, 'flex items-center gap-2')}>
             <Avatar size={32} shape="circle" src={avatar} />
             <div className="hidden md:block">
-                <div className="text-xs capitalize">
+                {/* <div className="text-xs capitalize">
                     {role || 'guest'}
-                </div>
+                </div> */}
                 <div className="font-bold capitalize">{userName}</div>
             </div>
         </div>
@@ -94,7 +96,7 @@ const _UserDropdown = ({ className }: CommonProps) => {
                 <Dropdown.Item
                     eventKey="Sign Out"
                     className="gap-2"
-                    onClick={signOut}
+                    onClick={() => signOut(token as string)}
                 >
                     <span className="text-xl opacity-50">
                         <HiOutlineLogout />

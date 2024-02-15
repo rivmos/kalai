@@ -116,9 +116,11 @@ function useAuth() {
         navigate(appConfig.unAuthenticatedEntryPath)
     }
 
-    const signOut = async () => {
-        await apiSignOut()
-        handleSignOut()
+    const signOut = async (token:string) => {
+        const res = await apiSignOut({token:token})
+        if(res.status === 204) {
+            handleSignOut()
+        }
     }
 
     return {

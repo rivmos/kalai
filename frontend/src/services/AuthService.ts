@@ -24,10 +24,13 @@ export async function apiSignUp(data: SignUpCredential) {
     })
 }
 
-export async function apiSignOut() {
-    return ApiService.fetchData({
+export async function apiSignOut<T, U extends Record<string, unknown>>(
+    data: U
+) {
+    return ApiService.fetchData<T>({
         url: '/logout',
         method: 'post',
+        data,
     })
 }
 
