@@ -10,7 +10,7 @@ import withHeaderItem, { WithHeaderItemProps } from '@/utils/hoc/withHeaderItem'
 import NavToggle from '@/components/shared/NavToggle'
 import useResponsive from '@/utils/hooks/useResponsive'
 import { useAppSelector } from '@/store'
-import appsNavigationConfig from '@/configs/navigation.config/app.navigation.config'
+import dashboardConfig from '@/configs/navigation.config/dashboard.navigation.config'
 
 const VerticalMenuContent = lazy(
     () => import('@/components/template/VerticalMenuContent')
@@ -85,7 +85,7 @@ const MobileNav = () => {
                                 <VerticalMenuContent
                                     navMode={navMode}
                                     collapsed={sideNavCollapse}
-                                    navigationTree={appsNavigationConfig}
+                                    navigationTree={dashboardConfig}
                                     routeKey={currentRouteKey}
                                     userAuthority={userAuthority as string[]}
                                     direction={direction}

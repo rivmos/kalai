@@ -1,6 +1,10 @@
 {
     "nav": {
         "home": "Home",
+        "addartist": "Add Artist",
+        "artists": "Artists",
+        "addcategory" : "Add Category",
+        "categories": "Categories",
         "singleMenuItem": "Single menu item"
     },
     "sidebar":{

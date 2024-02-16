@@ -426,38 +426,7 @@ const appsNavigationConfig: NavigationTree[] = [
                 type: NAV_ITEM_TYPE_COLLAPSE,
                 authority: [ADMIN, USER],
                 subMenu: [
-                    /*{
-                        key: 'pipelinemanagement.pipeline',
-                        path: `${APP_PREFIX_PATH}/pipelinemanagement/pipeline`,
-                        title: 'Pipeline',
-                        translateKey: 'app.sidebar.pipelinemanagement.pipeline',
-                        icon: '',
-                        type: NAV_ITEM_TYPE_ITEM,
-                        authority: [ADMIN, USER],
-                        subMenu: [
-                            {
-                                key: 'pipelinemanagement.pipeline.leadpipeline',
-                                path: `${APP_PREFIX_PATH}/pipelinemanagement/pipeline/leadpipeline`,
-                                title: 'Lead Pipeline',
-                                translateKey: 'app.sidebar.pipelinemanagement.pipeline.leadpipeline',
-                                icon: '',
-                                type: NAV_ITEM_TYPE_ITEM,
-                                authority: [ADMIN, USER],
-                                subMenu: [],
-                            },
-                            {
-                                key: 'pipelinemanagement.pipeline.bidpipeline',
-                                path: `${APP_PREFIX_PATH}/pipelinemanagement/pipeline/bidpipeline`,
-                                title: 'Bid Pipeline',
-                                translateKey: 'app.sidebar.pipelinemanagement.pipeline.bidpipeline',
-                                icon: '',
-                                type: NAV_ITEM_TYPE_ITEM,
-                                authority: [ADMIN, USER],
-                                subMenu: [],
-                            },
-
-                        ],
-                    },*/
+                    
 
                     {
                         key: 'pipeline.dashboard',

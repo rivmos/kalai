@@ -12,7 +12,7 @@ export const baseUrl = 'http://localhost:3001'
 const appConfig: AppConfig = {
     // apiPrefix: 'https://kalai-y5oa.onrender.com/api',
     apiPrefix: `${baseUrl}/api`,
-    authenticatedEntryPath: '/web/home',
+    authenticatedEntryPath: '/app/dashboard',
     unAuthenticatedEntryPath: '/web/home',
     tourPath: '/',
     locale: 'en',

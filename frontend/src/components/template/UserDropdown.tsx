@@ -72,8 +72,8 @@ const _UserDropdown = ({ className }: CommonProps) => {
                         </div>
                     </div>
                 </Dropdown.Item>
-                <Dropdown.Item variant="divider" />
-                {dropdownItemList.map((item) => (
+                {/* <Dropdown.Item variant="divider" /> */}
+                {/* {dropdownItemList.map((item) => (
                     <Dropdown.Item
                         key={item.label}
                         eventKey={item.label}
@@ -91,7 +91,7 @@ const _UserDropdown = ({ className }: CommonProps) => {
                             </span>
                         </Link>
                     </Dropdown.Item>
-                ))}
+                ))} */}
                 <Dropdown.Item variant="divider" />
                 <Dropdown.Item
                     eventKey="Sign Out"

@@ -22,3 +22,8 @@ export type Artist = {
     website: string,
     id: string
 }
+
+export type Category = {
+    id:number,
+    name:string
+}

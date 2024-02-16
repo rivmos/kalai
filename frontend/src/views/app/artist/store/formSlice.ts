@@ -7,43 +7,110 @@ import {
 
 import { UserDataState } from '@/views/web/company/AboutUs/store'
 import { apiGetUserProfile } from '@/services/UserService'
-import { Artwork } from '@/@types/artist'
+import { Artist, Artwork, Category } from '@/@types/artist'
+import { apiGetArtistProfile, apiGetArtists, apiGetCategories } from '@/services/ArtistService'
 
 export const SLICE_NAME = 'formSlice'
 
 export type FormSliceState = {
-    loading: boolean,
-    artworks:Artwork[]
+    loading: boolean
+    artists: Artist[]
+    categories: Category[],
+    artist: Artist
+    artworkId: number
+    artistId: number
 }
 
 const initialState: FormSliceState = {
     loading: false,
-    artworks:[]
+    artists: [],
+    categories: [],
+    artist: {
+        artworks: [],
+        name: '',
+        bio: '',
+        website: '',
+        id: ''
+    },
+    artworkId: 0,
+    artistId: 0
 }
 
-const customerDetailSlice = createSlice({
+
+export const getArtists = createAsyncThunk(
+    SLICE_NAME + '/getArtists',
+    async () => {
+        const response = await apiGetArtists<
+            Artist[]
+        >()
+        return response.data
+    }
+)
+
+export const getCategories = createAsyncThunk(
+    SLICE_NAME + '/getCategories',
+    async () => {
+        const response = await apiGetCategories<
+            Category[]
+        >()
+        return response.data
+    }
+)
+
+export const getArtistProfile = createAsyncThunk(
+    SLICE_NAME + '/getArtistProfile',
+    async (id:string) => {
+        const response = await apiGetArtistProfile<
+            Artist
+        >(id)
+        return response.data
+    }
+)
+
+
+const formSlice = createSlice({
     name: `${SLICE_NAME}/state`,
     initialState,
     reducers: {
-       addArtwork: (state, action:PayloadAction<Artwork>) => {
-            state.artworks.push(action.payload)
-       },
-       resetArtworks:(state) => {
-            state.artworks = []
-       }
+        addArtwork: (state, action: PayloadAction<Artwork>) => {
+            state.artist.artworks.push(action.payload)
+        },
+        resetArtworks: (state) => {
+            state.artist.artworks = []
+        },
+        setSelectedArtwork: (state, action) => {
+            state.artworkId = action.payload
+        },
+        setSelectedArtist: (state, action) => {
+            state.artworkId = action.payload
+        }
     },
     extraReducers: (builder) => {
-        // builder
-        //     .addCase(getUserProfile.fulfilled, (state, action) => {
-        //         state.loading = false
-        //         state.profileData = action.payload.userdetail[0]
-        //     })
-        //     .addCase(getUserProfile.pending, (state) => {
-        //         state.loading = true
-        //     })
+        builder
+            .addCase(getArtists.fulfilled, (state, action) => {
+                state.artists = action.payload
+                state.loading = false
+            })
+            .addCase(getArtists.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(getCategories.fulfilled, (state, action) => {
+                state.categories = action.payload
+                state.loading = false
+            })
+            .addCase(getCategories.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(getArtistProfile.fulfilled, (state, action) => {
+                state.artist = action.payload
+                state.loading = false
+            })
+            .addCase(getArtistProfile.pending, (state) => {
+                state.loading = true
+            })
     },
 })
 
-export const {addArtwork, resetArtworks} = customerDetailSlice.actions
+export const { addArtwork, resetArtworks, setSelectedArtwork, setSelectedArtist } = formSlice.actions
 
-export default customerDetailSlice.reducer
+export default formSlice.reducer

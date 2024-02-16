@@ -19,7 +19,7 @@ import { useState } from 'react'
 import ArtworkForm from './ArtworkForm'
 import reducer, { addArtwork, resetArtworks, setSelectedArtwork, useAppDispatch, useAppSelector } from './store'
 import { injectReducer } from '@/store'
-import { apiAddArtist } from '@/services/ArtistService'
+import { apiAddArtist, apiAddCategory } from '@/services/ArtistService'
 import { Artwork } from '@/@types/artist'
 import { useNavigate } from 'react-router-dom'
 import appConfig, { baseUrl } from '@/configs/app.config'
@@ -29,37 +29,26 @@ injectReducer('formSlice', reducer)
 
 type FormModel = {
     name: string
-    bio: string
-    website: string
 }
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
         .min(3, 'Too Short!')
         .max(20, 'Too Long!')
-        .required('Please an artist name!'),
-    bio: Yup.string()
-        .required('Please enter artist\'s bio!'),
-    website: Yup.string()
-        .matches(
-            /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-            'Enter correct url!'
-        )
-        .required('Please enter website'),
+        .required('Please an category name!'),
 })
 
-const addNewArtist = async (data: FormModel & { artworks: string[] }) => {
-    const res = await apiAddArtist<{ status: boolean, message: string }, FormModel & { artworks: string[] }>(data)
+const addNewCategory = async (data: FormModel ) => {
+    const res = await apiAddCategory<{ status: boolean, message: string }, FormModel >(data)
     return { data: res.data, status: res.status }
 }
 
-const ArtistForm = () => {
+const CategoryForm = () => {
     
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
     const [openArtworkForm, setOpenArtworkForm] = useState<boolean>(false)
-    const artworks = useAppSelector(state => state.formSlice.data.artist.artworks)
 
     return (
         <div className='container'>
@@ -68,14 +57,12 @@ const ArtistForm = () => {
                 enableReinitialize
                 initialValues={{
                     name: '',
-                    bio: '',
-                    website: '',
                 }}
                 validationSchema={validationSchema}
                 onSubmit={async (values, { setSubmitting }) => {
-                    const success = await addNewArtist({ ...values, artworks: artworks.map(artwork => String(artwork.id)) as string[] })
+                    const success = await addNewCategory(values)
                     if (success.status === 200) {
-                        navigate('/app/artists')
+                        navigate('/app/categories')
                         dispatch(resetArtworks())
                     }
                 }}
@@ -96,52 +83,9 @@ const ArtistForm = () => {
                                     component={Input}
                                 />
                             </FormItem>
-                            <FormItem
-                                asterisk
-                                label="Bio"
-                                invalid={errors.bio && touched.bio}
-                                errorMessage={errors.bio}
-                            >
-                                <Field
-                                    type="text"
-                                    name="bio"
-                                    placeholder="Bio"
-                                    component={Input}
-                                    textArea
-                                />
-                            </FormItem>
-                            <FormItem
-                                asterisk
-                                label="Website"
-                                invalid={errors.website && touched.website}
-                                errorMessage={errors.website}
-                            >
-                                <Field
-                                    type="text"
-                                    name="website"
-                                    placeholder="Website"
-                                    component={Input}
-                                />
-                            </FormItem>
+ 
 
-                            <FormItem asterisk label='Artworks' className='m-0'/>
-                            {
-                                artworks.length > 0 ?
-                                    <ul className='mb-2 !list-disc'>
-                                        {artworks.map(artwork => {
-                                            return (
-                                                <li key={artwork.id} className='flex items-center gap-2'>
-                                                    <h5>{artwork.title}</h5>
-                                                    <span className='cursor-pointer' onClick={() => {dispatch(setSelectedArtwork(artwork.id));setOpenArtworkForm(true)}}>Edit</span>
-                                                </li>
-                                            )
-                                        })}
-                                    </ul>
-                                    : <div></div>
-                            }
-
-                            <div className='!w-full !h-52 border-[1px] flex justify-center items-center cursor-pointer hover:bg-gray-100 rounded-xl border-dashed mb-6' onClick={() => setOpenArtworkForm(true)}>Add Artwork</div>
-
+       
                             <FormItem>
                                 <Button
                                     type="reset"
@@ -165,4 +109,4 @@ const ArtistForm = () => {
     )
 }
 
-export default ArtistForm
+export default CategoryForm

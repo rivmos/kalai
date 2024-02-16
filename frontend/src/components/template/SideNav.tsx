@@ -10,12 +10,11 @@ import {
     LOGO_X_GUTTER,
 } from '@/constants/theme.constant'
 import Logo from '@/components/template/Logo'
-import appsNavigationConfig from '@/configs/navigation.config/app.navigation.config'
 import VerticalMenuContent from '@/components/template/VerticalMenuContent'
 import useResponsive from '@/utils/hooks/useResponsive'
 import { useAppSelector } from '@/store'
 import { Link } from 'react-router-dom'
-import webNavigationConfig from '@/configs/navigation.config/web.navigation.config'
+import dashboardConfig from '@/configs/navigation.config/dashboard.navigation.config'
 
 const sideNavStyle = {
     width: SIDE_NAV_WIDTH,
@@ -68,7 +67,7 @@ const SideNav = () => {
         <VerticalMenuContent
             navMode={navMode}
             collapsed={sideNavCollapse}
-            navigationTree={webNavigationConfig}
+            navigationTree={dashboardConfig}
             routeKey={currentRouteKey}
             userAuthority={userAuthority as string[]}
             direction={direction}

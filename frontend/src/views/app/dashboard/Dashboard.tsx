@@ -16,12 +16,16 @@ const Dashboard = () => {
       <div>{JSON.stringify(user)}</div>
     </div>
   ) */
-  return(
+  return (
     <div className='container'>
-      <div>
-        <Link to="/app/artist/add">
+      <div className='mb-2'>
+        <h4>Hello, <span className="capitalize">Admin!</span></h4>
+        <p>Here are all the actions you can take.</p>
+      </div>
+      <div className='grid grid-cols-4 gap-4'>
+        {/* <Link to="/app/artists/add">
           <Button className='!w-full !h-52 !border-dashed'>Add Artist</Button>
-        </Link>
+        </Link> */}
       </div>
     </div>
   )

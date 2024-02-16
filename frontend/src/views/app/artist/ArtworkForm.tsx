@@ -6,13 +6,13 @@ import Switcher from '@/components/ui/Switcher'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import type { FieldProps } from 'formik'
-import reducer, { addArtwork, useAppDispatch } from './store'
+import reducer, { addArtwork, setSelectedArtwork, useAppDispatch, useAppSelector } from './store'
 import { injectReducer } from '@/store'
 import Dialog from '@/components/ui/Dialog'
 import { Dispatch, SetStateAction } from 'react'
 import { Artwork } from '@/@types/artist'
 import { apiAddArtwork } from '@/services/ArtistService'
-import { Upload } from '@/components/ui'
+import { ScrollBar, Upload } from '@/components/ui'
 
 injectReducer('formSlice', reducer)
 
@@ -105,11 +105,17 @@ const ArtworkForm = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIs
 
     };
 
+    
+    const dispatch = useAppDispatch()
+    
+    const artworks = useAppSelector(state => state.formSlice.data.artist.artworks)
+    const artworkId = useAppSelector(state => state.formSlice.data.artworkId)
+    const artworkToEdit = artworks.find(artwork => artwork.id === artworkId)
+    
     const onDialogClose = () => {
+        dispatch(setSelectedArtwork(''))
         setIsOpen(false)
     }
-
-    const dispatch = useAppDispatch()
 
     return (
         <Dialog
@@ -117,235 +123,240 @@ const ArtworkForm = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIs
             onClose={onDialogClose}
             onRequestClose={onDialogClose}
         >
-            <div className='container max-h-[600px] overflow-y-auto'>
-                <Formik
-                    enableReinitialize
-                    initialValues={{
-                        title: '',
-                        description: '',
-                        width: 0,
-                        height: 0,
-                        sizeUnit: '',
-                        price: 0,
-                        medium: '',
-                        deliveredAs: '',
-                        createdIn: 0,
-                        isSold: false,
-                        images: []
-                    }}
-                    validationSchema={validationSchema}
-                    onSubmit={async (values, { setSubmitting }) => {
-                        console.log(values)
-                        const success = await addNewArtwork(values)
-                        if (success.status === 200) {
-                            dispatch(addArtwork(success.data))
-                            onDialogClose()
-                        }
-                        // console.log('values', values)
-                        // setTimeout(() => {
-                        //     alert(JSON.stringify(values, null, 2))
-                        //     setSubmitting(false)
-                        // }, 400)
-                    }}
-                >
-                    {({ values, touched, errors, resetForm }) => (
-                        <Form>
-                            <FormContainer>
-                                <FormItem
-                                    asterisk
-                                    label="Title"
-                                    invalid={errors.title && touched.title}
-                                    errorMessage={errors.title}
-                                >
-                                    <Field
-                                        type="text"
-                                        name="title"
-                                        placeholder="Title"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                                <FormItem
-                                    asterisk
-                                    label="Description"
-                                    invalid={errors.description && touched.description}
-                                    errorMessage={errors.description}
-                                >
-                                    <Field
-                                        type="text"
-                                        name="description"
-                                        placeholder="Description"
-                                        component={Input}
-                                        textArea
-                                    />
-                                </FormItem>
+            <div className="overflow-y-auto h-[500px] mb-6">
+                <ScrollBar>
 
-                                <FormItem
-                                    asterisk
-                                    label="Images"
-                                    invalid={Boolean(
-                                        errors.images && touched.images
-                                    )}
-                                    errorMessage={errors.images as string}
-                                >
-                                    <Field name="images">
-                                        {({ field, form }: FieldProps<FormModel>) => (
-                                            <Upload
-                                                showList
-                                                draggable
-                                                beforeUpload={beforeUpload}
-                                                fileList={values.images}
-                                                onChange={(files) =>
-                                                    form.setFieldValue(field.name, files)
-                                                }
-                                                onFileRemove={(files) =>
-                                                    form.setFieldValue(field.name, files)
-                                                }
-                                            />
+                    <Formik
+                        enableReinitialize
+                        initialValues={{
+                            title: artworkId ? artworkToEdit?.title : '',
+                            description: artworkId ? artworkToEdit?.description : '',
+                            width: artworkId ? artworkToEdit?.width : 0,
+                            height: artworkId ? artworkToEdit?.height : 0,
+                            sizeUnit: artworkId ? artworkToEdit?.sizeUnit : '',
+                            price: artworkId ? artworkToEdit?.price : 0,
+                            medium: artworkId ? artworkToEdit?.medium : '',
+                            deliveredAs: artworkId ? artworkToEdit?.deliveredAs : '',
+                            createdIn: artworkId ? artworkToEdit?.createdIn : '',
+                            isSold: artworkId ? artworkToEdit?.isSold : false,
+                            images: []
+                        }}
+                        validationSchema={validationSchema}
+                        onSubmit={async (values, { setSubmitting }) => {
+                            console.log(values)
+                            const success = await addNewArtwork(values as FormModel)
+                            if (success.status === 200) {
+                                dispatch(addArtwork(success.data))
+                                onDialogClose()
+                            }
+                            // console.log('values', values)
+                            // setTimeout(() => {
+                            //     alert(JSON.stringify(values, null, 2))
+                            //     setSubmitting(false)
+                            // }, 400)
+                        }}
+                    >
+                        {({ values, touched, errors, resetForm }) => (
+                            <Form>
+                                <FormContainer>
+                                    <FormItem
+                                        asterisk
+                                        label="Title"
+                                        invalid={errors.title && touched.title}
+                                        errorMessage={errors.title}
+                                    >
+                                        <Field
+                                            type="text"
+                                            name="title"
+                                            placeholder="Title"
+                                            component={Input}
+                                        />
+                                    </FormItem>
+                                    <FormItem
+                                        asterisk
+                                        label="Description"
+                                        invalid={errors.description && touched.description}
+                                        errorMessage={errors.description}
+                                    >
+                                        <Field
+                                            type="text"
+                                            name="description"
+                                            placeholder="Description"
+                                            component={Input}
+                                            textArea
+                                        />
+                                    </FormItem>
+
+                                    <FormItem
+                                        asterisk
+                                        label="Images"
+                                        invalid={Boolean(
+                                            errors.images && touched.images
                                         )}
-                                    </Field>
-                                </FormItem>
-
-                                <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                                    <FormItem
-                                        asterisk
-                                        label="Width"
-                                        invalid={errors.width && touched.width}
-                                        errorMessage={errors.width}
+                                        errorMessage={errors.images as string}
                                     >
-                                        <Field name="width">
+                                        <Field name="images">
                                             {({ field, form }: FieldProps<FormModel>) => (
-                                                <Input value={values.width} onChange={(value) => form.setFieldValue(field.name, handleNumberInput(value))} />
-                                            )}
-                                        </Field>
-                                    </FormItem>
-
-                                    <FormItem
-                                        asterisk
-                                        label="Height"
-                                        invalid={errors.height && touched.height}
-                                        errorMessage={errors.height}
-                                    >
-                                        <Field name="height">
-                                            {({ field, form }: FieldProps<FormModel>) => (
-                                                <Input value={values.height} onChange={(value) => form.setFieldValue(field.name, handleNumberInput(value))} />
-                                            )}
-                                        </Field>
-                                    </FormItem>
-
-                                    <FormItem
-                                        asterisk
-                                        label="Unit"
-                                        invalid={errors.sizeUnit && touched.sizeUnit}
-                                        errorMessage={errors.sizeUnit}
-                                    >
-                                        <Field name="sizeUnit">
-                                            {({ field, form }: FieldProps<FormModel>) => (
-                                                <Select
-                                                    field={field}
-                                                    form={form}
-                                                    options={unitOptions}
-                                                    value={unitOptions.filter(
-                                                        (option) =>
-                                                            option.value ===
-                                                            values.sizeUnit
-                                                    )}
-                                                    onChange={(option) =>
-                                                        form.setFieldValue(
-                                                            field.name,
-                                                            option?.value
-                                                        )
+                                                <Upload
+                                                    showList
+                                                    draggable
+                                                    beforeUpload={beforeUpload}
+                                                    fileList={values.images}
+                                                    onChange={(files) =>
+                                                        form.setFieldValue(field.name, files)
+                                                    }
+                                                    onFileRemove={(files) =>
+                                                        form.setFieldValue(field.name, files)
                                                     }
                                                 />
                                             )}
                                         </Field>
                                     </FormItem>
-                                </div>
 
-                                <FormItem
-                                    asterisk
-                                    label="Price"
-                                    invalid={errors.price && touched.price}
-                                    errorMessage={errors.price}
-                                >
-                                    <Field name="price">
-                                        {({ field, form }: FieldProps<FormModel>) => (
-                                            <Input value={values.price} onChange={(value) => form.setFieldValue(field.name, handleNumberInput(value))} />
-                                        )}
-                                    </Field>
-                                </FormItem>
+                                    <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                                        <FormItem
+                                            asterisk
+                                            label="Width"
+                                            invalid={errors.width && touched.width}
+                                            errorMessage={errors.width}
+                                        >
+                                            <Field name="width">
+                                                {({ field, form }: FieldProps<FormModel>) => (
+                                                    <Input value={values.width} onChange={(value) => form.setFieldValue(field.name, handleNumberInput(value))} />
+                                                )}
+                                            </Field>
+                                        </FormItem>
 
-                                <FormItem
-                                    asterisk
-                                    label="Medium"
-                                    invalid={errors.medium && touched.medium}
-                                    errorMessage={errors.medium}
-                                >
-                                    <Field
-                                        type="text"
-                                        name="medium"
-                                        placeholder="Medium"
-                                        component={Input}
+                                        <FormItem
+                                            asterisk
+                                            label="Height"
+                                            invalid={errors.height && touched.height}
+                                            errorMessage={errors.height}
+                                        >
+                                            <Field name="height">
+                                                {({ field, form }: FieldProps<FormModel>) => (
+                                                    <Input value={values.height} onChange={(value) => form.setFieldValue(field.name, handleNumberInput(value))} />
+                                                )}
+                                            </Field>
+                                        </FormItem>
 
-                                    />
-                                </FormItem>
-
-
-                                <FormItem
-                                    asterisk
-                                    label="Delivered As"
-                                    invalid={errors.deliveredAs && touched.deliveredAs}
-                                    errorMessage={errors.deliveredAs}
-                                >
-                                    <Field
-                                        type="text"
-                                        name="deliveredAs"
-                                        placeholder="Delivered As"
-                                        component={Input}
-
-                                    />
-                                </FormItem>
-                                <FormItem
-                                    asterisk
-                                    label="Created In Year"
-                                    invalid={errors.createdIn && touched.createdIn}
-                                    errorMessage={errors.createdIn}
-                                >
-                                    <Field name="createdIn">
-                                        {({ field, form }: FieldProps<FormModel>) => (
-                                            <Input value={values.createdIn} onChange={(value) => form.setFieldValue(field.name, handleNumberInput(value))} />
-                                        )}
-                                    </Field>
-                                </FormItem>
-                                <FormItem
-                                    asterisk
-                                    label="Is Sold"
-                                    invalid={errors.isSold && touched.isSold}
-                                    errorMessage={errors.isSold}
-                                >
-                                    <div>
-                                        <Field
-                                            name="isSold"
-                                            component={Switcher}
-                                        />
+                                        <FormItem
+                                            asterisk
+                                            label="Unit"
+                                            invalid={errors.sizeUnit && touched.sizeUnit}
+                                            errorMessage={errors.sizeUnit}
+                                        >
+                                            <Field name="sizeUnit">
+                                                {({ field, form }: FieldProps<FormModel>) => (
+                                                    <Select
+                                                        field={field}
+                                                        form={form}
+                                                        options={unitOptions}
+                                                        value={unitOptions.filter(
+                                                            (option) =>
+                                                                option.value ===
+                                                                values.sizeUnit
+                                                        )}
+                                                        onChange={(option) =>
+                                                            form.setFieldValue(
+                                                                field.name,
+                                                                option?.value
+                                                            )
+                                                        }
+                                                    />
+                                                )}
+                                            </Field>
+                                        </FormItem>
                                     </div>
-                                </FormItem>
 
-                                <FormItem>
-                                    <Button
-                                        type="reset"
-                                        className="ltr:mr-2 rtl:ml-2"
-                                        onClick={() => resetForm()}
+                                    <FormItem
+                                        asterisk
+                                        label="Price"
+                                        invalid={errors.price && touched.price}
+                                        errorMessage={errors.price}
                                     >
-                                        Reset
-                                    </Button>
-                                    <Button variant="solid" type="submit">
-                                        Submit
-                                    </Button>
-                                </FormItem>
-                            </FormContainer>
-                        </Form>
-                    )}
-                </Formik>
+                                        <Field name="price">
+                                            {({ field, form }: FieldProps<FormModel>) => (
+                                                <Input value={values.price} onChange={(value) => form.setFieldValue(field.name, handleNumberInput(value))} />
+                                            )}
+                                        </Field>
+                                    </FormItem>
+
+                                    <FormItem
+                                        asterisk
+                                        label="Medium"
+                                        invalid={errors.medium && touched.medium}
+                                        errorMessage={errors.medium}
+                                    >
+                                        <Field
+                                            type="text"
+                                            name="medium"
+                                            placeholder="Medium"
+                                            component={Input}
+
+                                        />
+                                    </FormItem>
+
+
+                                    <FormItem
+                                        asterisk
+                                        label="Delivered As"
+                                        invalid={errors.deliveredAs && touched.deliveredAs}
+                                        errorMessage={errors.deliveredAs}
+                                    >
+                                        <Field
+                                            type="text"
+                                            name="deliveredAs"
+                                            placeholder="Delivered As"
+                                            component={Input}
+
+                                        />
+                                    </FormItem>
+                                    <FormItem
+                                        asterisk
+                                        label="Created In Year"
+                                        invalid={errors.createdIn && touched.createdIn}
+                                        errorMessage={errors.createdIn}
+                                    >
+                                        <Field name="createdIn">
+                                            {({ field, form }: FieldProps<FormModel>) => (
+                                                <Input value={values.createdIn} onChange={(value) => form.setFieldValue(field.name, handleNumberInput(value))} />
+                                            )}
+                                        </Field>
+                                    </FormItem>
+                                    <FormItem
+                                        asterisk
+                                        label="Is Sold"
+                                        invalid={errors.isSold && touched.isSold}
+                                        errorMessage={errors.isSold}
+                                    >
+                                        <div>
+                                            <Field
+                                                name="isSold"
+                                                component={Switcher}
+                                            />
+                                        </div>
+                                    </FormItem>
+
+                                    <FormItem>
+                                        <Button
+                                            type="reset"
+                                            className="ltr:mr-2 rtl:ml-2"
+                                            onClick={() => resetForm()}
+                                        >
+                                            Reset
+                                        </Button>
+                                        <Button variant="solid" type="submit">
+                                            Submit
+                                        </Button>
+                                    </FormItem>
+                                </FormContainer>
+                            </Form>
+                        )}
+                    </Formik>
+
+
+                </ScrollBar>
             </div>
         </Dialog>
     )

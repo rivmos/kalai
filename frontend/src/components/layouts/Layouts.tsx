@@ -27,6 +27,7 @@ const layouts = {
 const Layout = () => {
     const layoutType = useAppSelector((state) => state.theme.layout.type)
     const path = useAppSelector(state => state.base.common.currentRouteKey)
+    const currentRouteKey = useAppSelector(state => state.base.common.currentRouteKey)
 
     const { authenticated } = useAuth()
 
@@ -35,11 +36,11 @@ const Layout = () => {
     useLocale()
 
     const AppLayout = useMemo(() => {
-        if(authenticated){
-            return lazy(() => import('./ClassicLayout'))
+        if (authenticated) { 
+            return layouts[layoutType]
         }
-        if (path === 'signIn' || path === 'signUp') {
-            return lazy(() => import('./Authlayout/AuthLayout'))
+        if(currentRouteKey === 'signIn' || currentRouteKey === 'signUp') {
+            return lazy(() => import('./AuthLayout/AuthLayout'))
         }
 
         // if(path.includes('auth.') && !authenticated){
@@ -47,7 +48,7 @@ const Layout = () => {
         // }
 
         return lazy(() => import('./WebLayout'))
-    }, [layoutType, authenticated, path])
+    }, [layoutType, authenticated])
 
     return (
         <Suspense

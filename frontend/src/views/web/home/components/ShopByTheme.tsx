@@ -6,15 +6,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import { Button } from '@/components/ui';
-import { getArtists, useAppDispatch, useAppSelector } from '../store';
+import { getArtists, getCategories, useAppDispatch, useAppSelector } from '../store';
 import { Link } from 'react-router-dom';
 
 const ShopByTheme = () => {
     const dispatch = useAppDispatch()
     useEffect(() => {
-        dispatch(getArtists())
+        dispatch(getCategories())
     }, [])
-    const artists = useAppSelector(state => state.home.data.artists)
+    const categories = useAppSelector(state => state.home.data.categories)
     const [autoPlay, setAutoPlay] = useState(true)
     return (
         <>
@@ -25,20 +25,13 @@ const ShopByTheme = () => {
 
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 place-items-center place-items-center my-16'>
                     {
-                    ['Realistic',
-                    'Conceptual Art',
-                    'Sculptures',
-                    'Digital Art',
-                    'Pen & Ink',
-                    'Archer Paper',
-                    'Eccentric',
-                    'Nature'].map((artwork, index) => {
+                    categories.map((category, index) => {
                         return(
-                            <div key={artwork} className='relative rounded-full overflow-hidden group cursor-pointer w-52 h-52'>
+                            <div key={category.id} className='relative rounded-full overflow-hidden group cursor-pointer w-52 h-52'>
                                 <img src={`/img/banner/${index+1}.jpg`} className='group-hover:scale-125 transition-all duration-[4000ms] h-full object-cover'/>
                                 <div className='bg-gray-600 opacity-40 absolute top-0 left-0 z-[1] h-full w-full'></div>
                                 <div className='text-center text-white font-semibold text-lg z-[2] absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]'>
-                                    {artwork}
+                                    {category.name}
                                 </div>
                             </div>
                         )

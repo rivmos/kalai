@@ -23,15 +23,18 @@ const Banner = () => {
         {
           [1, 2, 3, 4].map(number => {
             return (
-              <SwiperSlide key={number}>
+              <SwiperSlide key={number} className='z-[2]'>
                 <img src={`/img/banner/${number}.jpg`} className='w-full h-full object-cover' />
               </SwiperSlide>
             )
           })
         }
       </Swiper>
+      <div className="absolute top-0 left-0 right-0 z-[1] h-full opacity-40 bg-gray-600">
+       
+      </div>
 
-      <div className="absolute top-[50%] -translate-y-[50%] left-0 right-0 z-[1] mx-auto container">
+      <div className="absolute top-[50%] -translate-y-[50%] left-0 right-0 z-[3] mx-auto container">
         <h2 className="text-2xl lg:text-3xl font-bold tracking-tight text-white sm:text-4xl">
           Elevate Your Art Journey.
         </h2>

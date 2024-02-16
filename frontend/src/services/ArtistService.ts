@@ -7,6 +7,13 @@ export async function apiGetArtists<T>() {
     })
 }
 
+export async function apiGetCategories<T>() {
+    return ApiService.fetchData<T>({
+        url: '/categories',
+        method: 'get',
+    })
+}
+
 export async function apiGetArtistProfile<T>(id:string) {
     return ApiService.fetchData<T>({
         url: `/artists/${id}`,
@@ -25,7 +32,17 @@ export async function apiAddArtist<T, U extends Record<string, unknown>>(
     data: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/artists/new',
+        url: '/artists/save',
+        method: 'post',
+        data,
+    })
+}
+
+export async function apiAddCategory<T, U extends Record<string, unknown>>(
+    data: U
+) {
+    return ApiService.fetchData<T>({
+        url: '/categories/save',
         method: 'post',
         data,
     })

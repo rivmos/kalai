@@ -5,8 +5,8 @@ const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
 const getTokenFrom = require('../utils/auth').getTokenFrom
 const config = require('../utils/config')
-const {upload} = require('../utils/middleware')
-const {verifyTokenMiddleware} = require('../utils/auth')
+const { upload } = require('../utils/middleware')
+const { verifyTokenMiddleware } = require('../utils/auth')
 
 // artistRouter.use(verifyTokenMiddleware)
 
@@ -43,40 +43,45 @@ artistRouter.get('/:id', verifyTokenMiddleware, (req, res) => {
 //         return ''
 //     }
 // }
-
-artistRouter.post('/new', async (req, res) => {
-    const decodedToken = jwt.verify(getTokenFrom(req, res), config.JWTSECRET)
+artistRouter.post('/save', async (req, res) => {
+    const decodedToken = jwt.verify(getTokenFrom(req), config.JWTSECRET);
     if (!decodedToken.id) {
-        return res.status(401).json({ error: 'token invalid' })
+        return res.status(401).json({ error: 'token invalid' });
     }
-    const { name, bio, website, artworks } = req.body;
-    // const validationError = validateEnquiry(body)
-    // if (validationError) {
-    //     res.status(500).json({ message: `${validationError} Required` })
-    //     return
-    // }
-    const newArtist = new Artist({ name, bio, website, artworks })
-    // await newArtist.save()
 
-    // const createdArtworks = await Artwork.create(artworks.map(artwork => {
-    //         console.log(upload.array(artwork.images))
-    //         return {...artwork, artist: newArtist._id }
-    //     }))
+    const { id, name, bio, website, artworks } = req.body;
 
+    // Optional: Add validation logic here for the request body.
 
-    // newArtist.artworks = createdArtworks.map(artwork => artwork._id)
+    try {
+        let artist;
+        if (id) {
+            // Update existing artist
+            artist = await Artist.findById(id);
+            if (!artist) {
+                return res.status(404).json({ error: 'Artist not found' });
+            }
+            artist.name = name;
+            artist.bio = bio;
+            artist.website = website;
+            // Update artworks logic here, if necessary.
+        } else {
+            // Create new artist
+            artist = new Artist({ name, bio, website, artworks });
+        }
 
-    newArtist.save()
-        .then((response) => {
-            logger.info('Artist saved')
-            res.json(response)
-        })
-        .catch((err) => {
-            logger.info('Artist not saved')
-            logger.info(err)
-            res.status(500).json(err)
-        })
-})
+        const savedArtist = await artist.save();
+
+        // Optional: Update artworks relationship here, if necessary.
+
+        logger.info('Artist saved');
+        res.json(savedArtist);
+    } catch (err) {
+        logger.error('Error saving artist', err);
+        res.status(500).json(err);
+    }
+});
+
 
 
 artistRouter.get('/:artistId/artworks', async (req, res) => {
