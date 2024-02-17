@@ -30,7 +30,7 @@ const Artists = () => {
             <div>
                 <h2 className="text-3xl font-semibold uppercase tracking-tight text-gray-700 sm:text-4xl text-orange-900 mb-8">Categories</h2>
                 <Loading loading={loading}>
-                    {categories.length > 0 && <div className='grid grid-cols-4 gap-4'>
+                    {categories.length > 0 && <div className='grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4'>
                         {
                             categories?.map((category, index) => {
                                 return (
@@ -45,9 +45,9 @@ const Artists = () => {
                             })
                         }
                     </div>}
-                    <div>
+                    {categories.length === 0 && <div>
                         <EmptyState text='Catogries'/>
-                    </div>
+                    </div>}
                 </Loading>
             </div >
         </>

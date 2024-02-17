@@ -3,6 +3,7 @@
         "home": "Home",
         "addartist": "Add Artist",
         "artists": "Artists",
+        "artworks": "Artworks",
         "addcategory" : "Add Category",
         "categories": "Categories",
         "singleMenuItem": "Single menu item"

@@ -6,11 +6,11 @@ import Switcher from '@/components/ui/Switcher'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import type { FieldProps } from 'formik'
-import reducer, { addArtwork, setSelectedArtwork, useAppDispatch, useAppSelector } from './store'
+import reducer, { addArtwork, getCategories, setSelectedArtwork, useAppDispatch, useAppSelector } from './store'
 import { injectReducer } from '@/store'
 import Dialog from '@/components/ui/Dialog'
-import { Dispatch, SetStateAction } from 'react'
-import { Artwork } from '@/@types/artist'
+import { Dispatch, SetStateAction, useEffect } from 'react'
+import { Artwork, Category } from '@/@types/artist'
 import { apiAddArtwork } from '@/services/ArtistService'
 import { ScrollBar, Upload } from '@/components/ui'
 
@@ -24,6 +24,7 @@ type Option = {
 type FormModel = {
     title: string,
     description: string, // Optional by default
+    category: string
     width: number,
     height: number,
     sizeUnit: string, // You might want to define specific allowed values
@@ -48,6 +49,7 @@ const MAX_UPLOAD = 2
 const validationSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
     description: Yup.string(), // Optional by default
+    category: Yup.string().required('Please select one!'),
     width: Yup.number().required('Width is required').positive('Width must be positive'),
     height: Yup.number().required('Height is required').positive('Height must be positive'),
     sizeUnit: Yup.string().required('Size unit is required'), // You might want to define specific allowed values
@@ -105,13 +107,21 @@ const ArtworkForm = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIs
 
     };
 
-    
+
     const dispatch = useAppDispatch()
-    
+
+
+    useEffect(() => {
+        dispatch(getCategories())
+    }, [])
+
+    const categories = useAppSelector(state => state.formSlice.data.categories)
+
+
     const artworks = useAppSelector(state => state.formSlice.data.artist.artworks)
     const artworkId = useAppSelector(state => state.formSlice.data.artworkId)
     const artworkToEdit = artworks.find(artwork => artwork.id === artworkId)
-    
+
     const onDialogClose = () => {
         dispatch(setSelectedArtwork(''))
         setIsOpen(false)
@@ -123,7 +133,7 @@ const ArtworkForm = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIs
             onClose={onDialogClose}
             onRequestClose={onDialogClose}
         >
-            <div className="overflow-y-auto h-[500px] mb-6">
+            <div className="overflow-y-auto h-[600px] mb-6">
                 <ScrollBar>
 
                     <Formik
@@ -131,6 +141,7 @@ const ArtworkForm = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIs
                         initialValues={{
                             title: artworkId ? artworkToEdit?.title : '',
                             description: artworkId ? artworkToEdit?.description : '',
+                            category: artworkId ? artworkToEdit?.category : '',
                             width: artworkId ? artworkToEdit?.width : 0,
                             height: artworkId ? artworkToEdit?.height : 0,
                             sizeUnit: artworkId ? artworkToEdit?.sizeUnit : '',
@@ -185,6 +196,34 @@ const ArtworkForm = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIs
                                             component={Input}
                                             textArea
                                         />
+                                    </FormItem>
+
+                                    <FormItem
+                                        asterisk
+                                        label="Select"
+                                        invalid={errors.category && touched.category}
+                                        errorMessage={errors.category}
+                                    >
+                                        <Field name="category">
+                                            {({ field, form }: FieldProps<FormModel>) => (
+                                                <Select
+                                                    field={field}
+                                                    form={form}
+                                                    options={categories.map(category => ({label:category.name, value:category.id}))}
+                                                    value={categories.map(category => ({label:category.name, value:category.id})).find(
+                                                        (option) =>
+                                                            option.value ===
+                                                            values.category
+                                                    )}
+                                                    onChange={(option) =>
+                                                        form.setFieldValue(
+                                                            field.name,
+                                                            option?.value
+                                                        )
+                                                    }
+                                                />
+                                            )}
+                                        </Field>
                                     </FormItem>
 
                                     <FormItem

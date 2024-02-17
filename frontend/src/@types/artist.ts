@@ -1,10 +1,11 @@
 export type Artwork = {
     id?:number,
-    imageUrl?: string[],
+    imageUrls?: string[],
     artist?: string,
     itemCode?:number,
     title: string,
     description: string,
+    category: number,
     width: number,
     height: number,
     sizeUnit: string,

@@ -2,6 +2,7 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const path = require('path')
 require('dotenv').config()
 
 /* Express Application Instance */
@@ -29,6 +30,8 @@ const { unknownEndpoint, requestLogger } = require('./utils/middleware')
 /* Middlewares Usage*/
 app.use(cors())
 app.use(express.json())
+
+app.use('/uploads', express.static('uploads'))
 // app.use(requestLogger)
 app.use('/api/categories', categoryRouter)
 app.use('/api/artists', artistRouter)

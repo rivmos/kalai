@@ -14,14 +14,22 @@ export async function apiGetCategories<T>() {
     })
 }
 
-export async function apiGetArtistProfile<T>(id:string) {
+export async function apiGetArtistProfile<T>(id: string) {
     return ApiService.fetchData<T>({
         url: `/artists/${id}`,
         method: 'get',
     })
 }
 
-export async function apiGetArtworkDetail<T>(id:string) {
+
+export async function apiGetArtworks<T>() {
+    return ApiService.fetchData<T>({
+        url: `/artworks`,
+        method: 'get',
+    })
+}
+
+export async function apiGetArtworkDetail<T>(id: string) {
     return ApiService.fetchData<T>({
         url: `/artworks/${id}`,
         method: 'get',
@@ -35,6 +43,13 @@ export async function apiAddArtist<T, U extends Record<string, unknown>>(
         url: '/artists/save',
         method: 'post',
         data,
+    })
+}
+
+export async function apiDeleteArtist<T>(id: string) {
+    return ApiService.fetchData<T>({
+        url: `/artists/${id}`,
+        method: 'delete',
     })
 }
 
@@ -55,8 +70,8 @@ export async function apiAddArtwork<T, U extends Record<string, unknown>>(
         url: '/artworks/new',
         method: 'post',
         data,
-        headers:{
-            "Content-Type":'multipart/form-data'
+        headers: {
+            "Content-Type": 'multipart/form-data'
         }
     })
 }

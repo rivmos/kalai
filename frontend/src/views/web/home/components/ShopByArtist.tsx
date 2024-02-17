@@ -9,6 +9,7 @@ import { Button } from '@/components/ui';
 import { getArtists, useAppDispatch, useAppSelector } from '../store';
 import { Link } from 'react-router-dom';
 import useResponsive from '@/utils/hooks/useResponsive';
+import { baseUrl } from '@/configs/app.config';
 
 const ShopByArtist = () => {
     const dispatch = useAppDispatch()
@@ -18,6 +19,12 @@ const ShopByArtist = () => {
     const artists = useAppSelector(state => state.home.data.artists)
     const [autoPlay, setAutoPlay] = useState(true)
     const {larger, smaller, windowWidth} = useResponsive()
+
+    const getImageName = (path: string) => {
+        return path.slice(path.indexOf('/backend') + ('/backend').length);
+    }
+
+
     return (
         <>
             <div className='container mx-auto !py-16 md:!py-20 lg:!py-28'>
@@ -37,8 +44,7 @@ const ShopByArtist = () => {
                                 <SwiperSlide className='cursor-pointer'>
                                     <Link to={`/web/profile/${artist.id}`}>
                                         <div className="text-gray-700">
-                                            <img src={artist?.artworks[0]?.imageUrl?.[0] ? artist?.artworks[0]?.imageUrl?.[0] : `/img/banner/${index}.jpg`} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
-
+                                        <img src={baseUrl + getImageName(artist?.artworks[0]?.imageUrls?.[0] as string)} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
                                             <div className="relative px-4 -mt-8  ">
                                                 <div className="bg-white p-4 rounded-lg shadow-lg">
                                                     <h4 className="mt-1 text-base capitalize text-center leading-tight text-gray-700 truncate">{artist.name}</h4>

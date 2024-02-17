@@ -8,13 +8,14 @@ import {
 import { UserDataState } from '@/views/web/company/AboutUs/store'
 import { apiGetUserProfile } from '@/services/UserService'
 import { Artist, Artwork, Category } from '@/@types/artist'
-import { apiGetArtistProfile, apiGetArtists, apiGetCategories } from '@/services/ArtistService'
+import { apiGetArtistProfile, apiGetArtists, apiGetArtworks, apiGetCategories } from '@/services/ArtistService'
 
 export const SLICE_NAME = 'formSlice'
 
 export type FormSliceState = {
     loading: boolean
     artists: Artist[]
+    artworks: Artwork[]
     categories: Category[],
     artist: Artist
     artworkId: number
@@ -24,6 +25,7 @@ export type FormSliceState = {
 const initialState: FormSliceState = {
     loading: false,
     artists: [],
+    artworks: [],
     categories: [],
     artist: {
         artworks: [],
@@ -42,6 +44,16 @@ export const getArtists = createAsyncThunk(
     async () => {
         const response = await apiGetArtists<
             Artist[]
+        >()
+        return response.data
+    }
+)
+
+export const getArtworks = createAsyncThunk(
+    SLICE_NAME + '/getArtworks',
+    async () => {
+        const response = await apiGetArtworks<
+            Artwork[]
         >()
         return response.data
     }
@@ -83,7 +95,10 @@ const formSlice = createSlice({
         },
         setSelectedArtist: (state, action) => {
             state.artworkId = action.payload
-        }
+        },
+        removeArtist: (state, action) => {
+            state.artists = state.artists.filter(artist => artist.id != action.payload)
+        } 
     },
     extraReducers: (builder) => {
         builder
@@ -92,6 +107,13 @@ const formSlice = createSlice({
                 state.loading = false
             })
             .addCase(getArtists.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(getArtworks.fulfilled, (state, action) => {
+                state.artworks = action.payload
+                state.loading = false
+            })
+            .addCase(getArtworks.pending, (state) => {
                 state.loading = true
             })
             .addCase(getCategories.fulfilled, (state, action) => {
@@ -111,6 +133,6 @@ const formSlice = createSlice({
     },
 })
 
-export const { addArtwork, resetArtworks, setSelectedArtwork, setSelectedArtist } = formSlice.actions
+export const { addArtwork, resetArtworks, setSelectedArtwork, setSelectedArtist, removeArtist } = formSlice.actions
 
 export default formSlice.reducer

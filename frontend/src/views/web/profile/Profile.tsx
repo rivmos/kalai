@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { injectReducer } from '@/store'
 import { Button } from '@/components/ui';
 import useResponsive from '@/utils/hooks/useResponsive';
+import { baseUrl } from '@/configs/app.config';
 injectReducer('profile', reducer)
 
 const Profile = () => {
@@ -24,6 +25,10 @@ const Profile = () => {
     useEffect(() => {
         dispatch(getArtistProfile(id as string))
     }, [])
+
+    const getImageName = (path:string) => {
+        return path.slice(path.indexOf('/backend') + ('/backend').length);
+    }
 
     return (
         <>
@@ -70,10 +75,10 @@ const Profile = () => {
                                 <SwiperSlide className='cursor-pointer'>
                                     {/* <img src={`/img/banner/${index + 1}.jpg`} className='object-cover h-[300px] hover:scale-125 transition-all duration-1000' />
             <div>{artist.name}</div> */}
-                                    <Link to={`/web/artwork/${artwork.id}`}>
+                                    <Link to={`/web/artworks/${artwork.id}`}>
                                         <div className="text-gray-700">
-                                            <img src={artwork.imageUrl} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
-
+                                            <img src={baseUrl + getImageName(artwork?.imageUrls?.[0] as string)} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
+ 
                                             <div className="relative px-6 -mt-8  ">
                                                 <div className="bg-white p-4 rounded-lg shadow-lg">
                                                     <h4 className="mt-1 text-base capitalize text-center leading-tight text-gray-700 truncate">{artwork.title}</h4>

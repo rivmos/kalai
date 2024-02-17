@@ -15,9 +15,9 @@ import { Field, Form, Formik } from 'formik'
 import CreatableSelect from 'react-select/creatable'
 import * as Yup from 'yup'
 import type { FieldProps } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ArtworkForm from './ArtworkForm'
-import reducer, { addArtwork, resetArtworks, setSelectedArtwork, useAppDispatch, useAppSelector } from './store'
+import reducer, { addArtwork, getCategories, resetArtworks, setSelectedArtwork, useAppDispatch, useAppSelector } from './store'
 import { injectReducer } from '@/store'
 import { apiAddArtist } from '@/services/ArtistService'
 import { Artwork } from '@/@types/artist'
@@ -59,7 +59,9 @@ const ArtistForm = () => {
     const dispatch = useAppDispatch()
 
     const [openArtworkForm, setOpenArtworkForm] = useState<boolean>(false)
+
     const artworks = useAppSelector(state => state.formSlice.data.artist.artworks)
+    // const artistToEdit = useAppSelector(state => state.formSlice.data.artist)
 
     return (
         <div className='container'>

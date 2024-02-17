@@ -1,6 +1,7 @@
 :root {
   --primaryColorLevel: #3730a3;
 }
+
 @media all and (min-width: 767px) {
   .col-md-1 {
     max-width: 8.33333333%;

@@ -16,7 +16,7 @@ artworkRouter.get('/', (req, res) => {
 /* Get Single Product */
 artworkRouter.get('/:id', (req, res) => {
     const id = req.params.id
-    Artwork.findById(id).then(artwork => {
+    Artwork.findById(id).populate('category').then(artwork => {
         res.json(artwork)
     }).catch(error => {
         res.json({
@@ -45,11 +45,12 @@ artworkRouter.post('/new', upload.array('images[]', 5) , async (req, res) => {
     if (!decodedToken.id) {
         return res.status(401).json({ error: 'token invalid' })
     }
-    const {title, description, width, height, sizeUnit, price, medium, deliveredAs, createdIn, isSold} = req.body;
+    const {title, description, category, width, height, sizeUnit, price, medium, deliveredAs, createdIn, isSold} = req.body;
     const imagePaths = req.files.map(file => file.path); 
     const newArtwork = new Artwork({
         title,
         description,
+        category,
         width,
         height,
         sizeUnit,

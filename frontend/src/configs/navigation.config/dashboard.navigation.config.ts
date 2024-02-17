@@ -51,6 +51,17 @@ const dashboardConfig: NavigationTree[] = [
     },
 
     {
+        key: 'app.artworks',
+        path: '/app/artworks/',
+        title: 'Artworks',
+        translateKey: 'nav.artworks',
+        icon: 'home',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [],
+        subMenu: [],
+    },
+
+    {
         key: 'app.categories',
         path: '/app/categories/',
         title: 'Categories',

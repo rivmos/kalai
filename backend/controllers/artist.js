@@ -12,13 +12,13 @@ const { verifyTokenMiddleware } = require('../utils/auth')
 
 /* Get Products */
 artistRouter.get('/', (req, res) => {
-    Artist.find({}).populate('artworks', 'imageUrl').then((artist) => {
+    Artist.find({}).populate('artworks', 'imageUrls').then((artist) => {
         res.json(artist)
     }).catch(error => res.json(error))
 })
 
 /* Get Single Product */
-artistRouter.get('/:id', verifyTokenMiddleware, (req, res) => {
+artistRouter.get('/:id', (req, res) => {
     const id = req.params.id
     Artist.findById(id).populate('artworks').then(artist => {
         res.json(artist)
@@ -83,7 +83,6 @@ artistRouter.post('/save', async (req, res) => {
 });
 
 
-
 artistRouter.get('/:artistId/artworks', async (req, res) => {
     try {
         const artist = await Artist.findById(req.params.artistId).populate('artworks');
@@ -95,6 +94,20 @@ artistRouter.get('/:artistId/artworks', async (req, res) => {
         res.json(artworks);
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+}); 
+
+artistRouter.delete('/:artistId', async (req, res) => {
+    try {
+        const result = await Artist.deleteOne({ _id: req.params.artistId }); // Assuming _id is the correct field
+        await Artwork.deleteMany({ artist: req.params.artistId });
+        if (result.deletedCount === 0) {
+          return res.status(404).send('No artist found with that ID');
+        }
+        res.send('Artist deleted successfully');
+    } catch (error) {
+        console.error("Error deleting artist and their artwork: ", error); // Example of logging the error
+        res.status(500).send(error.message);
     }
 });
 

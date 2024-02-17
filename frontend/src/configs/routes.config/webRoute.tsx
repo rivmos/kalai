@@ -70,7 +70,7 @@ const webRoute: Routes = [
     },
     {
         key: 'web.artwork',
-        path: '/web/artwork/:id',
+        path: '/web/artworks/:id',
         component: lazy(() => import('@/views/web/profile/Artwork')),
         authority: [],
         meta:{}
