@@ -1,36 +1,29 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SLICE_BASE_NAME } from './constants'
-import { apiGetUserActivity } from '@/services/UserService'
-import { UserActivityState } from '@/@types/user'
+import { CategoryState } from '@/@types/artist'
+import { apiGetCategories } from '@/services/CategoryService'
 
 export type CommonState = {
     loading: boolean
     currentRouteKey: string
-    userActivity: UserActivityState[]
+    categories: CategoryState[]
 }
 
 export const initialState: CommonState = {
     loading: false,
     currentRouteKey: '',
-    userActivity: []
+    categories: []
 }
 
-export const getUserActivity = createAsyncThunk(
-    SLICE_BASE_NAME + 'getUserActivity', 
-    async (userId: number) => {
-        const res = await apiGetUserActivity<{status:boolean, message:string, data:UserActivityState[]}>(userId)
-        return res.data
+export const getCategories = createAsyncThunk(
+    SLICE_BASE_NAME + '/getCategories',
+    async () => {
+        const response = await apiGetCategories<
+            { data: CategoryState[], total: number }
+        >()
+        return response.data
     }
 )
-
-// export const getUserActivity = createAsyncThunk(
-//     SLICE_NAME + '/getUserActivity',
-//     async (userId: number) => {
-//         const response =
-//             await apiGetUserActivity<{ success: boolean, message:string, data: UserActivityState[] }>(userId)
-//         return response.data
-//     }
-// )
 
 
 export const commonSlice = createSlice({
@@ -43,13 +36,13 @@ export const commonSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getUserActivity.fulfilled, (state, action) => {
-                state.userActivity = action.payload.data
+            .addCase(getCategories.fulfilled, (state, action) => {
+                state.categories = action.payload.data
                 state.loading = false
             })
-            .addCase(getUserActivity.pending, (state, action) => {
+            .addCase(getCategories.pending, (state, action) => {
                 state.loading = true
-            }) 
+            })
     }
 })
 

@@ -23,6 +23,7 @@ const subscriberRouter = require('./controllers/subscriber')
 const enquiryRouter = require('./controllers/enquiry')
 const usersRouter = require('./controllers/users')
 const categoryRouter = require('./controllers/category')
+const dashboardRouter = require('./controllers/dashboard')
 
 /* Middlewares Imports */
 const { unknownEndpoint, requestLogger } = require('./utils/middleware')
@@ -33,6 +34,7 @@ app.use(express.json())
 
 app.use('/uploads', express.static('uploads'))
 // app.use(requestLogger)
+app.use('/api/dashboard', dashboardRouter)
 app.use('/api/categories', categoryRouter)
 app.use('/api/artists', artistRouter)
 app.use('/api/artworks', artworkRouter)

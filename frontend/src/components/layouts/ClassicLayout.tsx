@@ -42,7 +42,7 @@ const ClassicLayout = () => {
                         headerStart={<HeaderActionsStart />}
                         headerEnd={<HeaderActionsEnd />}
                     />
-                    <div className="h-full flex flex-auto flex-col !bg-white">
+                    <div className="h-full flex flex-auto flex-col">
                         <View />
                     </div>
                 </div>

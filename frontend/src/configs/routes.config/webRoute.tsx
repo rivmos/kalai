@@ -5,12 +5,6 @@ import type { Routes } from '@/@types/routes'
 
 const webRoute: Routes = [
     {
-        key: 'app.users.profile',
-        path: `${WEB_PREFIX_PATH}/users/profile/:id`,
-        component: lazy(() => import('@/views/app/profile/Profile')),
-        authority: [ADMIN, USER],
-    },
-    {
         key: 'web.home',
         path: `${WEB_PREFIX_PATH}/home`,
         component: lazy(() => import('@/views/web/home/Home')),

@@ -21,7 +21,7 @@ const ShopByArtist = () => {
     const {larger, smaller, windowWidth} = useResponsive()
 
     const getImageName = (path: string) => {
-        return path.slice(path.indexOf('/backend') + ('/backend').length);
+        return path?.slice(path?.indexOf('/backend') + ('/backend').length);
     }
 
 
@@ -41,7 +41,7 @@ const ShopByArtist = () => {
                     {
                         artists?.map((artist, index) => {
                             return (
-                                <SwiperSlide className='cursor-pointer'>
+                                <SwiperSlide key={artist.id} className='cursor-pointer'>
                                     <Link to={`/web/profile/${artist.id}`}>
                                         <div className="text-gray-700">
                                         <img src={baseUrl + getImageName(artist?.artworks[0]?.imageUrls?.[0] as string)} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />

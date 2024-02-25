@@ -9,36 +9,13 @@ const dashboardConfig: NavigationTree[] = [
     {
         key: 'app.dashboard',
         path: '/app/dashboard',
-        title: 'Home',
+        title: 'Dashboard',
         translateKey: 'nav.home',
         icon: 'home',
         type: NAV_ITEM_TYPE_ITEM,
         authority: [],
         subMenu: [],
     },
-
-    {
-        key: 'app.addartist',
-        path: '/app/artists/add',
-        title: 'Add Artist',
-        translateKey: 'nav.addartist',
-        icon: 'home',
-        type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
-        subMenu: [],
-    },
-
-    {
-        key: 'app.addcategory',
-        path: '/app/categories/add',
-        title: 'Add Category',
-        translateKey: 'nav.addcategory',
-        icon: 'home',
-        type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
-        subMenu: [],
-    },
-
     {
         key: 'app.artists',
         path: '/app/artists/',

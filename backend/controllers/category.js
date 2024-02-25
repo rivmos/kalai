@@ -7,10 +7,24 @@ const config = require('../utils/config')
 const {upload} = require('../utils/middleware')
   
 /* Get Products */
-categoryRouter.get('/', (req, res) => {
-    Category.find({}).then((category) => {
-        res.json(category) 
-    }).catch(error => res.json(error))
+categoryRouter.get('/', async (req, res) => {
+    try{
+        const [categories, total] = await Promise.all([
+            Category.find({}), // Fetch all categories
+            Category.countDocuments({}) // Count total number of products
+          ]);
+        res.json({
+            data:categories,
+            total: total
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+          });
+    }
 })
 
 

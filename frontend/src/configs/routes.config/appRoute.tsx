@@ -18,25 +18,52 @@ const appRoute: Routes = [
     {
         key: 'app.addartist',
         path: `${APP_PREFIX_PATH}/artists/add`,
-        component: lazy(() => import('@/views/app/artist/ArtistForm')),
+        component: lazy(() => import('@/views/app/Artists/ArtistNew')),
         authority: [ADMIN, USER],
         meta: {
             layout: 'classic'
         }
     },
     {
-        key: 'app.addcategory',
-        path: `${APP_PREFIX_PATH}/categories/add`,
-        component: lazy(() => import('@/views/app/artist//CategoryForm')),
+        key: 'app.editartist',
+        path: `${APP_PREFIX_PATH}/artists/edit/:id`,
+        component: lazy(() => import('@/views/app/Artists/ArtistEdit')),
         authority: [ADMIN, USER],
         meta: {
             layout: 'classic'
         }
     },
+    {
+        key: 'app.editartwork',
+        path: `${APP_PREFIX_PATH}/artworks/edit/:id`,
+        component: lazy(() => import('@/views/app/Artwork/ArtworkEdit')),
+        authority: [ADMIN, USER],
+        meta: {
+            layout: 'classic'
+        }
+    },
+    {
+        key: 'app.addartwork',
+        path: `${APP_PREFIX_PATH}/artwork/add`,
+        component: lazy(() => import('@/views/app/Artwork/ArtworkForm')),
+        authority: [ADMIN, USER],
+        meta: {
+            layout: 'classic'
+        }
+    },
+    // {
+    //     key: 'app.addcategory',
+    //     path: `${APP_PREFIX_PATH}/categories/add`,
+    //     component: lazy(() => import('@/views/app/artist/CategoryForm')),
+    //     authority: [ADMIN, USER],
+    //     meta: {
+    //         layout: 'classic'
+    //     }
+    // },
     {
         key: 'app.artists',
         path: `${APP_PREFIX_PATH}/artists`,
-        component: lazy(() => import('@/views/app/artist/Artists')),
+        component: lazy(() => import('@/views/app/Artists/ArtistList/ArtistList')),
         authority: [ADMIN, USER],
         meta: {
             layout: 'classic'
@@ -46,7 +73,7 @@ const appRoute: Routes = [
     {
         key: 'app.artworks',
         path: `${APP_PREFIX_PATH}/artworks`,
-        component: lazy(() => import('@/views/app/artist/Artworks')),
+        component: lazy(() => import('@/views/app/Artwork/ArtworkList/ArtworkList')),
         authority: [ADMIN, USER],
         meta: {
             layout: 'classic'
@@ -56,7 +83,7 @@ const appRoute: Routes = [
     {
         key: 'app.categories',
         path: `${APP_PREFIX_PATH}/categories`,
-        component: lazy(() => import('@/views/app/artist/Categories')),
+        component: lazy(() => import('@/views/app/Category/CategoryList')),
         authority: [ADMIN, USER],
         meta: {
             layout: 'classic'
@@ -65,7 +92,7 @@ const appRoute: Routes = [
     {
         key: 'app.dashboard',
         path: `${APP_PREFIX_PATH}/dashboard`,
-        component: lazy(() => import('@/views/app/dashboard/Dashboard')),
+        component: lazy(() => import('@/views/app/Dashboard/Dashboard')),
         authority: [ADMIN, USER],
         meta: {
             layout: 'classic'

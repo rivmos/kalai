@@ -7,8 +7,8 @@ export type AppConfig = {
     enableMock: boolean
 }
 
-export const baseUrl = 'https://kalai-y5oa.onrender.com'
-// export const baseUrl = 'http://localhost:3001'
+// export const baseUrl = 'https://kalai-y5oa.onrender.com'
+export const baseUrl = 'http://localhost:3001'
 
 const appConfig: AppConfig = {
     apiPrefix: `${baseUrl}/api`,

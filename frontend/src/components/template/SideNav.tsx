@@ -82,7 +82,7 @@ const SideNav = () => {
                         sideNavCollapse ? sideNavCollapseStyle : sideNavStyle
                     }
                     className={classNames(
-                        'side-nav bg-[#F3F4F6]',
+                        'side-nav',
                         sideNavColor(),
                         !sideNavCollapse && 'side-nav-expand'
                     )}

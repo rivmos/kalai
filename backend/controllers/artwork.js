@@ -6,11 +6,25 @@ const getTokenFrom = require('../utils/auth').getTokenFrom
 const config = require('../utils/config')
 const {upload} = require('../utils/middleware')
   
-/* Get Products */
-artworkRouter.get('/', (req, res) => {
-    Artwork.find({}).then((artwork) => {
-        res.json(artwork) 
-    }).catch(error => res.json(error))
+/* Get Artworks */
+artworkRouter.get('/', async (req, res) => {
+    try{
+        const [artworks, total] = await Promise.all([
+            Artwork.find({}), // Fetch all products
+            Artwork.countDocuments({}) // Count total number of products
+          ]);
+        res.json({
+            data:artworks,
+            total: total
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+          });
+    }
 })
 
 /* Get Single Product */

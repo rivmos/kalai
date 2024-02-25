@@ -7,16 +7,11 @@ export async function apiGetArtists<T>() {
     })
 }
 
-export async function apiGetCategories<T>() {
+export async function apiGetArtistProfile<T, U extends Record<string, unknown>>(
+    params: U
+) {
     return ApiService.fetchData<T>({
-        url: '/categories',
-        method: 'get',
-    })
-}
-
-export async function apiGetArtistProfile<T>(id: string) {
-    return ApiService.fetchData<T>({
-        url: `/artists/${id}`,
+        url: `/artists/${params.id}`,
         method: 'get',
     })
 }
@@ -29,9 +24,11 @@ export async function apiGetArtworks<T>() {
     })
 }
 
-export async function apiGetArtworkDetail<T>(id: string) {
+export async function apiGetArtworkDetail<T, U extends Record<string, unknown>>(
+    params: U
+) {
     return ApiService.fetchData<T>({
-        url: `/artworks/${id}`,
+        url: `/artworks/${params.id}`,
         method: 'get',
     })
 }
@@ -46,12 +43,24 @@ export async function apiAddArtist<T, U extends Record<string, unknown>>(
     })
 }
 
-export async function apiDeleteArtist<T>(id: string) {
+export async function apiDeleteArtist<T, U extends Record<string, unknown>>(data: U) {
     return ApiService.fetchData<T>({
-        url: `/artists/${id}`,
+        url: `/artists/delete`,
         method: 'delete',
+        data
     })
 }
+
+// export async function apiDeleteSalesProducts<
+//     T,
+//     U extends Record<string, unknown>
+// >(data: U) {
+//     return ApiService.fetchData<T>({
+//         url: '/sales/products/delete',
+//         method: 'delete',
+//         data,
+//     })
+// }
 
 export async function apiAddCategory<T, U extends Record<string, unknown>>(
     data: U

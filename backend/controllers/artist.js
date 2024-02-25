@@ -11,10 +11,24 @@ const { verifyTokenMiddleware } = require('../utils/auth')
 // artistRouter.use(verifyTokenMiddleware)
 
 /* Get Products */
-artistRouter.get('/', (req, res) => {
-    Artist.find({}).populate('artworks', 'imageUrls').then((artist) => {
-        res.json(artist)
-    }).catch(error => res.json(error))
+artistRouter.get('/', async (req, res) => {
+    try{
+        const [artists, total] = await Promise.all([
+            Artist.find({}).populate('artworks', 'imageUrls'), // Fetch all products
+            Artist.countDocuments({}) // Count total number of products
+          ]);
+        res.json({
+            data:artists,
+            total: total
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+          });
+    }
 })
 
 /* Get Single Product */
@@ -97,10 +111,11 @@ artistRouter.get('/:artistId/artworks', async (req, res) => {
     }
 }); 
 
-artistRouter.delete('/:artistId', async (req, res) => {
+artistRouter.delete('/delete', verifyTokenMiddleware , async (req, res) => {
+    const {id} = req.body
     try {
-        const result = await Artist.deleteOne({ _id: req.params.artistId }); // Assuming _id is the correct field
-        await Artwork.deleteMany({ artist: req.params.artistId });
+        const result = await Artist.deleteOne({ _id: id }); // Assuming _id is the correct field
+        await Artwork.deleteMany({ artist: id });
         if (result.deletedCount === 0) {
           return res.status(404).send('No artist found with that ID');
         }
