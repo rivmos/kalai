@@ -1,10 +1,17 @@
 const mongoose = require('mongoose')
 
+const imageSchema = new mongoose.Schema({
+    id: String,
+    name: String,
+    img: String
+});
+
+
 const artworkSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: String,
     category: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
-    imageUrls: [String],
+    imgList: [imageSchema],
     artist: { type: mongoose.Schema.Types.ObjectId, ref: 'Artist' },
     width: {type:Number, required: true},
     height: {type:Number, required: true},

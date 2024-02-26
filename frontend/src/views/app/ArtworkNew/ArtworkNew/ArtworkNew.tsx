@@ -1,7 +1,7 @@
 import ArtworkForm, {
     FormModel,
     SetSubmitting,
-} from '@/views/app/Artwork/ArtworkForm'
+} from '@/views/app/ArtworkNew/ArtworkForm'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import { useNavigate } from 'react-router-dom'
@@ -37,12 +37,12 @@ const ArtworkNew = () => {
         //             placement: 'top-center',
         //         }
         //     )
-        //     navigate('/app/artists/')
+        //     navigate('/app/artworks/')
         // }
     }
 
     const handleDiscard = () => {
-        navigate('/app/artists/')
+        navigate('/app/artworks/')
     }
 
     return (

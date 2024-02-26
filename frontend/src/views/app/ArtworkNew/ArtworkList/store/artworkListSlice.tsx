@@ -32,6 +32,11 @@ export type SalesProductListState = {
 }
 
 type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
+type GetArtworksRequest = {
+    pageIndex?: number
+    pageSize?: number
+    query?: string
+}
 
 export const SLICE_NAME = 'artworkListSlice'
 
@@ -46,12 +51,23 @@ export const getProducts = createAsyncThunk(
     }
 )
 
+// export const getArtworks = createAsyncThunk(
+//     SLICE_NAME + '/getArtworks',
+//     async () => {
+//         const response = await apiGetArtworks<
+//             GetArtworksResponse
+//         >()
+//         return response.data
+//     }
+// )
+
 export const getArtworks = createAsyncThunk(
     SLICE_NAME + '/getArtworks',
-    async () => {
+    async (data:GetArtworksRequest) => {
         const response = await apiGetArtworks<
-            GetArtworksResponse
-        >()
+            GetArtworksResponse,
+            GetArtworksRequest
+        >(data)
         return response.data
     }
 )

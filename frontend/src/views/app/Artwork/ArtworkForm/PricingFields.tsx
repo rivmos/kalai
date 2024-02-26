@@ -13,6 +13,7 @@ import {
 import type { ComponentType } from 'react'
 import type { InputProps } from '@/components/ui/Input'
 import { Select } from '@/components/ui'
+import { FormModel } from './ArtworkForm'
 
 type FormFieldsName = {
     width: number
@@ -24,7 +25,7 @@ type FormFieldsName = {
 type PricingFieldsProps = {
     touched: FormikTouched<FormFieldsName>
     errors: FormikErrors<FormFieldsName>
-    values: FormikValues
+    values: FormModel
 }
 
 const unitOptions: {value:string, label:string}[] = [

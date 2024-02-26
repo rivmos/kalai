@@ -1,11 +1,15 @@
 import ApiService from "./ApiService";
 
-export async function apiGetArtists<T>() {
+export async function apiGetArtists<T, U extends Record<string, unknown>>(
+    data: U
+) {
     return ApiService.fetchData<T>({
         url: '/artists',
-        method: 'get',
+        method: 'post',
+        data,
     })
 }
+
 
 export async function apiGetArtistProfile<T, U extends Record<string, unknown>>(
     params: U
@@ -17,12 +21,16 @@ export async function apiGetArtistProfile<T, U extends Record<string, unknown>>(
 }
 
 
-export async function apiGetArtworks<T>() {
+export async function apiGetArtworks<T, U extends Record<string, unknown>>(
+    data: U
+) {
     return ApiService.fetchData<T>({
-        url: `/artworks`,
-        method: 'get',
+        url: '/artworks',
+        method: 'post',
+        data,
     })
 }
+
 
 export async function apiGetArtworkDetail<T, U extends Record<string, unknown>>(
     params: U

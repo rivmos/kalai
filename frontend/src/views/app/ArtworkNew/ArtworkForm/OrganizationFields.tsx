@@ -4,8 +4,6 @@ import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import CreatableSelect from 'react-select/creatable'
 import { Field, FormikErrors, FormikTouched, FieldProps } from 'formik'
-import { getCategories, useAppDispatch, useAppSelector } from '@/store'
-import { useEffect } from 'react'
 
 type Options = {
     label: string
@@ -44,25 +42,18 @@ const tags = [
 
 const OrganizationFields = (props: OrganizationFieldsProps) => {
     const { values = { category: '', tags: [] }, touched, errors } = props
-    
-    const dispatch = useAppDispatch()
-
-    const categories = useAppSelector(state => state.base.common.categories)
-
-    useEffect(() => {
-        dispatch(getCategories())
-    }, [])
 
     return (
         <AdaptableCard divider isLastChild className="mb-4">
             <h5>Organizations</h5>
-            <p className="mb-6">Section to config the artwork attribute</p>
+            <p className="mb-6">Section to config the product attribute</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
-                        asterisk
                         label="Category"
-                        invalid={errors.category && touched.category}
+                        invalid={
+                            (errors.category && touched.category) as boolean
+                        }
                         errorMessage={errors.category}
                     >
                         <Field name="category">
@@ -70,11 +61,10 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                                 <Select
                                     field={field}
                                     form={form}
-                                    options={categories.map(category => ({ label: category.name, value: category.id }))}
-                                    value={categories.map(category => ({ label: category.name, value: category.id })).find(
-                                        (option) =>
-                                            option.value ===
-                                            values.category
+                                    options={categories}
+                                    value={categories.filter(
+                                        (category) =>
+                                            category.value === values.category
                                     )}
                                     onChange={(option) =>
                                         form.setFieldValue(
@@ -88,7 +78,7 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                     </FormItem>
                 </div>
                 <div className="col-span-1">
-                    {/* <FormItem
+                    <FormItem
                         label="Tags"
                         invalid={
                             (errors.tags && touched.tags) as unknown as boolean
@@ -110,10 +100,10 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                                 />
                             )}
                         </Field>
-                    </FormItem> */}
+                    </FormItem>
                 </div>
             </div>
-            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
                     <FormItem
                         label="Brand"
@@ -144,7 +134,7 @@ const OrganizationFields = (props: OrganizationFieldsProps) => {
                         />
                     </FormItem>
                 </div>
-            </div> */}
+            </div>
         </AdaptableCard>
     )
 }

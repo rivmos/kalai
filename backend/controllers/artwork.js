@@ -5,16 +5,26 @@ const jwt = require('jsonwebtoken')
 const getTokenFrom = require('../utils/auth').getTokenFrom
 const config = require('../utils/config')
 const {upload} = require('../utils/middleware')
+const pagination = require('../utils/pagination')
   
 /* Get Artworks */
-artworkRouter.get('/', async (req, res) => {
-    try{
-        const [artworks, total] = await Promise.all([
+artworkRouter.post('/', async (req, res) => {
+    const { pageIndex, pageSize, query } = req.body
+    try {
+        let [artworks, total] = await Promise.all([
             Artwork.find({}), // Fetch all products
             Artwork.countDocuments({}) // Count total number of products
-          ]);
+        ]);
+
+        if (query) {
+            filteredData = pagination.wildCardSearch(artworks, query, 'name'); // Assuming 'name' is the field you want to search on
+            total = filteredData.length;
+            artworks = pagination.paginate(filteredData, pageSize, pageIndex); // Paginate the filtered data
+        } else {
+            artworks = pagination.paginate(artworks, pageSize, pageIndex); // Paginate all artworks if no query
+        }
         res.json({
-            data:artworks,
+            data: artworks,
             total: total
         })
     }
@@ -23,7 +33,7 @@ artworkRouter.get('/', async (req, res) => {
             success: false,
             message: 'Server error',
             error: error.message
-          });
+        });
     }
 })
 

@@ -135,7 +135,8 @@ const ArtistTable = () => {
 
     const fetchData = () => {
         // dispatch(getProducts({ pageIndex, pageSize, sort, query, filterData }))
-        dispatch(getArtworks())
+        dispatch(getArtworks({ pageIndex, pageSize, query }))
+        // dispatch(getArtworks())
     }
 
     const columns: ColumnDef<ArtworkState>[] = useMemo(

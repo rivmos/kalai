@@ -36,7 +36,7 @@ const appRoute: Routes = [
     {
         key: 'app.editartwork',
         path: `${APP_PREFIX_PATH}/artworks/edit/:id`,
-        component: lazy(() => import('@/views/app/Artwork/ArtworkEdit')),
+        component: lazy(() => import('@/views/app/ArtworkNew/ArtistEdit')),
         authority: [ADMIN, USER],
         meta: {
             layout: 'classic'
@@ -45,7 +45,7 @@ const appRoute: Routes = [
     {
         key: 'app.addartwork',
         path: `${APP_PREFIX_PATH}/artwork/add`,
-        component: lazy(() => import('@/views/app/Artwork/ArtworkForm')),
+        component: lazy(() => import('@/views/app/ArtworkNew/ArtworkNew')),
         authority: [ADMIN, USER],
         meta: {
             layout: 'classic'
@@ -73,7 +73,7 @@ const appRoute: Routes = [
     {
         key: 'app.artworks',
         path: `${APP_PREFIX_PATH}/artworks`,
-        component: lazy(() => import('@/views/app/Artwork/ArtworkList/ArtworkList')),
+        component: lazy(() => import('@/views/app/ArtworkNew/ArtworkList/ArtworkList')),
         authority: [ADMIN, USER],
         meta: {
             layout: 'classic'

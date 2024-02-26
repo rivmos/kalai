@@ -147,7 +147,7 @@ const ArtistTable = () => {
 
     const fetchData = () => {
         // dispatch(getProducts({ pageIndex, pageSize, sort, query, filterData }))
-        dispatch(getArtists())
+        dispatch(getArtists({ pageIndex, pageSize, query }))
     }
 
     const columns: ColumnDef<ArtistState>[] = useMemo(

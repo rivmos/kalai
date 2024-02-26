@@ -1,6 +1,6 @@
 export type ArtworkState = {
     id?:string,
-    imageUrls?: string[],
+    imgList?: {id:string, name:string, img:string}[],
     artist?: string,
     itemCode?:number,
     title?: string,

@@ -36,7 +36,7 @@ export type OnDeleteCallback = React.Dispatch<React.SetStateAction<boolean>>
 
 type OnDelete = (callback: OnDeleteCallback) => void
 
-type ArtistForm = {
+type ArtworkForm = {
     initialData?: InitialData
     type: 'edit' | 'new'
     onDiscard?: () => void
@@ -99,7 +99,7 @@ const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
     )
 }
 
-const ArtistForm = forwardRef<FormikRef, ArtistForm>((props, ref) => {
+const ArtworkForm = forwardRef<FormikRef, ArtworkForm>((props, ref) => {
     const {
         type,
         initialData = {
@@ -107,18 +107,6 @@ const ArtistForm = forwardRef<FormikRef, ArtistForm>((props, ref) => {
             name: '',
             website: '',
             bio: '',
-            img: '',
-            imgList: [],
-            category: '',
-            price: 0,
-            stock: 0,
-            status: 0,
-            costPerItem: 0,
-            bulkDiscountPrice: 0,
-            taxRate: 6,
-            // tags: [],
-            brand: '',
-            vendor: '',
         },
         onFormSubmit,
         onDiscard,
@@ -201,6 +189,6 @@ const ArtistForm = forwardRef<FormikRef, ArtistForm>((props, ref) => {
     )
 })
 
-ArtistForm.displayName = 'ArtistForm'
+ArtworkForm.displayName = 'ArtworkForm'
 
-export default ArtistForm
+export default ArtworkForm

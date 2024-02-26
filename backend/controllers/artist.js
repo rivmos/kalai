@@ -7,18 +7,28 @@ const getTokenFrom = require('../utils/auth').getTokenFrom
 const config = require('../utils/config')
 const { upload } = require('../utils/middleware')
 const { verifyTokenMiddleware } = require('../utils/auth')
+const pagination = require('../utils/pagination')
 
 // artistRouter.use(verifyTokenMiddleware)
 
 /* Get Products */
-artistRouter.get('/', async (req, res) => {
-    try{
-        const [artists, total] = await Promise.all([
+artistRouter.post('/', async (req, res) => {
+    const { pageIndex, pageSize, query } = req.body
+    try {
+        let [artists, total] = await Promise.all([
             Artist.find({}).populate('artworks', 'imageUrls'), // Fetch all products
             Artist.countDocuments({}) // Count total number of products
-          ]);
+        ]);
+
+        if (query) {
+            filteredData = pagination.wildCardSearch(artists, query, 'name'); // Assuming 'name' is the field you want to search on
+            total = filteredData.length;
+            artists = pagination.paginate(filteredData, pageSize, pageIndex); // Paginate the filtered data
+        } else {
+            artists = pagination.paginate(artists, pageSize, pageIndex); // Paginate all artists if no query
+        }
         res.json({
-            data:artists,
+            data: artists,
             total: total
         })
     }
@@ -27,7 +37,7 @@ artistRouter.get('/', async (req, res) => {
             success: false,
             message: 'Server error',
             error: error.message
-          });
+        });
     }
 })
 
@@ -109,15 +119,15 @@ artistRouter.get('/:artistId/artworks', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}); 
+});
 
-artistRouter.delete('/delete', verifyTokenMiddleware , async (req, res) => {
-    const {id} = req.body
+artistRouter.delete('/delete', verifyTokenMiddleware, async (req, res) => {
+    const { id } = req.body
     try {
         const result = await Artist.deleteOne({ _id: id }); // Assuming _id is the correct field
         await Artwork.deleteMany({ artist: id });
         if (result.deletedCount === 0) {
-          return res.status(404).send('No artist found with that ID');
+            return res.status(404).send('No artist found with that ID');
         }
         res.send('Artist deleted successfully');
     } catch (error) {

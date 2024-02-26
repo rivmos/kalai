@@ -24,21 +24,21 @@ const ArtistNew = () => {
         console.log(values)
         const success = await addProduct(values)
         setSubmitting(false)
-        // if (success) {
-        //     toast.push(
-        //         <Notification
-        //             title={'Successfuly added'}
-        //             type="success"
-        //             duration={2500}
-        //         >
-        //             Product successfuly added
-        //         </Notification>,
-        //         {
-        //             placement: 'top-center',
-        //         }
-        //     )
-        //     navigate('/app/artists/')
-        // }
+        if (success) {
+            toast.push(
+                <Notification
+                    title={'Successfuly added'}
+                    type="success"
+                    duration={2500}
+                >
+                    Artist successfuly added
+                </Notification>,
+                {
+                    placement: 'top-center',
+                }
+            )
+            navigate('/app/artists/')
+        }
     }
 
     const handleDiscard = () => {

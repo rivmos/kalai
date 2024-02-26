@@ -8,19 +8,6 @@ import { ArtistState } from '@/@types/artist'
 import { apiDeleteArtist, apiGetArtists } from '@/services/ArtistService'
 
 
-type Product = {
-    id: string
-    name: string
-    productCode: string
-    img: string
-    category: string
-    price: number
-    stock: number
-    status: number
-}
-
-type Products = Product[]
-
 type Artists = ArtistState[]
 
 type GetArtistsResponse = {
@@ -45,7 +32,11 @@ export type SalesProductListState = {
 }
 
 type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
-
+type GetArtistsRequest = {
+    pageIndex?: number
+    pageSize?: number
+    query?: string
+}
 export const SLICE_NAME = 'artistListSlice'
 
 export const getProducts = createAsyncThunk(
@@ -61,10 +52,11 @@ export const getProducts = createAsyncThunk(
 
 export const getArtists = createAsyncThunk(
     SLICE_NAME + '/getArtists',
-    async () => {
+    async (data:GetArtistsRequest) => {
         const response = await apiGetArtists<
-            GetArtistsResponse
-        >()
+            GetArtistsResponse,
+            GetArtistsRequest
+        >(data)
         return response.data
     }
 )
@@ -133,14 +125,6 @@ const artistListSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            // .addCase(getProducts.fulfilled, (state, action) => {
-            //     state.artistList = action.payload.data
-            //     state.tableData.total = action.payload.total
-            //     state.loading = false
-            // })
-            // .addCase(getProducts.pending, (state) => {
-            //     state.loading = true
-            // })
             .addCase(getArtists.fulfilled, (state, action) => {
                 state.artistList = action.payload.data
                 state.tableData.total = action.payload.total

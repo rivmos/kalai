@@ -4,6 +4,7 @@ import Input from '@/components/ui/Input'
 import { FormItem } from '@/components/ui/Form'
 import { Field, FormikErrors, FormikTouched, FieldProps, FormikValues } from 'formik'
 import { Switcher } from '@/components/ui'
+import { FormModel } from './ArtworkForm'
 
 type FormFieldsName = {
     medium: string,
@@ -15,7 +16,7 @@ type FormFieldsName = {
 type MiscInformationFields = {
     touched: FormikTouched<FormFieldsName>
     errors: FormikErrors<FormFieldsName>
-    values: FormikValues
+    values: FormModel
 }
 
 
