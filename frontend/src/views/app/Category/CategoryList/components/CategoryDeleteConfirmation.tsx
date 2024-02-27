@@ -3,11 +3,10 @@ import Notification from '@/components/ui/Notification'
 import ConfirmDialog from '@/components/shared/ConfirmDialog'
 import {
     toggleDeleteConfirmation,
-    deleteProduct,
-    getProducts,
     useAppDispatch,
     useAppSelector,
-    deleteArtist,
+    deleteCategory,
+    getCategories,
 } from '../store'
 
 const ArtistDeleteConfirmation = () => {
@@ -16,7 +15,7 @@ const ArtistDeleteConfirmation = () => {
         (state) => state.categoryListSlice.data.deleteConfirmation
     )
     const selectedProduct = useAppSelector(
-        (state) => state.categoryListSlice.data.selectedArtist
+        (state) => state.categoryListSlice.data.selectedCategory
     )
     const tableData = useAppSelector(
         (state) => state.categoryListSlice.data.tableData
@@ -29,10 +28,10 @@ const ArtistDeleteConfirmation = () => {
     const onDelete = async () => {
         dispatch(toggleDeleteConfirmation(false))
         // const success = await deleteProduct({ id: selectedProduct })
-        const success = await deleteArtist({ id: selectedProduct })
+        const success = await deleteCategory({ id: selectedProduct })
 
         if (success) {
-            dispatch(getProducts(tableData))
+            dispatch(getCategories(tableData))
             toast.push(
                 <Notification
                     title={'Successfuly Deleted'}

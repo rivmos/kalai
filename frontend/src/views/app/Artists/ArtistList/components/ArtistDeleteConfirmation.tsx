@@ -8,6 +8,7 @@ import {
     useAppDispatch,
     useAppSelector,
     deleteArtist,
+    getArtists,
 } from '../store'
 
 const ArtistDeleteConfirmation = () => {
@@ -32,7 +33,8 @@ const ArtistDeleteConfirmation = () => {
         const success = await deleteArtist({ id: selectedProduct })
 
         if (success) {
-            dispatch(getProducts(tableData))
+            // dispatch(getProducts(tableData))
+            dispatch(getArtists(tableData))
             toast.push(
                 <Notification
                     title={'Successfuly Deleted'}

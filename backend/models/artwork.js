@@ -10,8 +10,8 @@ const imageSchema = new mongoose.Schema({
 const artworkSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: String,
-    category: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
-    imgList: [imageSchema],
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
+    imgList: [String],
     artist: { type: mongoose.Schema.Types.ObjectId, ref: 'Artist' },
     width: {type:Number, required: true},
     height: {type:Number, required: true},

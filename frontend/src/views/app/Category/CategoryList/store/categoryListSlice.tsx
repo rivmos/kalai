@@ -6,7 +6,7 @@ import {
 import type { TableQueries } from '@/@types/common'
 import {  CategoryState } from '@/@types/artist'
 import { apiDeleteArtist, apiGetArtists } from '@/services/ArtistService'
-import { apiGetCategories } from '@/services/CategoryService'
+import { apiDeleteCategory, apiGetCategories } from '@/services/CategoryService'
 
 type Categories = CategoryState[]
 
@@ -25,13 +25,18 @@ type FilterQueries = {
 export type SalesProductListState = {
     loading: boolean
     deleteConfirmation: boolean
-    selectedArtist: string
+    selectedCategory: string
     tableData: TableQueries
     filterData: FilterQueries
     categoryList: Categories
 }
 
 type GetSalesProductsRequest = TableQueries & { filterData?: FilterQueries }
+type GetCategoriesRequest = {
+    pageIndex?: number
+    pageSize?: number
+    query?: string
+}
 
 export const SLICE_NAME = 'categoryListSlice'
 
@@ -48,10 +53,11 @@ export const getProducts = createAsyncThunk(
 
 export const getCategories = createAsyncThunk(
     SLICE_NAME + '/getCategories',
-    async () => {
+    async (data:GetCategoriesRequest) => {
         const response = await apiGetCategories<
-            GetCategoriesResponse
-        >()
+            GetCategoriesResponse,
+            GetCategoriesRequest
+        >(data)
         return response.data
     }
 )
@@ -64,8 +70,8 @@ export const deleteProduct = async (data: { id: string | string[] }) => {
     return response.data
 }
 
-export const deleteArtist = async (data: { id: string | string[] }) => {
-    const response = await apiDeleteArtist<
+export const deleteCategory = async (data: { id: string | string[] }) => {
+    const response = await apiDeleteCategory<
         boolean,
         { id: string | string[] }
     >(data)
@@ -87,7 +93,7 @@ export const initialTableData: TableQueries = {
 const initialState: SalesProductListState = {
     loading: false,
     deleteConfirmation: false,
-    selectedArtist: '',
+    selectedCategory: '',
     categoryList: [],
     tableData: initialTableData,
     filterData: {
@@ -114,8 +120,8 @@ const categoryListSlice = createSlice({
         toggleDeleteConfirmation: (state, action) => {
             state.deleteConfirmation = action.payload
         },
-        setSelectedArtist: (state, action) => {
-            state.selectedArtist = action.payload
+        setSelectedCategory: (state, action) => {
+            state.selectedCategory = action.payload
         },
     },
     extraReducers: (builder) => {
@@ -144,7 +150,7 @@ export const {
     setTableData,
     setFilterData,
     toggleDeleteConfirmation,
-    setSelectedArtist,
+    setSelectedCategory,
 } = categoryListSlice.actions
 
 export default categoryListSlice.reducer

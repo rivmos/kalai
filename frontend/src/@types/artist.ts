@@ -1,24 +1,24 @@
 export type ArtworkState = {
     id?:string,
-    imgList?: {id:string, name:string, img:string}[],
+    imgList?: string[],
     artist?: string,
     itemCode?:number,
     title?: string,
     description?: string,
-    category?: number,
+    category?: string,
     width?: number,
     height?: number,
     sizeUnit?: string,
     price?: number,
     medium?: string,
     deliveredAs?:string,
-    createdIn?:number,
+    createdIn?:string,
     isSold?:boolean
 }
 
 export type CategoryState = {
-    id:number,
-    name:string
+    id?:string,
+    name?:string
 }
 
 export type ArtistState = {

@@ -41,6 +41,21 @@ artistRouter.post('/', async (req, res) => {
     }
 })
 
+artistRouter.get('/all', async (req, res) => {
+    try {
+        const artists = await Artist.find({})
+        res.json(artists)
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+        });
+    }
+})
+
+
 /* Get Single Product */
 artistRouter.get('/:id', (req, res) => {
     const id = req.params.id
@@ -53,20 +68,7 @@ artistRouter.get('/:id', (req, res) => {
     })
 })
 
-// const validateArtist = (body) => {
-//     if (!body.name) {
-//         return 'Name'
-//     }
-//     else if (!body.bio) {
-//         return 'Bio'
-//     }
-//     else if (!body.website) {
-//         return 'Website'
-//     }
-//     else {
-//         return ''
-//     }
-// }
+
 artistRouter.post('/save', async (req, res) => {
     const decodedToken = jwt.verify(getTokenFrom(req), config.JWTSECRET);
     if (!decodedToken.id) {

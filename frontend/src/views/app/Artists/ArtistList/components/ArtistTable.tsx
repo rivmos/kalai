@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import Avatar from '@/components/ui/Avatar'
 import Badge from '@/components/ui/Badge'
 import DataTable from '@/components/shared/DataTable'
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
+import { HiEye, HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { FiPackage } from 'react-icons/fi'
 import {
     getProducts,
@@ -70,6 +70,10 @@ const ActionColumn = ({ row }: { row: ArtistState }) => {
         navigate(`/app/artists/edit/${row.id}`)
     }
 
+    const onView = () => {
+        navigate(`/app/profile/${row.id}`)
+    }
+
     const onDelete = () => {
         dispatch(toggleDeleteConfirmation(true))
         dispatch(setSelectedArtist(row.id))
@@ -82,6 +86,12 @@ const ActionColumn = ({ row }: { row: ArtistState }) => {
                 onClick={onEdit}
             >
                 <HiOutlinePencil />
+            </span>
+            <span
+                className={`cursor-pointer p-2 hover:text-gray-400`}
+                onClick={onView}
+            >
+                <HiEye />
             </span>
             <span
                 className="cursor-pointer p-2 hover:text-red-500"

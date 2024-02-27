@@ -10,6 +10,12 @@ export async function apiGetArtists<T, U extends Record<string, unknown>>(
     })
 }
 
+export async function apiGetAllArtists<T>() {
+    return ApiService.fetchData<T>({
+        url: '/artists/all',
+        method: 'get',
+    })
+}
 
 export async function apiGetArtistProfile<T, U extends Record<string, unknown>>(
     params: U
@@ -59,6 +65,16 @@ export async function apiDeleteArtist<T, U extends Record<string, unknown>>(data
     })
 }
 
+
+export async function apiDeleteArtwork<T, U extends Record<string, unknown>>(data: U) {
+    return ApiService.fetchData<T>({
+        url: `/artworks/delete`,
+        method: 'delete',
+        data
+    })
+}
+
+
 // export async function apiDeleteSalesProducts<
 //     T,
 //     U extends Record<string, unknown>
@@ -84,7 +100,7 @@ export async function apiAddArtwork<T, U extends Record<string, unknown>>(
     data: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/artworks/new',
+        url: '/artworks/save',
         method: 'post',
         data,
         headers: {

@@ -7,7 +7,7 @@ import { FiPackage } from 'react-icons/fi'
 import {
     getProducts,
     setTableData,
-    setSelectedArtist,
+    setSelectedCategory,
     toggleDeleteConfirmation,
     useAppDispatch,
     useAppSelector,
@@ -55,12 +55,12 @@ const ActionColumn = ({ row }: { row: CategoryState }) => {
     const navigate = useNavigate()
 
     const onEdit = () => {
-        navigate(`/ app/artists/add/${row.id}`)
+        navigate(`/app/categories/edit/${row.id}`)
     }
 
     const onDelete = () => {
         dispatch(toggleDeleteConfirmation(true))
-        dispatch(setSelectedArtist(row.id))
+        dispatch(setSelectedCategory(row.id))
     }
 
     return (
@@ -135,7 +135,7 @@ const ArtistTable = () => {
 
     const fetchData = () => {
         // dispatch(getProducts({ pageIndex, pageSize, sort, query, filterData }))
-        dispatch(getCategories())
+        dispatch(getCategories({ pageIndex, pageSize, query }))
     }
 
     const columns: ColumnDef<CategoryState>[] = useMemo(
