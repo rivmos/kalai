@@ -40,7 +40,7 @@ const ArtistDeleteConfirmation = () => {
                     type="success"
                     duration={2500}
                 >
-                    Artist successfuly deleted
+                    Artwork successfuly deleted
                 </Notification>,
                 {
                     placement: 'top-center',
@@ -61,8 +61,8 @@ const ArtistDeleteConfirmation = () => {
             onConfirm={onDelete}
         >
             <p>
-                Are you sure you want to delete this product? All record related
-                to this product will be deleted as well. This action cannot be
+                Are you sure you want to delete this artwork? All record related
+                to this artwork will be deleted as well. This action cannot be
                 undone.
             </p>
         </ConfirmDialog>

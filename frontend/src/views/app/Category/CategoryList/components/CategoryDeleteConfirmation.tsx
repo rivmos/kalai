@@ -59,8 +59,8 @@ const ArtistDeleteConfirmation = () => {
             onConfirm={onDelete}
         >
             <p>
-                Are you sure you want to delete this product? All record related
-                to this product will be deleted as well. This action cannot be
+                Are you sure you want to delete this category? All record related
+                to this category will be deleted as well. This action cannot be
                 undone.
             </p>
         </ConfirmDialog>

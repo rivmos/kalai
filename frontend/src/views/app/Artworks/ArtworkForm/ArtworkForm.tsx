@@ -111,8 +111,8 @@ const DeleteProductButton = ({ onDelete }: { onDelete: OnDelete }) => {
                 onConfirm={handleConfirm}
             >
                 <p>
-                    Are you sure you want to delete this product? All record
-                    related to this product will be deleted as well. This action
+                    Are you sure you want to delete this artwork? All record
+                    related to this artwork will be deleted as well. This action
                     cannot be undone.
                 </p>
             </ConfirmDialog>
