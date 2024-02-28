@@ -5,6 +5,7 @@ const artistSchema = new mongoose.Schema({
     bio: String,
     website: String,
     artworks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Artwork' }],
+    avatar: String
 })
 
 artistSchema.set('toJSON', {

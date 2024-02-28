@@ -10,6 +10,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
+import ProductImages from './ProductImages'
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 type FormikRef = FormikProps<any>
@@ -19,12 +20,7 @@ type InitialData = {
     name?: string
     website?: string
     bio?: string
-    // img?: string
-    // imgList?: {
-    //     id: string
-    //     name: string
-    //     img: string
-    // }[]
+    avatar?: string
 
 }
 
@@ -107,18 +103,7 @@ const ArtistForm = forwardRef<FormikRef, ArtistForm>((props, ref) => {
             name: '',
             website: '',
             bio: '',
-            img: '',
-            imgList: [],
-            category: '',
-            price: 0,
-            stock: 0,
-            status: 0,
-            costPerItem: 0,
-            bulkDiscountPrice: 0,
-            taxRate: 6,
-            // tags: [],
-            brand: '',
-            vendor: '',
+            avatar:'',
         },
         onFormSubmit,
         onDiscard,
@@ -158,9 +143,9 @@ const ArtistForm = forwardRef<FormikRef, ArtistForm>((props, ref) => {
                                     />
             
                                 </div>
-                                {/* <div className="lg:col-span-1">
+                                <div className="lg:col-span-1">
                                     <ProductImages values={values} />
-                                </div> */}
+                                </div>
                             </div>
                             <StickyFooter
                                 className="-mx-8 px-8 flex items-center justify-between py-4"

@@ -89,6 +89,16 @@ const appRoute: Routes = [
     },
 
     {
+        key: 'app.profile',
+        path: `${APP_PREFIX_PATH}/artworks/:id`,
+        component: lazy(() => import('@/views/app/Artworks/ArtworkDetail')),
+        authority: [ADMIN, USER],
+        meta: {
+            layout: 'classic'
+        }
+    },
+
+    {
         key: 'app.artworks',
         path: `${APP_PREFIX_PATH}/artworks`,
         component: lazy(() => import('@/views/app/Artworks/ArtworkList/ArtworkList')),

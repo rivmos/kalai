@@ -20,19 +20,42 @@ const unknownEndpoint = (request, response) => {
 
 // Multer Upload Object
 
-const storage = multer.diskStorage({
+const artworkStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '..', '/uploads'));
+    cb(null, path.join(__dirname, '..', '/uploads/artwork'));
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname);
   }
 });
 
-const upload = multer({ storage: storage });
+const categoryStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', '/uploads/category'));
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const avatarStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', '/uploads/avatar'));
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+
+const uploadArtwork = multer({ storage: artworkStorage });
+const uploadCategory = multer({ storage: categoryStorage });
+const uploadAvatar = multer({ storage: avatarStorage });
 
 module.exports = {
   requestLogger,
   unknownEndpoint,
-  upload
+  uploadArtwork,
+  uploadCategory,
+  uploadAvatar
 }

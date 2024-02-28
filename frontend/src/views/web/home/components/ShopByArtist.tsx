@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import { Button } from '@/components/ui';
-import { getArtists, useAppDispatch, useAppSelector } from '../store';
+import { getAllArtists, useAppDispatch, useAppSelector } from '@/store';
 import { Link } from 'react-router-dom';
 import useResponsive from '@/utils/hooks/useResponsive';
 import { baseUrl } from '@/configs/app.config';
@@ -14,16 +14,10 @@ import { baseUrl } from '@/configs/app.config';
 const ShopByArtist = () => {
     const dispatch = useAppDispatch()
     useEffect(() => {
-        dispatch(getArtists())
+        dispatch(getAllArtists())
     }, [])
-    const artists = useAppSelector(state => state.home.data.artists)
-    const [autoPlay, setAutoPlay] = useState(true)
-    const {larger, smaller, windowWidth} = useResponsive()
-
-    const getImageName = (path: string) => {
-        return path?.slice(path?.indexOf('/backend') + ('/backend').length);
-    }
-
+    const artists = useAppSelector(state => state.base.common.allArtists)
+    const {larger} = useResponsive()
 
     return (
         <>
@@ -33,7 +27,7 @@ const ShopByArtist = () => {
                 <Swiper
                     modules={[Autoplay, Pagination]}
                     spaceBetween={20}
-                    autoplay={autoPlay}
+                    autoplay
                     slidesPerView={larger.sm === false ? 1 : larger.md === false ? 2 : 4}
                     onSwiper={(swiper) => {}}
                     className='my-4 md:my-8 lg:my-16 h-[300px]'
@@ -42,9 +36,9 @@ const ShopByArtist = () => {
                         artists?.map((artist, index) => {
                             return (
                                 <SwiperSlide key={artist.id} className='cursor-pointer'>
-                                    <Link to={`/web/profile/${artist.id}`}>
+                                    <Link to={`/app/profile/${artist.id}`}>
                                         <div className="text-gray-700">
-                                        <img src={baseUrl + getImageName(artist?.artworks[0]?.imageUrls?.[0] as string)} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
+                                        <img src={`${baseUrl}/uploads/avatar/${artist?.avatar}`} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
                                             <div className="relative px-4 -mt-8  ">
                                                 <div className="bg-white p-4 rounded-lg shadow-lg">
                                                     <h4 className="mt-1 text-base capitalize text-center leading-tight text-gray-700 truncate">{artist.name}</h4>

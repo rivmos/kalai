@@ -5,7 +5,7 @@ const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
 const getTokenFrom = require('../utils/auth').getTokenFrom
 const config = require('../utils/config')
-const { upload } = require('../utils/middleware')
+const { upload, uploadAvatar } = require('../utils/middleware')
 const { verifyTokenMiddleware } = require('../utils/auth')
 const pagination = require('../utils/pagination')
 
@@ -69,19 +69,22 @@ artistRouter.get('/:id', (req, res) => {
 })
 
 
-artistRouter.post('/save', async (req, res) => {
+artistRouter.post('/save', uploadAvatar.single('avatar'),async (req, res) => {
     const decodedToken = jwt.verify(getTokenFrom(req), config.JWTSECRET);
     if (!decodedToken.id) {
         return res.status(401).json({ error: 'token invalid' });
     }
 
-    const { id, name, bio, website, artworks } = req.body;
+    const { id, name, bio, website, artworks, avatar } = req.body;
+    const uploadedImage = req.file.filename
 
     // Optional: Add validation logic here for the request body.
 
     try {
         let artist;
         if (id) {
+            const avatarNotUpdated = typeof avatar === 'string'
+
             // Update existing artist
             artist = await Artist.findById(id);
             if (!artist) {
@@ -90,10 +93,17 @@ artistRouter.post('/save', async (req, res) => {
             artist.name = name;
             artist.bio = bio;
             artist.website = website;
+            artist.artworks = artworks;
+            if(avatarNotUpdated){
+                artist.avatar = avatar
+            }
+            else{
+                artist.avatar = uploadedImage
+            }
             // Update artworks logic here, if necessary.
         } else {
             // Create new artist
-            artist = new Artist({ name, bio, website, artworks });
+            artist = new Artist({ name, bio, website, artworks, avatar:uploadedImage });
         }
 
         const savedArtist = await artist.save();
@@ -126,12 +136,24 @@ artistRouter.get('/:artistId/artworks', async (req, res) => {
 artistRouter.delete('/delete', verifyTokenMiddleware, async (req, res) => {
     const { id } = req.body
     try {
-        const result = await Artist.deleteOne({ _id: id }); // Assuming _id is the correct field
-        await Artwork.deleteMany({ artist: id });
-        if (result.deletedCount === 0) {
-            return res.status(404).send('No artist found with that ID');
+        // const result = await Artist.deleteOne({ _id: id }); // Assuming _id is the correct field
+        // await Artwork.deleteMany({ artist: id });
+        // if (result.deletedCount === 0) {
+        //     return res.status(404).send('No artist found with that ID');
+        // }
+        // res.send('Artist deleted successfully');
+
+        const artist = await Artist.findById(id);
+    
+        if (!artist) {
+          return res.status(404).json({ message: "Artist not found" });
         }
-        res.send('Artist deleted successfully');
+    
+        // Delete associated artworks
+        await Artwork.deleteMany({ artist: artist.id });
+        await Artist.deleteOne({ _id: id })
+    
+        res.json({ message: "Artist and associated artworks deleted successfully" });
     } catch (error) {
         console.error("Error deleting artist and their artwork: ", error); // Example of logging the error
         res.status(500).send(error.message);

@@ -26,6 +26,7 @@ export type ArtistState = {
     name?: string,
     website?: string,
     bio?: string,
+    avatar?: string,
     artworks?: ArtworkState[],
 }
 

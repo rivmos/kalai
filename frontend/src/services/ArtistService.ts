@@ -54,6 +54,9 @@ export async function apiAddArtist<T, U extends Record<string, unknown>>(
         url: '/artists/save',
         method: 'post',
         data,
+        headers: {
+            "Content-Type": 'multipart/form-data'
+        }
     })
 }
 

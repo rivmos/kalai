@@ -6,16 +6,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import { Button } from '@/components/ui';
-import { getArtists, getCategories, useAppDispatch, useAppSelector } from '../store';
 import { Link } from 'react-router-dom';
+import { getAllCategories, useAppDispatch, useAppSelector } from '@/store';
 
 const ShopByTheme = () => {
     const dispatch = useAppDispatch()
     useEffect(() => {
-        dispatch(getCategories())
+        dispatch(getAllCategories())
     }, [])
-    const categories = useAppSelector(state => state.home.data.categories)
-    const [autoPlay, setAutoPlay] = useState(true)
+    const categories = useAppSelector(state => state.base.common.categories)
     return (
         <>
             <div className='container mx-auto !py-16 md:!py-20 lg:!py-28'>

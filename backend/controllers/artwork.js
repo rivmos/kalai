@@ -5,7 +5,7 @@ const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
 const getTokenFrom = require('../utils/auth').getTokenFrom
 const config = require('../utils/config')
-const {upload} = require('../utils/middleware')
+const {uploadArtwork} = require('../utils/middleware')
 const { verifyTokenMiddleware } = require('../utils/auth')
 const pagination = require('../utils/pagination')
   
@@ -52,16 +52,20 @@ artworkRouter.get('/:id', (req, res) => {
 })
 
 
-artworkRouter.post('/save', upload.array('imgList[]'), async (req, res) => {
+
+artworkRouter.post('/save', uploadArtwork.array('imgList[]'), async (req, res) => {
     const decodedToken = jwt.verify(getTokenFrom(req, res), config.JWTSECRET);
     if (!decodedToken.id) {
         return res.status(401).json({ error: 'token invalid' });
     }
-    const { id, title, description, category, width, height, sizeUnit, price, medium, deliveredAs, createdIn, isSold, artist } = req.body;
+    const { id, title, description, category, width, height, sizeUnit, price, medium, deliveredAs, createdIn, isSold, artist, imgList } = req.body;
 
+    
     const images = req.files.map(file => file.filename);
 
+    
     if (id) {
+        const alreadyExistingImages = imgList.filter(img => typeof img === 'string')
         // Update existing artwork
         Artwork.findByIdAndUpdate(id, {
             title,
@@ -76,12 +80,17 @@ artworkRouter.post('/save', upload.array('imgList[]'), async (req, res) => {
             createdIn,
             isSold,
             artist,
-            imgList: images
+            imgList: [...images, ...alreadyExistingImages]
         }, { new: true })
-            .then(updatedArtwork => {
+            .then(async (updatedArtwork) => {
                 if (!updatedArtwork) {
                     return res.status(404).json({ error: 'Artwork not found' });
                 }
+                const artistSelected = await Artist.findById(artist)
+                if(!artistSelected.artworks.includes(updatedArtwork._id)){
+                    artistSelected.artworks.push(updatedArtwork.id)
+                }
+                artistSelected.save()
                 logger.info('Artwork updated');
                 res.json(updatedArtwork);
             })
