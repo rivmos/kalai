@@ -6,15 +6,7 @@ import sideNavRoutes from './sideNavRoutes'
 
 const appRoute: Routes = [
     ...sideNavRoutes,
-    {
-        key: 'app.project',
-        path: `${APP_PREFIX_PATH}/project/:id`,
-        component: lazy(() => import('@/views/app/project/SingleProject/Project')),
-        authority: [ADMIN, USER],
-        meta: {
-            layout: 'classic'
-        }
-    },
+   
     {
         key: 'app.addartist',
         path: `${APP_PREFIX_PATH}/artists/add`,
