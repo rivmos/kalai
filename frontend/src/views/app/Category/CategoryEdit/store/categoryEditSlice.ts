@@ -5,7 +5,7 @@ import {
     apiDeleteSalesProducts,
 } from '@/services/SalesService'
 import { ArtistState, CategoryState } from '@/@types/artist'
-import { apiAddCategory } from '@/services/ArtistService'
+import { apiAddCategory } from '@/services/CategoryService'
 import { apiGetSingleCategory } from '@/services/CategoryService'
 
 

@@ -35,7 +35,7 @@ const Banner = () => {
         className='h-[500px] lg:h-[700px]'
       >
         {
-          allBanners.map(banner => {
+          allBanners?.map(banner => {
             return (
               <SwiperSlide key={banner.id} className='z-[2]'>
                 <img src={`${baseUrl}/uploads/banner/${banner.img}`} className='w-full h-full object-cover' />
