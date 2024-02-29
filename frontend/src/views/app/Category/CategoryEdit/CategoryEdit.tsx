@@ -70,7 +70,7 @@ const ProductEdit = () => {
                 type="success"
                 duration={2500}
             >
-                Artist successfuly {keyword}
+                Category successfuly {keyword}
             </Notification>,
             {
                 placement: 'top-center',

@@ -8,6 +8,7 @@ import 'swiper/css';
 import { Button } from '@/components/ui';
 import { Link } from 'react-router-dom';
 import { getAllCategories, useAppDispatch, useAppSelector } from '@/store';
+import { baseUrl } from '@/configs/app.config';
 
 const ShopByTheme = () => {
     const dispatch = useAppDispatch()
@@ -27,7 +28,7 @@ const ShopByTheme = () => {
                     categories.map((category, index) => {
                         return(
                             <div key={category.id} className='relative rounded-full overflow-hidden group cursor-pointer w-52 h-52'>
-                                <img src={`/img/banner/${index+1}.jpg`} className='group-hover:scale-125 transition-all duration-[4000ms] h-full object-cover'/>
+                                <img src={category.img ? `${baseUrl}/uploads/category/${category.img}` : `/img/banner/${index+1}.jpg`} className='group-hover:scale-125 transition-all duration-[4000ms] h-full object-cover'/>
                                 <div className='bg-gray-600 opacity-40 absolute top-0 left-0 z-[1] h-full w-full'></div>
                                 <div className='text-center text-white font-semibold text-lg z-[2] absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]'>
                                     {category.name}

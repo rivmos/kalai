@@ -26,18 +26,18 @@ const appRoute: Routes = [
         }
     },
     {
-        key: 'app.editartwork',
-        path: `${APP_PREFIX_PATH}/artworks/edit/:id`,
-        component: lazy(() => import('@/views/app/Artworks/ArtworkEdit')),
+        key: 'app.addartwork',
+        path: `${APP_PREFIX_PATH}/artwork/add`,
+        component: lazy(() => import('@/views/app/Artworks/ArtworkNew')),
         authority: [ADMIN, USER],
         meta: {
             layout: 'classic'
         }
     },
     {
-        key: 'app.addartwork',
-        path: `${APP_PREFIX_PATH}/artwork/add`,
-        component: lazy(() => import('@/views/app/Artworks/ArtworkNew')),
+        key: 'app.editartwork',
+        path: `${APP_PREFIX_PATH}/artworks/edit/:id`,
+        component: lazy(() => import('@/views/app/Artworks/ArtworkEdit')),
         authority: [ADMIN, USER],
         meta: {
             layout: 'classic'
@@ -62,6 +62,24 @@ const appRoute: Routes = [
         }
     },
     {
+        key: 'app.addbanner',
+        path: `${APP_PREFIX_PATH}/banners/add`,
+        component: lazy(() => import('@/views/app/Banner/BannerNew')),
+        authority: [ADMIN, USER],
+        meta: {
+            layout: 'classic'
+        }
+    },
+    {
+        key: 'app.editbanner',
+        path: `${APP_PREFIX_PATH}/banners/edit/:id`,
+        component: lazy(() => import('@/views/app/Banner/BannerEdit')),
+        authority: [ADMIN, USER],
+        meta: {
+            layout: 'classic'
+        }
+    },
+    {
         key: 'app.artists',
         path: `${APP_PREFIX_PATH}/artists`,
         component: lazy(() => import('@/views/app/Artists/ArtistList/ArtistList')),
@@ -70,26 +88,8 @@ const appRoute: Routes = [
             layout: 'classic'
         }
     },
-    {
-        key: 'app.profile',
-        path: `${APP_PREFIX_PATH}/profile/:id`,
-        component: lazy(() => import('@/views/app/Artists/ArtistProfile')),
-        authority: [ADMIN, USER],
-        meta: {
-            layout: 'classic'
-        }
-    },
 
-    {
-        key: 'app.profile',
-        path: `${APP_PREFIX_PATH}/artworks/:id`,
-        component: lazy(() => import('@/views/app/Artworks/ArtworkDetail')),
-        authority: [ADMIN, USER],
-        meta: {
-            layout: 'classic'
-        }
-    },
-
+    
     {
         key: 'app.artworks',
         path: `${APP_PREFIX_PATH}/artworks`,
@@ -109,6 +109,36 @@ const appRoute: Routes = [
             layout: 'classic'
         }
     },
+
+    {
+        key: 'app.banners',
+        path: `${APP_PREFIX_PATH}/banners`,
+        component: lazy(() => import('@/views/app/Banner/BannerList')),
+        authority: [ADMIN, USER],
+        meta: {
+            layout: 'classic'
+        }
+    },
+
+    {
+        key: 'app.artistprofile',
+        path: `${APP_PREFIX_PATH}/profile/:id`,
+        component: lazy(() => import('@/views/app/Artists/ArtistProfile')),
+        authority: [],
+        meta: {
+            layout: 'classic'
+        }
+    },
+    {
+        key: 'app.artworkdetail',
+        path: `${APP_PREFIX_PATH}/artworks/:id`,
+        component: lazy(() => import('@/views/app/Artworks/ArtworkDetail')),
+        authority: [ADMIN, USER],
+        meta: {
+            layout: 'classic'
+        }
+    },
+
     {
         key: 'app.dashboard',
         path: `${APP_PREFIX_PATH}/dashboard`,

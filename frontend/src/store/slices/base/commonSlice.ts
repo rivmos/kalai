@@ -1,21 +1,25 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { SLICE_BASE_NAME } from './constants'
-import { Artists, Categories, CategoryState } from '@/@types/artist'
+import { Artists, Categories, CategoryState, Banners } from '@/@types/artist'
 import { apiGetAllCategories, apiGetCategories } from '@/services/CategoryService'
 import { apiGetAllArtists } from '@/services/ArtistService'
+import { apiGetAllBannerImages } from '@/services/BannerService'
+import { getBannerImages } from '@/views/app/Banner/BannerList/store'
 
 export type CommonState = {
     loading: boolean
     currentRouteKey: string
     categories: Categories
     allArtists: Artists
+    allBanners: Banners
 }
 
 export const initialState: CommonState = {
     loading: false,
     currentRouteKey: '',
     categories: [],
-    allArtists:[]
+    allArtists:[],
+    allBanners:[]
 }
 
 export const getAllCategories = createAsyncThunk(
@@ -38,6 +42,17 @@ export const getAllArtists = createAsyncThunk(
         return response.data
     }
 )
+
+export const getAllBanners = createAsyncThunk(
+    SLICE_BASE_NAME + '/getAllBanners',
+    async () => {
+        const response = await apiGetAllBannerImages<
+            Banners
+        >()
+        return response.data
+    }
+)
+
 
 
 
@@ -63,6 +78,13 @@ export const commonSlice = createSlice({
                 state.loading = false
             })
             .addCase(getAllArtists.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(getAllBanners.fulfilled, (state, action) => {
+                state.allBanners = action.payload
+                state.loading = false
+            })
+            .addCase(getBannerImages.pending, (state, action) => {
                 state.loading = true
             })
     }

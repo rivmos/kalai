@@ -76,7 +76,8 @@ artistRouter.post('/save', uploadAvatar.single('avatar'),async (req, res) => {
     }
 
     const { id, name, bio, website, artworks, avatar } = req.body;
-    const uploadedImage = req.file.filename
+
+    const uploadedImage = req?.file?.filename
 
     // Optional: Add validation logic here for the request body.
 

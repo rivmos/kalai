@@ -35,3 +35,16 @@ export async function apiDeleteCategory<T, U extends Record<string, unknown>>(da
         data
     })
 }
+
+export async function apiAddCategory<T, U extends Record<string, unknown>>(
+    data: U
+) {
+    return ApiService.fetchData<T>({
+        url: '/categories/save',
+        method: 'post',
+        data,
+        headers: {
+            "Content-Type": 'multipart/form-data'
+        }
+    })
+}

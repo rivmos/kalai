@@ -4,7 +4,7 @@ import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import reducer, {
-    getProduct,
+    getArtistProfile,
     updateProduct,
     deleteProduct,
     useAppSelector,
@@ -36,7 +36,7 @@ const ProductEdit = () => {
     )
 
     const fetchData = (data: { id: string }) => {
-        dispatch(getProduct(data))
+        dispatch(getArtistProfile(data))
     }
 
     const handleFormSubmit = async (

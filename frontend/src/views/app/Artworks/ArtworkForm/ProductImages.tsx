@@ -64,9 +64,6 @@ const ImageList = (props: ImageListProps) => {
         setDeleteConfirmationOpen(false)
     }
 
-    const getImageName = (path: string) => {
-        return path?.slice(path?.indexOf('\backend') + ('\backend').length);
-    }
 
     return (
         <>
@@ -185,8 +182,8 @@ const ProductImages = (props: ProductImagesProps) => {
 
     return (
         <AdaptableCard className="mb-4">
-            <h5>Product Image</h5>
-            <p className="mb-6">Add or change image for the product</p>
+            <h5>Artwork Images</h5>
+            <p className="mb-6">Add or change image for the artwork</p>
             <FormItem>
                 <Field name="imgList">
                     {({ field, form }: FieldProps) => {

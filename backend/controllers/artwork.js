@@ -65,7 +65,7 @@ artworkRouter.post('/save', uploadArtwork.array('imgList[]'), async (req, res) =
 
     
     if (id) {
-        const alreadyExistingImages = imgList.filter(img => typeof img === 'string')
+        const alreadyExistingImages = imgList?.filter(img => typeof img === 'string') ?? []
         // Update existing artwork
         Artwork.findByIdAndUpdate(id, {
             title,

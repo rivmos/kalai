@@ -17,7 +17,7 @@ const ShopByArtist = () => {
         dispatch(getAllArtists())
     }, [])
     const artists = useAppSelector(state => state.base.common.allArtists)
-    const {larger} = useResponsive()
+    const { larger } = useResponsive()
 
     return (
         <>
@@ -29,22 +29,19 @@ const ShopByArtist = () => {
                     spaceBetween={20}
                     autoplay
                     slidesPerView={larger.sm === false ? 1 : larger.md === false ? 2 : 4}
-                    onSwiper={(swiper) => {}}
+                    onSwiper={(swiper) => { }}
                     className='my-4 md:my-8 lg:my-16 h-[300px]'
                 >
                     {
                         artists?.map((artist, index) => {
                             return (
                                 <SwiperSlide key={artist.id} className='cursor-pointer'>
-                                    <Link to={`/app/profile/${artist.id}`}>
-                                        <div className="text-gray-700">
-                                        <img src={`${baseUrl}/uploads/avatar/${artist?.avatar}`} alt=" random imgee" className="w-full h-[250px] object-cover rounded-lg shadow-md" />
-                                            <div className="relative px-4 -mt-8  ">
-                                                <div className="bg-white p-4 rounded-lg shadow-lg">
-                                                    <h4 className="mt-1 text-base capitalize text-center leading-tight text-gray-700 truncate">{artist.name}</h4>
-                                                </div>
+                                    <Link to={`/web/profile/${artist.id}`}>
+                                        <div className="text-gray-700 flex flex-col items-center">
+                                            <img src={`${baseUrl}/uploads/avatar/${artist?.avatar}`} alt=" random imgee" className="!w-52 !h-52 object-cover rounded-full shadow-md" />
+                                            <div>
+                                                <h4 className="mt-2 text-base capitalize text-center leading-tight text-gray-700 truncate">{artist.name}</h4>
                                             </div>
-
                                         </div>
                                     </Link>
                                 </SwiperSlide>

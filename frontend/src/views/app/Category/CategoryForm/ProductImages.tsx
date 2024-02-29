@@ -8,21 +8,16 @@ import Upload from '@/components/ui/Upload'
 import { HiEye, HiTrash } from 'react-icons/hi'
 import cloneDeep from 'lodash/cloneDeep'
 import { Field, FieldProps, FieldInputProps, FormikProps } from 'formik'
-
-type Image = {
-    id: string
-    name: string
-    img: string
-}
+import { baseUrl } from '@/configs/app.config'
 
 type FormModel = {
-    imgList: Image[]
+    img: string
     [key: string]: unknown
 }
 
 type ImageListProps = {
-    imgList: Image[]
-    onImageDelete: (img: Image) => void
+    img: string
+    onImageDelete: (img: string) => void
 }
 
 type ProductImagesProps = {
@@ -30,13 +25,13 @@ type ProductImagesProps = {
 }
 
 const ImageList = (props: ImageListProps) => {
-    const { imgList, onImageDelete } = props
+    const { img, onImageDelete } = props
 
-    const [selectedImg, setSelectedImg] = useState<Image>({} as Image)
+    const [selectedImg, setSelectedImg] = useState<string>({} as string)
     const [viewOpen, setViewOpen] = useState(false)
     const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false)
 
-    const onViewOpen = (img: Image) => {
+    const onViewOpen = (img: string) => {
         setSelectedImg(img)
         setViewOpen(true)
     }
@@ -44,63 +39,64 @@ const ImageList = (props: ImageListProps) => {
     const onDialogClose = () => {
         setViewOpen(false)
         setTimeout(() => {
-            setSelectedImg({} as Image)
+            setSelectedImg({} as string)
         }, 300)
     }
 
-    const onDeleteConfirmation = (img: Image) => {
+    const onDeleteConfirmation = (img: string) => {
         setSelectedImg(img)
         setDeleteConfirmationOpen(true)
     }
 
     const onDeleteConfirmationClose = () => {
-        setSelectedImg({} as Image)
+        setSelectedImg({} as string)
         setDeleteConfirmationOpen(false)
     }
 
     const onDelete = () => {
-        onImageDelete?.(selectedImg)
+        // onImageDelete?.(selectedImg)
         setDeleteConfirmationOpen(false)
     }
 
+
     return (
         <>
-            {imgList.map((img) => (
-                <div
-                    key={img.id}
-                    className="group relative rounded border p-2 flex"
-                >
-                    <img
-                        className="rounded max-h-[140px] max-w-full"
-                        src={img.img}
-                        alt={img.name}
-                    />
-                    <div className="absolute inset-2 bg-gray-900/[.7] group-hover:flex hidden text-xl items-center justify-center">
-                        <span
-                            className="text-gray-100 hover:text-gray-300 cursor-pointer p-1.5"
-                            onClick={() => onViewOpen(img)}
-                        >
-                            <HiEye />
-                        </span>
-                        <span
-                            className="text-gray-100 hover:text-gray-300 cursor-pointer p-1.5"
-                            onClick={() => onDeleteConfirmation(img)}
-                        >
-                            <HiTrash />
-                        </span>
-                    </div>
+
+            <div
+                key={img}
+                className="group relative rounded border p-2 flex"
+            >
+                <img
+                    className="rounded max-h-[140px] max-w-full"
+                    src={`${baseUrl}/uploads/category/${img}`}
+                    alt={img}
+                />
+                <div className="absolute inset-2 bg-gray-900/[.7] group-hover:flex hidden text-xl items-center justify-center">
+                    <span
+                        className="text-gray-100 hover:text-gray-300 cursor-pointer p-1.5"
+                        onClick={() => onViewOpen(img)}
+                    >
+                        <HiEye />
+                    </span>
+                    <span
+                        className="text-gray-100 hover:text-gray-300 cursor-pointer p-1.5"
+                        onClick={() => onDeleteConfirmation(img)}
+                    >
+                        <HiTrash />
+                    </span>
                 </div>
-            ))}
+            </div>
+
             <Dialog
                 isOpen={viewOpen}
                 onClose={onDialogClose}
                 onRequestClose={onDialogClose}
             >
-                <h5 className="mb-4">{selectedImg.name}</h5>
+                <h5 className="mb-4">{selectedImg}</h5>
                 <img
                     className="w-full"
-                    src={selectedImg.img}
-                    alt={selectedImg.name}
+                    src={`${baseUrl}/uploads/category/${img}`}
+                    alt={selectedImg}
                 />
             </Dialog>
             <ConfirmDialog
@@ -150,20 +146,20 @@ const ProductImages = (props: ProductImagesProps) => {
     ) => {
         let imageId = '1-img-0'
         const latestUpload = files.length - 1
-        if (values.imgList.length > 0) {
-            const prevImgId = values.imgList[values.imgList.length - 1].id
-            const splitImgId = prevImgId.split('-')
-            const newIdNumber = parseInt(splitImgId[splitImgId.length - 1]) + 1
-            splitImgId.pop()
-            const newIdArr = [...splitImgId, ...[newIdNumber]]
-            imageId = newIdArr.join('-')
-        }
+        // if (values.imgList.length > 0) {
+        //     const prevImgId = values.imgList[values.imgList.length - 1].id
+        //     const splitImgId = prevImgId.split('-')
+        //     const newIdNumber = parseInt(splitImgId[splitImgId.length - 1]) + 1
+        //     splitImgId.pop()
+        //     const newIdArr = [...splitImgId, ...[newIdNumber]]
+        //     imageId = newIdArr.join('-')
+        // }
         const image = {
             id: imageId,
             name: files[latestUpload].name,
-            img: URL.createObjectURL(files[latestUpload]),
+            img: files[latestUpload],
         }
-        const imageList = [...values.imgList, ...[image]]
+        const imageList = files[latestUpload]
         console.log('imageList', imageList)
         form.setFieldValue(field.name, imageList)
     }
@@ -171,26 +167,26 @@ const ProductImages = (props: ProductImagesProps) => {
     const handleImageDelete = (
         form: FormikProps<FormModel>,
         field: FieldInputProps<FormModel>,
-        deletedImg: Image
+        deletedImg: string
     ) => {
         let imgList = cloneDeep(values.imgList)
-        imgList = imgList.filter((img) => img.id !== deletedImg.id)
+        // imgList = imgList.filter((img) => img.id !== deletedImg.id)
         form.setFieldValue(field.name, imgList)
     }
 
     return (
         <AdaptableCard className="mb-4">
-            <h5>Product Image</h5>
-            <p className="mb-6">Add or change image for the product</p>
+            <h5>Category Image</h5>
+            <p className="mb-6">Add or change image for the category</p>
             <FormItem>
-                <Field name="imgList">
+                <Field name="img">
                     {({ field, form }: FieldProps) => {
-                        if (values.imgList.length > 0) {
+                        if (values.img) {
                             return (
                                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                                     <ImageList
-                                        imgList={values.imgList}
-                                        onImageDelete={(img: Image) =>
+                                        img={values.img}
+                                        onImageDelete={(img: string) =>
                                             handleImageDelete(form, field, img)
                                         }
                                     />
@@ -209,7 +205,7 @@ const ProductImages = (props: ProductImagesProps) => {
                                                 darkModeSrc="/img/others/upload-dark.png"
                                             />
                                             <p className="font-semibold text-center text-gray-800 dark:text-white">
-                                                Upload
+                                                Change
                                             </p>
                                         </div>
                                     </Upload>

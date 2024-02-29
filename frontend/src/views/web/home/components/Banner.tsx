@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // Import Swiper React components
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,8 +6,22 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import { Button } from '@/components/ui';
+import { getAllBanners, useAppSelector, useAppDispatch } from '@/store';
+import useResponsive from '@/utils/hooks/useResponsive';
+import { baseUrl } from '@/configs/app.config';
 
 const Banner = () => {
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(getAllBanners())
+  }, [])
+
+  const allBanners = useAppSelector(state => state.base.common.allBanners)
+
+  const { larger } = useResponsive()
+
   return (
     <div className="relative">
 
@@ -16,22 +30,22 @@ const Banner = () => {
         spaceBetween={0}
         autoplay
         slidesPerView={1}
-        onSlideChange={() => {}}
-        onSwiper={(swiper) => {}}
+        onSlideChange={() => { }}
+        onSwiper={(swiper) => { }}
         className='h-[500px] lg:h-[700px]'
       >
         {
-          [1, 2, 3, 4].map(number => {
+          allBanners.map(banner => {
             return (
-              <SwiperSlide key={number} className='z-[2]'>
-                <img src={`/img/banner/${number}.jpg`} className='w-full h-full object-cover' />
+              <SwiperSlide key={banner.id} className='z-[2]'>
+                <img src={`${baseUrl}/uploads/banner/${banner.img}`} className='w-full h-full object-cover' />
               </SwiperSlide>
             )
           })
         }
       </Swiper>
       <div className="absolute top-0 left-0 right-0 z-[1] h-full opacity-40 bg-gray-600">
-       
+
       </div>
 
       <div className="absolute top-[50%] -translate-y-[50%] left-0 right-0 z-[3] mx-auto container">

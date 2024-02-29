@@ -89,16 +89,6 @@ export async function apiDeleteArtwork<T, U extends Record<string, unknown>>(dat
 //     })
 // }
 
-export async function apiAddCategory<T, U extends Record<string, unknown>>(
-    data: U
-) {
-    return ApiService.fetchData<T>({
-        url: '/categories/save',
-        method: 'post',
-        data,
-    })
-}
-
 export async function apiAddArtwork<T, U extends Record<string, unknown>>(
     data: U
 ) {

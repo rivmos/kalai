@@ -176,8 +176,8 @@ const ProductImages = (props: ProductImagesProps) => {
 
     return (
         <AdaptableCard className="mb-4">
-            <h5>Product Image</h5>
-            <p className="mb-6">Add or change image for the product</p>
+            <h5>Avatar Image</h5>
+            <p className="mb-6">Add or change avatar of the artist</p>
             <FormItem>
                 <Field name="avatar">
                     {({ field, form }: FieldProps) => {

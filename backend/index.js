@@ -8,10 +8,6 @@ require('dotenv').config()
 /* Express Application Instance */
 const app = express()
 
-/* Model Imports */
-const Product = require('./models/artist')
-const Artwork = require('./models/artwork')
-
 /* Config Imports */
 const config = require('./utils/config')
 const logger = require('./utils/logger')
@@ -24,6 +20,7 @@ const enquiryRouter = require('./controllers/enquiry')
 const usersRouter = require('./controllers/users')
 const categoryRouter = require('./controllers/category')
 const dashboardRouter = require('./controllers/dashboard')
+const bannerRouter = require('./controllers/banner')
 
 /* Middlewares Imports */
 const { unknownEndpoint, requestLogger } = require('./utils/middleware')
@@ -32,6 +29,7 @@ const { unknownEndpoint, requestLogger } = require('./utils/middleware')
 app.use(cors())
 app.use(express.json())
 
+// For static serving user files
 app.use('/uploads', express.static('uploads'))
 // app.use(requestLogger)
 app.use('/api/dashboard', dashboardRouter)
@@ -40,12 +38,19 @@ app.use('/api/artists', artistRouter)
 app.use('/api/artworks', artworkRouter)
 app.use('/api/subscribers', subscriberRouter)
 app.use('/api/enquiries', enquiryRouter)
+app.use('/api/banner', bannerRouter)
 app.use('/api/', usersRouter)
 
 
 /* Mongoose Connection */
-mongoose.connect(config.MONGO_URI).then(() => logger.info('connection successfull')).catch(() => logger.info('connection failed'))
-
+mongoose.connect(config.MONGO_URI)
+    .then(() => {
+        logger.info('Connected to MongoDB');
+    })
+    .catch((error) => {
+        logger.error('Failed to connect to MongoDB:', error.message);
+        process.exit(1); // Exit the application if unable to connect to the database
+    });
 
 /* API Routes */
 
@@ -54,103 +59,14 @@ app.get('/', (req, res) => {
     res.send('Gallery Server')
 })
 
-
-/* Get DropDown Data */
-app.get('/api/dropdowndata/', (req, res) => {
-    const multilevelDropdownData = [];
-
-    Product.find({}).then((products) => {
-        for (const product of products) {
-            const mainCategory = product.mainCategory;
-            const subCategory = product.subCategory;
-            const productName = product.productName;
-            const productId = product.id
-
-            multilevelDropdownData.push([mainCategory, subCategory, productName, productId]);
-        }
-
-        const multilevelJson = [];
-
-        for (const level of multilevelDropdownData) {
-            const mainCategoryExists = multilevelJson.find(item => item.title === level[0])
-            if (!mainCategoryExists) {
-                const node = {
-                    title: level[0],
-                    children: [
-                        {
-                            title: level[1],
-                            children: [
-                                { id: level.slice(-1)[0], title: level[2] }
-                            ]
-                        }
-                    ]
-                };
-                multilevelJson.push(node);
-            }
-            else {
-                const subCategoryExists = mainCategoryExists.children.find(item => item.title === level[1])
-                if (!subCategoryExists) {
-                    const node = {
-                        title: level[1],
-                        children: [
-                            {
-                                id: level.slice(-1)[0],
-                                title: level[2],
-                            }
-                        ]
-                    };
-                    mainCategoryExists.children.push(node)
-                }
-                else {
-                    subCategoryExists.children.push({ id: level.slice(-1)[0], title: level[2] })
-                }
-            }
-        }
-
-        res.json(multilevelJson);
-        res.end()
-    }).catch(error => logger.info(error))
-})
-
-app.get('/api/maincategories/', (req, res) => {
-    const mainCategories = [];
-
-    Product.find({}).then((products) => {
-
-        for (const product of products) {
-            const mainCategory = product.mainCategory;
-            const mainCategoriesExists = mainCategories.find(item => item === mainCategory)
-            if (!mainCategoriesExists) {
-                mainCategories.push(mainCategory);
-            }
-        }
-
-        res.json(mainCategories);
-        res.end()
-    }).catch(error => logger.info(error))
-})
-
-app.get('/api/subcategories/', (req, res) => {
-    const subCategories = [];
-
-    Product.find({}).then((products) => {
-
-        for (const product of products) {
-            const subCategory = product.subCategory;
-            const subCategoryExists = subCategories.find(item => item === subCategory)
-            if (!subCategoryExists) {
-                subCategories.push(subCategory);
-            }
-        }
-
-        res.json(subCategories);
-        res.end()
-    }).catch(error => logger.info(error))
-})
-
 /* Unknown EndPoint Route */
 app.use(unknownEndpoint)
 
+/*Generic Error Handling Middleware */
+app.use((error, req, res, next) => {
+    logger.error('An error occurred:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+});
 
 app.listen(config.PORT, () => {
     logger.info(`The Server Is Running On Port : ${config.PORT}`)

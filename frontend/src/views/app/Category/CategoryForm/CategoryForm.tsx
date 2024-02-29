@@ -10,6 +10,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
+import ProductImages from './ProductImages'
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 type FormikRef = FormikProps<any>
@@ -17,6 +18,7 @@ type FormikRef = FormikProps<any>
 type InitialData = {
     id?: string
     name?: string
+    img?: string
 }
 
 export type FormModel = InitialData
@@ -94,6 +96,7 @@ const CategoryForm = forwardRef<FormikRef, CategoryForm>((props, ref) => {
         initialData = {
             id: '',
             name: '',
+            img: ''
         },
         onFormSubmit,
         onDiscard,
@@ -132,9 +135,9 @@ const CategoryForm = forwardRef<FormikRef, CategoryForm>((props, ref) => {
                                         errors={errors}
                                     />
                                 </div>
-                                {/* <div className="lg:col-span-1">
+                                <div className="lg:col-span-1">
                                     <ProductImages values={values} />
-                                </div> */}
+                                </div>
                             </div>
                             <StickyFooter
                                 className="-mx-8 px-8 flex items-center justify-between py-4"

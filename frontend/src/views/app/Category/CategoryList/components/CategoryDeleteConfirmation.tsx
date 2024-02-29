@@ -38,7 +38,7 @@ const ArtistDeleteConfirmation = () => {
                     type="success"
                     duration={2500}
                 >
-                    Artist successfuly deleted
+                    Category successfuly deleted
                 </Notification>,
                 {
                     placement: 'top-center',
@@ -51,7 +51,7 @@ const ArtistDeleteConfirmation = () => {
         <ConfirmDialog
             isOpen={dialogOpen}
             type="danger"
-            title="Delete product"
+            title="Delete Category"
             confirmButtonColor="red-600"
             onClose={onDialogClose}
             onRequestClose={onDialogClose}

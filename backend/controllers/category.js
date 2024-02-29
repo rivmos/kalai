@@ -4,7 +4,7 @@ const logger = require('../utils/logger')
 const jwt = require('jsonwebtoken')
 const getTokenFrom = require('../utils/auth').getTokenFrom
 const config = require('../utils/config')
-const {upload} = require('../utils/middleware')
+const {upload, uploadCategory} = require('../utils/middleware')
 const { verifyTokenMiddleware } = require('../utils/auth')
 const pagination = require('../utils/pagination')
   
@@ -65,17 +65,23 @@ categoryRouter.get('/:id', (req, res) => {
 })
 
 
-categoryRouter.post('/save', async (req, res) => {
+categoryRouter.post('/save',uploadCategory.single('img') , async (req, res) => {
     const decodedToken = jwt.verify(getTokenFrom(req, res), config.JWTSECRET)
     if (!decodedToken.id) {
         return res.status(401).json({ error: 'token invalid' })
     }
-    const {id, name} = req.body;
+    const {id, name, img} = req.body;
+
+    const uploadedImage = req?.file?.filename
 
     if (id) {
         // Update existing artwork
+        const imgNotUpdated = typeof img === 'string'
+
+        const categoryImage = imgNotUpdated ? img : uploadedImage
+
         Category.findByIdAndUpdate(id, {
-            name,
+            name, img: categoryImage
         }, { new: true })
             .then(updatedCategory => {
                 if (!updatedCategory) {
@@ -92,6 +98,7 @@ categoryRouter.post('/save', async (req, res) => {
         // Create new artwork
         const newCategory = new Category({
             name,
+            img:uploadedImage
         });
 
         newCategory.save()

@@ -30,7 +30,7 @@ const webRoute: Routes = [
     {
         key: 'web.artists',
         path: '/web/artists',
-        component: lazy(() => import('@/views/web/artists/Artists')),
+        component: lazy(() => import('@/views/web/home/components/ShopByArtist')),
         authority: [],
         meta:{}
     },

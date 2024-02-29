@@ -1,10 +1,12 @@
 {
     "nav": {
-        "home": "Dashboard",
+        "home": "Home",
+        "dashboard": "Dashboard",
         "addartist": "Add Artist",
         "artists": "Artists",
         "artworks": "Artworks",
         "addcategory" : "Add Category",
+        "bannerimages" : "Banner Images",
         "categories": "Categories",
         "singleMenuItem": "Single menu item"
     },

@@ -5,10 +5,9 @@ import CategoryForm, {
 import toast from '@/components/ui/toast'
 import Notification from '@/components/ui/Notification'
 import { useNavigate } from 'react-router-dom'
-import { apiCreateSalesProduct } from '@/services/SalesService'
-import { apiAddArtist, apiAddCategory } from '@/services/ArtistService'
+import { apiAddCategory } from '@/services/CategoryService'
 
-const ArtistNew = () => {
+const CategoryNew = () => {
     const navigate = useNavigate()
 
     const addCategory = async (data: FormModel) => {
@@ -56,4 +55,4 @@ const ArtistNew = () => {
     )
 }
 
-export default ArtistNew
+export default CategoryNew

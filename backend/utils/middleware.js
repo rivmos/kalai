@@ -47,15 +47,26 @@ const avatarStorage = multer.diskStorage({
   }
 });
 
+const bannerStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', '/uploads/banner'));
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
 
 const uploadArtwork = multer({ storage: artworkStorage });
 const uploadCategory = multer({ storage: categoryStorage });
 const uploadAvatar = multer({ storage: avatarStorage });
+const uploadBanner = multer({ storage: bannerStorage });
 
 module.exports = {
   requestLogger,
   unknownEndpoint,
   uploadArtwork,
   uploadCategory,
-  uploadAvatar
+  uploadAvatar,
+  uploadBanner
 }

@@ -39,8 +39,8 @@ type GetArtistProfileResponse = ArtistState
 
 export const SLICE_NAME = 'artistEditSlice'
 
-export const getProduct = createAsyncThunk(
-    SLICE_NAME + '/getProducts',
+export const getArtistProfile = createAsyncThunk(
+    SLICE_NAME + '/getArtistProfile',
     async (data: { id: string }) => {
         const response = await apiGetArtistProfile<
             GetArtistProfileResponse,
@@ -75,11 +75,11 @@ const artistEditSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getProduct.fulfilled, (state, action) => {
+            .addCase(getArtistProfile.fulfilled, (state, action) => {
                 state.artistData = action.payload
                 state.loading = false
             })
-            .addCase(getProduct.pending, (state) => {
+            .addCase(getArtistProfile.pending, (state) => {
                 state.loading = true
             })
     },

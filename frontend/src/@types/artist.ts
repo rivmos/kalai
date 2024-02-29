@@ -19,6 +19,13 @@ export type ArtworkState = {
 export type CategoryState = {
     id?:string,
     name?:string
+    img?:string
+}
+
+export type BannerState = {
+    id?:string,
+    title?:string
+    img?:string
 }
 
 export type ArtistState = {
@@ -35,6 +42,7 @@ export type ArtistState = {
 export type Artists = ArtistState[]
 export type Artworks = ArtworkState[]
 export type Categories = CategoryState[]
+export type Banners = BannerState[]
 
 
 
@@ -49,6 +57,11 @@ export type GetArtistResponse = {
 }
 
 export type GetCategoriesResponse = {
+    data: Categories
+    total: number
+}
+
+export type GetBannerImagesResponse = {
     data: Categories
     total: number
 }
